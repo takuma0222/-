@@ -23,13 +23,14 @@ Public Class MainForm
 
     Public Sub New()
         InitializeComponent()
+        InitializeCustomComponents()
         InitializeServices()
     End Sub
 
     ''' <summary>
-    ''' UIコンポーネントを初期化
+    ''' カスタムUIコンポーネントを初期化
     ''' </summary>
-    Private Sub InitializeComponent()
+    Private Sub InitializeCustomComponents()
         Me.Text = "検品デスクトップアプリ"
         Me.Size = New Size(800, 500)
         Me.StartPosition = FormStartPosition.CenterScreen
@@ -200,7 +201,7 @@ Public Class MainForm
             ShowMessage("使用部材条件を表示しました", Color.Green)
             btnVerify.Enabled = True
         Catch ex As Exception
-            ShowMessage("計測エラー:" & Left(ex.Message, 20), Color.Red)
+            ShowMessage("計測エラー:" & ex.Message.Substring(0, Math.Min(20, ex.Message.Length)), Color.Red)
             _logManager.WriteErrorLog($"初回計測エラー: {ex.Message}")
             btnVerify.Enabled = False
         End Try
@@ -259,7 +260,7 @@ Public Class MainForm
             End If
             
         Catch ex As Exception
-            ShowMessage("照合エラー:" & Left(ex.Message, 20), Color.Red)
+            ShowMessage("照合エラー:" & ex.Message.Substring(0, Math.Min(20, ex.Message.Length)), Color.Red)
             _logManager.WriteErrorLog($"照合時エラー: {ex.Message}")
         End Try
     End Sub
@@ -334,7 +335,7 @@ Public Class MainForm
         
         ' 30文字制限
         If message.Length > 30 Then
-            message = Left(message, 27) & "..."
+            message = message.Substring(0, 27) & "..."
         End If
         
         Return message
@@ -364,7 +365,7 @@ Public Class MainForm
     ''' </summary>
     Private Sub ShowMessage(message As String, color As Color)
         If message.Length > 30 Then
-            message = Left(message, 30)
+            message = message.Substring(0, 30)
         End If
         lblMessage.Text = message
         lblMessage.ForeColor = color

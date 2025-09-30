@@ -14,9 +14,6 @@ Option Explicit On
 
 Namespace My
     
-    <Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0"),  _
-     Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
     Partial Friend NotInheritable Class MySettings
         Inherits Global.System.Configuration.ApplicationSettingsBase
         
@@ -30,9 +27,7 @@ Namespace My
 
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)> _
     Private Shared Sub AutoSaveSettings(sender As Global.System.Object, e As Global.System.EventArgs)
-        If My.Application.SaveMySettingsOnExit Then
-            My.Settings.Save()
-        End If
+        ' Auto-save disabled for now
     End Sub
 #End If
 #End Region
@@ -44,7 +39,7 @@ Namespace My
                If Not addedHandler Then
                     SyncLock addedHandlerLockObject
                         If Not addedHandler Then
-                            AddHandler My.Application.Shutdown, AddressOf AutoSaveSettings
+                            ' Handler disabled for now
                             addedHandler = True
                         End If
                     End SyncLock

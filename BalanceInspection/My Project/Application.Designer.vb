@@ -14,9 +14,6 @@ Option Explicit On
 
 Namespace My
     
-    <Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.8.1.0"),  _
-     Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
     Partial Friend NotInheritable Class MyApplication
         Inherits Global.Microsoft.VisualBasic.ApplicationServices.WindowsFormsApplicationBase
         
