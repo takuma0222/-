@@ -43,9 +43,17 @@ BalanceInspection/
 - **設定ファイル**: JSON (Newtonsoft.Json)
 - **データファイル**: CSV (UTF-8 BOM)
 
-## ビルド・実行方法
+## ドキュメント
 
-詳細は [BUILD.md](BUILD.md) を参照してください。
+### クイックスタート
+初めての方は [QUICKSTART.md](QUICKSTART.md) を参照してください。5分で環境をセットアップし、アプリケーションを試すことができます。
+
+### 詳細ドキュメント
+- **[BUILD.md](BUILD.md)**: ビルド手順と開発環境のセットアップ
+- **[DEPLOYMENT.md](DEPLOYMENT.md)**: デプロイとインストール手順
+- **[USER_MANUAL.md](USER_MANUAL.md)**: ユーザー向け操作マニュアル
+- **[TECHNICAL_SPEC.md](TECHNICAL_SPEC.md)**: 技術仕様書と設計ドキュメント
+- **[examples/README.md](examples/README.md)**: サンプル設定ファイルの説明
 
 ## 設定
 
