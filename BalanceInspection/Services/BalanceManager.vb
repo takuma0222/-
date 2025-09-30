@@ -5,27 +5,39 @@ Imports System.Collections.Generic
 ''' </summary>
 Public Class BalanceManager
     Private _serialManagers As List(Of SerialPortManager)
+    Private _tcpManagers As List(Of TcpCommunicationManager)
     Private _initialReadings As Dictionary(Of String, Double)
     Private _verificationReadings As Dictionary(Of String, Double)
+    Private _initialReadingTimeoutMs As Integer
+    Private _appConfig As AppConfig
 
     Public Sub New(config As AppConfig)
         _serialManagers = New List(Of SerialPortManager)()
+        _tcpManagers = New List(Of TcpCommunicationManager)()
         _initialReadings = New Dictionary(Of String, Double)()
         _verificationReadings = New Dictionary(Of String, Double)()
+        _initialReadingTimeoutMs = 5000  ' 初回計測タイムアウトを5秒に設定
+        _appConfig = config
 
-        ' 各天秤のシリアルポートマネージャーを作成
+        ' 各天秤の通信マネージャーを作成（シリアルまたはTCP）
         For Each balanceConfig As BalanceConfig In config.Balances
-            Dim manager As New SerialPortManager(balanceConfig, config.ReadTimeoutMs, config.MaxRetries)
-            _serialManagers.Add(manager)
+            If balanceConfig.ConnectionType = "TCP" Then
+                Dim tcpManager As New TcpCommunicationManager(balanceConfig, config.ReadTimeoutMs, config.MaxRetries)
+                _tcpManagers.Add(tcpManager)
+            Else
+                Dim serialManager As New SerialPortManager(balanceConfig, config.ReadTimeoutMs, config.MaxRetries)
+                _serialManagers.Add(serialManager)
+            End If
         Next
     End Sub
 
     ''' <summary>
-    ''' すべてのポートを開く
+    ''' すべての接続を開く（シリアル/TCP）
     ''' </summary>
     Public Sub OpenAll()
         Dim errors As New List(Of String)()
         
+        ' シリアルポート接続の場合のみポートを開く
         For Each manager As SerialPortManager In _serialManagers
             Try
                 manager.Open()
@@ -40,9 +52,19 @@ Public Class BalanceManager
     End Sub
 
     ''' <summary>
-    ''' すべてのポートを閉じる
+    ''' すべての接続を閉じる（シリアル/TCP）
     ''' </summary>
     Public Sub CloseAll()
+        ' TCP接続を閉じる
+        For Each manager As TcpCommunicationManager In _tcpManagers
+            Try
+                manager.Dispose()
+            Catch ex As Exception
+                ' エラーは無視
+            End Try
+        Next
+        
+        ' シリアル接続を閉じる
         For Each manager As SerialPortManager In _serialManagers
             Try
                 manager.Close()
@@ -60,9 +82,22 @@ Public Class BalanceManager
         
         Dim errors As New List(Of String)()
         
+        ' TCP接続での初回計測
+        For Each manager As TcpCommunicationManager In _tcpManagers
+            Try
+                ' 初回計測用のタイムアウトを設定（5秒）
+                Dim value As Double = manager.ReadValueWithTimeout(_initialReadingTimeoutMs)
+                _initialReadings(manager.LogicalName) = value
+            Catch ex As Exception
+                errors.Add($"{manager.LogicalName}: {ex.Message}")
+            End Try
+        Next
+        
+        ' シリアル接続での初回計測
         For Each manager As SerialPortManager In _serialManagers
             Try
-                Dim value As Double = manager.ReadValue()
+                ' 初回計測用のタイムアウトを設定（5秒）
+                Dim value As Double = manager.ReadValueWithTimeout(_initialReadingTimeoutMs)
                 _initialReadings(manager.LogicalName) = value
             Catch ex As Exception
                 errors.Add($"{manager.LogicalName}: {ex.Message}")
@@ -82,6 +117,17 @@ Public Class BalanceManager
         
         Dim errors As New List(Of String)()
         
+        ' TCP接続での照合時計測
+        For Each manager As TcpCommunicationManager In _tcpManagers
+            Try
+                Dim value As Double = manager.ReadValue()
+                _verificationReadings(manager.LogicalName) = value
+            Catch ex As Exception
+                errors.Add($"{manager.LogicalName}: {ex.Message}")
+            End Try
+        Next
+        
+        ' シリアル接続での照合時計測
         For Each manager As SerialPortManager In _serialManagers
             Try
                 Dim value As Double = manager.ReadValue()

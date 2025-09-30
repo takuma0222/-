@@ -122,6 +122,63 @@ Public Class SerialPortManager
     End Function
 
     ''' <summary>
+    ''' 指定されたタイムアウト時間で計測値を取得（コマンドモード）
+    ''' </summary>
+    Public Function ReadValueWithTimeout(timeoutMs As Integer) As Double
+        Dim originalTimeout As Integer = _port.ReadTimeout
+        Dim retryCount As Integer = 0
+        
+        Try
+            ' 一時的にタイムアウトを変更
+            _port.ReadTimeout = timeoutMs
+            
+            While retryCount < _maxRetries
+                Try
+                    ' バッファをクリア
+                    If _port.IsOpen Then
+                        _port.DiscardInBuffer()
+                        _port.DiscardOutBuffer()
+                    End If
+                    
+                    ' 計測コマンド送信（EK-iシリーズのコマンド）
+                    _port.WriteLine("Q")
+                    
+                    ' 応答待機
+                    Thread.Sleep(500)
+                    
+                    ' データ読み取り
+                    Dim response As String = _port.ReadLine()
+                    
+                    ' データをパース
+                    Dim value As Double = ParseWeight(response)
+                    Return value
+                    
+                Catch ex As TimeoutException
+                    retryCount += 1
+                    If retryCount >= _maxRetries Then
+                        Throw New Exception($"初回計測タイムアウト({timeoutMs}ms): {_config.PortName} ({_config.LogicalName})")
+                    End If
+                    Thread.Sleep(500)
+                Catch ex As Exception
+                    retryCount += 1
+                    If retryCount >= _maxRetries Then
+                        Throw New Exception($"初回計測読み取りエラー: {_config.PortName} ({_config.LogicalName}) - {ex.Message}")
+                    End If
+                    Thread.Sleep(500)
+                End Try
+            End While
+            
+            Throw New Exception($"初回計測値の取得に失敗しました: {_config.PortName}")
+            
+        Finally
+            ' タイムアウトを元に戻す
+            If _port IsNot Nothing AndAlso _port.IsOpen Then
+                _port.ReadTimeout = originalTimeout
+            End If
+        End Try
+    End Function
+
+    ''' <summary>
     ''' 応答文字列から重量を抽出
     ''' EK-iシリーズの応答形式: "ST,GS,+0000.00g" など
     ''' </summary>

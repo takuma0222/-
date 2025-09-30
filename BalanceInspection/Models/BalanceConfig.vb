@@ -36,4 +36,19 @@ Public Class BalanceConfig
     ''' 計測器ID（EK-iシリーズのID番号）
     ''' </summary>
     Public Property DeviceId As String = ""
+
+    ''' <summary>
+    ''' 接続タイプ（SerialPort または TCP）
+    ''' </summary>
+    Public Property ConnectionType As String = "SerialPort"
+
+    ''' <summary>
+    ''' TCP接続時のIPアドレス
+    ''' </summary>
+    Public Property TcpAddress As String = "127.0.0.1"
+
+    ''' <summary>
+    ''' TCP接続時のポート番号
+    ''' </summary>
+    Public Property TcpPort As Integer = 9001
 End Class

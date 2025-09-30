@@ -13,11 +13,14 @@ Public Class ConfigLoader
             Dim configPath As String = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json")
             
             If Not File.Exists(configPath) Then
-                ' デフォルト設定を作成
+                ' デフォルト設定を作成（電子天秤シミュレータ対応）
                 Dim defaultConfig As New AppConfig()
                 defaultConfig.Balances.Add(New BalanceConfig() With {
                     .LogicalName = "Pre_10mm",
-                    .PortName = "COM1",
+                    .ConnectionType = "TCP",
+                    .TcpAddress = "127.0.0.1",
+                    .TcpPort = 9001,
+                    .PortName = "SIM1",
                     .BaudRate = 9600,
                     .DataBits = 8,
                     .Parity = "None",
@@ -25,7 +28,10 @@ Public Class ConfigLoader
                 })
                 defaultConfig.Balances.Add(New BalanceConfig() With {
                     .LogicalName = "Post_1mm",
-                    .PortName = "COM2",
+                    .ConnectionType = "TCP",
+                    .TcpAddress = "127.0.0.1",
+                    .TcpPort = 9002,
+                    .PortName = "SIM2",
                     .BaudRate = 9600,
                     .DataBits = 8,
                     .Parity = "None",
@@ -33,7 +39,10 @@ Public Class ConfigLoader
                 })
                 defaultConfig.Balances.Add(New BalanceConfig() With {
                     .LogicalName = "Post_5mm",
-                    .PortName = "COM3",
+                    .ConnectionType = "TCP",
+                    .TcpAddress = "127.0.0.1",
+                    .TcpPort = 9003,
+                    .PortName = "SIM3",
                     .BaudRate = 9600,
                     .DataBits = 8,
                     .Parity = "None",

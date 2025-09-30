@@ -50,6 +50,7 @@ Public Class MainForm
         txtEmployeeNo.Size = New Size(150, 20)
         txtEmployeeNo.MaxLength = 6
         AddHandler txtEmployeeNo.KeyPress, AddressOf TextBox_KeyPress
+        AddHandler txtEmployeeNo.TextChanged, AddressOf TxtEmployeeNo_TextChanged
         Me.Controls.Add(txtEmployeeNo)
 
         ' ラベル: カードNo
@@ -64,7 +65,9 @@ Public Class MainForm
         txtCardNo.Location = New Point(410, 20)
         txtCardNo.Size = New Size(150, 20)
         txtCardNo.MaxLength = 6
+        txtCardNo.Enabled = False  ' 初期状態で非活性
         AddHandler txtCardNo.KeyPress, AddressOf TextBox_KeyPress
+        AddHandler txtCardNo.TextChanged, AddressOf TxtCardNo_TextChanged
         AddHandler txtCardNo.Leave, AddressOf TxtCardNo_Leave
         Me.Controls.Add(txtCardNo)
 
@@ -107,9 +110,10 @@ Public Class MainForm
         dgvConditions.MultiSelect = False
         
         ' 列を追加
-        dgvConditions.Columns.Add("Col1mm", "1mmクッション材")
-        dgvConditions.Columns.Add("Col5mm", "5mmクッション材")
-        dgvConditions.Columns.Add("Col10mm", "10mmクッション材")
+        dgvConditions.Columns.Add("ColPre10mm", "投入前10mmクッション材")
+        dgvConditions.Columns.Add("Col1mm", "投入後1mmクッション材")
+        dgvConditions.Columns.Add("Col5mm", "投入後5mmクッション材")
+        dgvConditions.Columns.Add("Col10mm", "投入後10mmクッション材")
         dgvConditions.Columns.Add("ColEdge", "エッジガード")
         dgvConditions.Columns.Add("ColBubble", "気泡緩衝材")
         
@@ -165,7 +169,7 @@ Public Class MainForm
     End Sub
 
     ''' <summary>
-    ''' カードNo入力後の処理
+    ''' カードNo入力後の処理（フォーカス離脱時）
     ''' </summary>
     Private Sub TxtCardNo_Leave(sender As Object, e As EventArgs)
         Dim cardNo As String = txtCardNo.Text.Trim()
@@ -174,7 +178,7 @@ Public Class MainForm
             Return
         End If
         
-        ' 6桁チェック
+        ' 6桁でない場合はエラーメッセージを表示
         If cardNo.Length <> 6 Then
             ShowMessage("カードNoは6桁で入力してください", Color.Red)
             dgvConditions.Rows.Clear()
@@ -182,29 +186,10 @@ Public Class MainForm
             Return
         End If
         
-        ' カード条件を取得
-        _currentCondition = _cardLoader.GetCondition(cardNo)
-        
+        ' 6桁の場合で、まだ処理されていない場合のみ処理（TextChangedで処理済みの場合は重複を避ける）
         If _currentCondition Is Nothing Then
-            ShowMessage("条件なし", Color.Black)
-            dgvConditions.Rows.Clear()
-            btnVerify.Enabled = False
-            Return
+            ProcessCardNoInput()
         End If
-        
-        ' 条件を表示
-        DisplayCondition(_currentCondition)
-        
-        ' 初回計測を実行
-        Try
-            _balanceManager.PerformInitialReading()
-            ShowMessage("使用部材条件を表示しました", Color.Green)
-            btnVerify.Enabled = True
-        Catch ex As Exception
-            ShowMessage("計測エラー:" & ex.Message.Substring(0, Math.Min(20, ex.Message.Length)), Color.Red)
-            _logManager.WriteErrorLog($"初回計測エラー: {ex.Message}")
-            btnVerify.Enabled = False
-        End Try
     End Sub
 
     ''' <summary>
@@ -213,9 +198,10 @@ Public Class MainForm
     Private Sub DisplayCondition(condition As CardCondition)
         dgvConditions.Rows.Clear()
         dgvConditions.Rows.Add(
+            condition.Pre10mm.ToString(),
             condition.Post1mm.ToString(),
             condition.Post5mm.ToString(),
-            condition.Pre10mm.ToString(),
+            condition.Post10mm.ToString(),
             condition.EdgeGuard.ToString(),
             condition.BubbleInterference.ToString("D2")
         )
@@ -252,6 +238,9 @@ Public Class MainForm
                 _logManager.WriteInspectionLog(employeeNo, txtCardNo.Text.Trim(), _currentCondition, "OK")
                 ShowMessage("検査合格", Color.Green)
                 btnVerify.Enabled = False
+                ' 照合OK時はカードNoを非活性化して従業員Noにフォーカス
+                txtCardNo.Enabled = False
+                txtEmployeeNo.Focus()
             Else
                 ' NG: 不一致を表示
                 Dim ngMessage As String = BuildNgMessage(differences, _currentCondition)
@@ -354,10 +343,12 @@ Public Class MainForm
     Private Sub ResetForm()
         txtEmployeeNo.Text = ""
         txtCardNo.Text = ""
+        txtCardNo.Enabled = False  ' カードNoを非活性化
         dgvConditions.Rows.Clear()
         ShowMessage("従業員Noを入力してください", Color.Black)
         btnVerify.Enabled = False
         _currentCondition = Nothing
+        txtEmployeeNo.Focus()  ' 従業員Noにフォーカス
     End Sub
 
     ''' <summary>
@@ -383,6 +374,87 @@ Public Class MainForm
             End If
         Catch ex As Exception
             ' エラーは無視
+        End Try
+    End Sub
+
+    ''' <summary>
+    ''' 従業員No入力時の処理
+    ''' </summary>
+    Private Sub TxtEmployeeNo_TextChanged(sender As Object, e As EventArgs)
+        Dim employeeNo As String = txtEmployeeNo.Text.Trim()
+        
+        If employeeNo.Length = 6 Then
+            ' 6桁入力完了：カードNoを活性化してフォーカス移動
+            txtCardNo.Enabled = True
+            txtCardNo.Focus()
+            ShowMessage("カードNoを入力してください", Color.Black)
+        Else
+            ' 6桁未満：カードNoを非活性化
+            txtCardNo.Enabled = False
+            txtCardNo.Text = ""
+            dgvConditions.Rows.Clear()
+            btnVerify.Enabled = False
+            
+            If employeeNo.Length > 0 Then
+                ShowMessage("従業員Noを6桁で入力してください", Color.Black)
+            Else
+                ShowMessage("従業員Noを入力してください", Color.Black)
+            End If
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' カードNo入力時の処理（6桁で自動実行）
+    ''' </summary>
+    Private Sub TxtCardNo_TextChanged(sender As Object, e As EventArgs)
+        Dim cardNo As String = txtCardNo.Text.Trim()
+        
+        ' 6桁入力完了時に自動でカードNo入力後の処理を実行
+        If cardNo.Length = 6 Then
+            ProcessCardNoInput()
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' カードNo入力後の処理（共通処理）
+    ''' </summary>
+    Private Sub ProcessCardNoInput()
+        Dim cardNo As String = txtCardNo.Text.Trim()
+        
+        If String.IsNullOrEmpty(cardNo) Then
+            Return
+        End If
+        
+        ' 6桁チェック
+        If cardNo.Length <> 6 Then
+            ShowMessage("カードNoは6桁で入力してください", Color.Red)
+            dgvConditions.Rows.Clear()
+            btnVerify.Enabled = False
+            Return
+        End If
+        
+        ' カード条件を取得
+        _currentCondition = _cardLoader.GetCondition(cardNo)
+        
+        If _currentCondition Is Nothing Then
+            ShowMessage("条件なし", Color.Black)
+            dgvConditions.Rows.Clear()
+            btnVerify.Enabled = False
+            Return
+        End If
+        
+        ' 条件を表示
+        DisplayCondition(_currentCondition)
+        
+        ' 初回計測を実行
+        Try
+            _balanceManager.PerformInitialReading()
+            ShowMessage("使用部材条件を表示しました", Color.Green)
+            btnVerify.Enabled = True
+        Catch ex As Exception
+            ShowMessage("計測エラー:" & ex.Message.Substring(0, Math.Min(20, ex.Message.Length)), Color.Red)
+            _logManager.WriteErrorLog($"初回計測エラー: {ex.Message}")
+            btnVerify.Enabled = False
         End Try
     End Sub
 End Class
