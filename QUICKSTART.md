@@ -1,43 +1,73 @@
 # クイックスタートガイド
 
-## 5分で始める検品デスクトップアプリ
+## ⚡ 5分で始める電子天秤検品システム
 
-### ステップ1: プロジェクトのビルド（開発者向け）
+**実機不要！** シミュレータを使って、電子天秤システムを即座に体験できます。
 
-Visual Studioがインストールされている場合:
+### 📋 事前準備
 
-1. `BalanceInspection.sln` をVisual Studioで開く
-2. メニューから「ビルド」→「ソリューションのビルド」
-3. ビルドが完了したら、`BalanceInspection\bin\Debug\BalanceInspection.exe` が生成される
+- Windows 10/11
+- .NET Framework 4.8（通常はプリインストール済み）
+- .NET 9.0 SDK（シミュレータ用）
 
-コマンドラインの場合:
+### ステップ1: 🧪 シミュレータの起動
 
-```bash
-# NuGetパッケージのリストア
-nuget restore BalanceInspection.sln
+```powershell
+# シミュレータディレクトリに移動
+cd BalanceSimulator\BalanceSimulator
 
-# ビルド
-msbuild BalanceInspection.sln /p:Configuration=Debug
+# シミュレータをビルド・起動
+dotnet run
 ```
 
-### ステップ2: 設定ファイルの準備
+✅ **確認**: シミュレータウィンドウが開き、「ポート9001-9003で待機中」が表示される
 
-初回起動時に自動生成されますが、事前に準備する場合:
+### ステップ2: 🎯 検品アプリの起動
 
-```bash
-# サンプルファイルをコピー
-copy examples\appsettings.json BalanceInspection\bin\Debug\
-copy examples\card_conditions.csv BalanceInspection\bin\Debug\
+```powershell  
+# 検品アプリを実行
+BalanceInspection\bin\Debug\BalanceInspection.exe
 ```
 
-**重要**: 実際のCOMポート番号に合わせて `appsettings.json` を編集してください。
+✅ **確認**: 検品アプリのメインウィンドウが開く
+✅ **自動設定**: TCP接続用の設定ファイルが自動生成される
 
-### ステップ3: 電子天秤の接続（実機がある場合）
+### ステップ3: 🚀 検品デモの実行
 
-1. 3台のEK-2000iをRS-232CケーブルでPCに接続
-2. デバイスマネージャーでCOMポート番号を確認
-3. `appsettings.json` の各Balance設定を更新:
-   ```json
+#### 従業員番号の入力
+1. 検品アプリの「従業員No」欄に `123456` を入力
+2. カード番号欄がアクティブになる
+
+#### カード番号の入力と自動計測
+1. 「カード番号」欄に `123456` を入力
+2. **自動実行**: 入力完了と同時に以下が発生
+   - 使用部材条件がテーブルに表示
+   - 初回計測が5秒タイムアウトで自動実行
+   - 3台の天秤から重量データを取得
+
+#### 照合処理の実行
+1. 「照合」ボタンをクリック
+2. 照合時計測が実行される
+3. 差分値が計算され、合否判定結果が表示される
+
+### ✅ 動作確認ポイント
+
+#### TCP通信の確認
+```powershell
+# ポートがリスニングしているか確認
+netstat -an | Select-String "900[1-3]"
+```
+以下のような出力が表示されれば正常：
+```
+TCP    0.0.0.0:9001    0.0.0.0:0    LISTENING
+TCP    0.0.0.0:9002    0.0.0.0:0    LISTENING  
+TCP    0.0.0.0:9003    0.0.0.0:0    LISTENING
+```
+
+#### 設定ファイルの自動生成
+初回起動時に以下が自動生成される：
+- `appsettings.json` - TCP接続設定（127.0.0.1:9001-9003）
+- `card_conditions.csv` - サンプルカードデータ
    "PortName": "COM1"  # 実際のポート番号に変更
    ```
 

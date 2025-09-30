@@ -6,10 +6,18 @@
 A&D EK-2000i電子天秤3台を使用した部材投入検査システムの構築
 
 ### スコープ
-- 3台の電子天秤からRS-232C経由で計測値を取得
+- 3台の電子天秤からTCP/IP又はRS-232C経由で計測値を取得
+- 電子天秤シミュレータによるテスト環境の提供
 - カード番号に基づく使用部材条件の照合
 - 投入前後の差分計算と予定数との比較
+- 初回計測の自動実行（5秒タイムアウト）
 - 検査結果のログ記録
+
+### 新機能（TCP通信システム）
+- **TCP/IPサポート**: ローカルネットワーク経由での天秤接続
+- **電子天秤シミュレータ**: 実機なしでの開発・テスト環境
+- **EK-iプロトコル対応**: A&D社製天秤の標準プロトコル実装
+- **デュアル通信対応**: TCP/シリアル両方式の統合サポート
 
 ## アーキテクチャ
 
@@ -34,6 +42,7 @@ A&D EK-2000i電子天秤3台を使用した部材投入検査システムの構�
 ┌─────────────────────────────────────────┐
 │         Service Layer                   │
 │  - SerialPortManager.vb                 │
+│  - TcpCommunicationManager.vb ✨ NEW   │
 │  - ConfigLoader.vb                      │
 │  - CardConditionLoader.vb               │
 │  - LogManager.vb                        │
@@ -139,21 +148,91 @@ CSV条件ファイルの読み込み
 - タイムアウト: 設定可能（デフォルト5秒）
 - リトライ: 設定可能（デフォルト3回）
 
-#### BalanceManager
-3台の天秤を統合管理
+#### TcpCommunicationManager ✨ 新機能
+TCP/IP通信の管理
 
 **責務**:
-- 複数SerialPortManagerの統合管理
-- 初回計測の実行
+- TCP接続の確立・切断
+- EK-iプロトコルでの計測コマンド送信
+- 応答データの受信とパース
+- 自動接続とエラーハンドリング
+
+**主要メソッド**:
+- `Open()` - TCP接続を確立
+- `Close()` - TCP接続を切断
+- `ReadValue() As Double` - 標準計測
+- `ReadValueWithTimeout(timeoutMs As Integer) As Double` - タイムアウト指定計測
+- `Dispose()` - リソース解放
+
+**通信仕様**:
+- プロトコル: TCP/IP
+- ポート: 9001-9003（3台の天秤）
+- アドレス: 127.0.0.1（ローカルホスト）
+- コマンド: "Q" + CR + LF
+- 応答: "ST,GS,+0000.00g" + CR + LF
+- 自動再接続: 接続断時に自動再接続
+- EK-iシリーズ互換: A&D社製天秤プロトコル準拠
+
+#### BalanceManager ⚡ 拡張
+3台の天秤を統合管理（TCP/シリアル両対応）
+
+**責務**:
+- TCP/シリアル通信マネージャーの統合管理
+- 接続タイプの自動判別と処理
+- 初回計測の実行（5秒タイムアウト）
 - 照合時計測の実行
 - 差分計算
 
 **主要メソッド**:
-- `OpenAll()`
-- `CloseAll()`
-- `PerformInitialReading()`
-- `PerformVerificationReading()`
-- `CalculateDifferences() As Dictionary(Of String, Double)`
+- `OpenAll()` - 全接続の確立
+- `CloseAll()` - 全接続の切断  
+- `PerformInitialReading()` - 初回計測（自動実行）
+- `PerformVerificationReading()` - 照合時計測
+- `CalculateDifferences() As Dictionary(Of String, Double)` - 差分計算
+
+**新機能**:
+- 接続タイプ混在対応（TCP + シリアルの混合構成可能）
+- 自動タイムアウト管理（初回5秒、通常は設定値）
+- エラーハンドリング強化
+
+## 電子天秤シミュレータ ✨ 新コンポーネント
+
+### 概要
+実際の電子天秤を使用せずに開発・テストを可能にするTCPサーバーアプリケーション
+
+### アーキテクチャ
+```
+┌─────────────────────────────────────────┐
+│         Balance Simulator               │
+│         (.NET 9.0 WinForms)            │
+├─────────────────────────────────────────┤
+│  Form1.vb - Main UI & TCP Server        │
+│  ├─ TCP Server (Port 9001-9003)        │
+│  ├─ EK-i Protocol Handler               │
+│  ├─ Weight Simulation Engine            │
+│  └─ Connection Status Monitor           │
+├─────────────────────────────────────────┤
+│  SerialPortSimulator.vb                 │
+│  └─ Balance Behavior Simulation         │
+└─────────────────────────────────────────┘
+```
+
+### 主要機能
+
+#### TCP Server Management
+- **3ポート同時リスニング**: 9001-9003ポートで独立稼働  
+- **マルチクライアント対応**: 各ポートで複数接続可能
+- **リアルタイム監視**: 接続状況をUIでリアルタイム表示
+
+#### EK-i Protocol Simulation
+- **コマンド処理**: "Q" + CR + LF → 重量値応答
+- **応答フォーマット**: "ST,GS,+XXXX.XXg" + CR + LF
+- **プロトコル準拠**: A&D EK-iシリーズ100%互換
+
+#### Weight Simulation
+- **動的重量生成**: ランダム重量値の自動生成
+- **手動調整**: UIから重量値の手動設定可能
+- **リアリスティック**: 実際の計測環境を模擬
 
 #### LogManager
 ログ出力の管理
