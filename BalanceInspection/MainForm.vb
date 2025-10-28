@@ -125,12 +125,20 @@ Public Class MainForm
     Private Sub DisplayCardInfo(condition As CardCondition)
         dgvCardInfo.Rows.Clear()
         
-        ' 品名、枚数、所在を表示
+        ' 品名、枚数、所在を縦方向に表示（行ヘッダーに項目名、セルに値）
         Dim productName As String = If(String.IsNullOrEmpty(condition.ProductName), "", condition.ProductName)
         Dim quantity As String = If(condition.Quantity > 0, condition.Quantity.ToString(), "")
         Dim location As String = If(String.IsNullOrEmpty(condition.Location), "", condition.Location)
         
-        dgvCardInfo.Rows.Add(productName, quantity, location)
+        ' 3行追加
+        dgvCardInfo.Rows.Add(productName)
+        dgvCardInfo.Rows.Add(quantity)
+        dgvCardInfo.Rows.Add(location)
+        
+        ' 行ヘッダーに項目名を設定
+        dgvCardInfo.Rows(0).HeaderCell.Value = "品名"
+        dgvCardInfo.Rows(1).HeaderCell.Value = "枚数"
+        dgvCardInfo.Rows(2).HeaderCell.Value = "所在"
     End Sub
 
     ''' <summary>

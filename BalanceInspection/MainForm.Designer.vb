@@ -162,41 +162,44 @@ Partial Class MainForm
         '
         Me.dgvCardInfo.AllowUserToAddRows = False
         Me.dgvCardInfo.AllowUserToDeleteRows = False
-        Me.dgvCardInfo.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgvCardInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvCardInfo.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ColProductName, Me.ColQuantity, Me.ColLocation})
+        Me.dgvCardInfo.ColumnHeadersVisible = False
+        Me.dgvCardInfo.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ColProductName, Me.ColQuantity})
         Me.dgvCardInfo.Location = New System.Drawing.Point(30, 210)
         Me.dgvCardInfo.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.dgvCardInfo.MultiSelect = False
         Me.dgvCardInfo.Name = "dgvCardInfo"
         Me.dgvCardInfo.ReadOnly = True
-        Me.dgvCardInfo.RowHeadersVisible = False
-        Me.dgvCardInfo.RowHeadersWidth = 62
+        Me.dgvCardInfo.RowHeadersVisible = True
+        Me.dgvCardInfo.RowHeadersWidth = 100
         Me.dgvCardInfo.RowTemplate.Height = 25
         Me.dgvCardInfo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvCardInfo.Size = New System.Drawing.Size(550, 96)
+        Me.dgvCardInfo.Size = New System.Drawing.Size(400, 120)
         Me.dgvCardInfo.TabIndex = 8
         '
         'ColProductName
         '
-        Me.ColProductName.HeaderText = "品名"
+        Me.ColProductName.HeaderText = "値"
         Me.ColProductName.MinimumWidth = 8
         Me.ColProductName.Name = "ColProductName"
         Me.ColProductName.ReadOnly = True
+        Me.ColProductName.Width = 280
         '
         'ColQuantity
         '
-        Me.ColQuantity.HeaderText = "枚数"
+        Me.ColQuantity.HeaderText = ""
         Me.ColQuantity.MinimumWidth = 8
         Me.ColQuantity.Name = "ColQuantity"
         Me.ColQuantity.ReadOnly = True
+        Me.ColQuantity.Visible = False
         '
         'ColLocation
         '
-        Me.ColLocation.HeaderText = "所在"
+        Me.ColLocation.HeaderText = ""
         Me.ColLocation.MinimumWidth = 8
         Me.ColLocation.Name = "ColLocation"
         Me.ColLocation.ReadOnly = True
+        Me.ColLocation.Visible = False
         '
         'lblEmployeeNo
         '
