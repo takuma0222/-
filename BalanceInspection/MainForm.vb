@@ -262,11 +262,20 @@ Public Class MainForm
     ''' 判定を表示（必要枚数＝確保枚数でOK、それ以外はNG）
     ''' </summary>
     Private Sub DisplayJudgment(condition As CardCondition)
-        ' 投入前10mmの判定
+        ' 投入前10mmと投入後10mmの判定（同じ秤9001を使用）
+        ' 両方の必要枚数の合計が確保枚数と一致していればOK
         If Not String.IsNullOrEmpty(lblPre10mmUsed.Text) AndAlso lblPre10mmUsed.Text <> "不要" Then
             Dim secured As Double = Double.Parse(lblPre10mmUsed.Text.Replace("枚", ""))
-            lblPre10mmJudgment.Text = If(Math.Round(secured) = condition.Pre10mm, "OK", "NG")
-            lblPre10mmJudgment.ForeColor = If(lblPre10mmJudgment.Text = "OK", Color.Green, Color.Red)
+            Dim totalRequired As Integer = condition.Pre10mm + condition.Post10mm
+            Dim isOk As Boolean = Math.Round(secured) = totalRequired
+            
+            ' 投入前10mmの判定
+            lblPre10mmJudgment.Text = If(isOk, "OK", "NG")
+            lblPre10mmJudgment.ForeColor = If(isOk, Color.Green, Color.Red)
+            
+            ' 投入後10mmの判定（同じ結果）
+            lblPost10mmJudgment.Text = If(isOk, "OK", "NG")
+            lblPost10mmJudgment.ForeColor = If(isOk, Color.Green, Color.Red)
         End If
 
         ' 投入後1mmの判定
@@ -281,13 +290,6 @@ Public Class MainForm
             Dim secured As Double = Double.Parse(lblPost5mmUsed.Text.Replace("枚", ""))
             lblPost5mmJudgment.Text = If(Math.Round(secured) = condition.Post5mm, "OK", "NG")
             lblPost5mmJudgment.ForeColor = If(lblPost5mmJudgment.Text = "OK", Color.Green, Color.Red)
-        End If
-
-        ' 投入後10mmの判定
-        If Not String.IsNullOrEmpty(lblPost10mmUsed.Text) AndAlso lblPost10mmUsed.Text <> "不要" Then
-            Dim secured As Double = Double.Parse(lblPost10mmUsed.Text.Replace("枚", ""))
-            lblPost10mmJudgment.Text = If(Math.Round(secured) = condition.Post10mm, "OK", "NG")
-            lblPost10mmJudgment.ForeColor = If(lblPost10mmJudgment.Text = "OK", Color.Green, Color.Red)
         End If
 
         ' エッジガードの判定（必要枚数が0でない場合）
