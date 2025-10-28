@@ -6,14 +6,6 @@
 Public Class MainForm
     Inherits Form
 
-    ' UI コンポーネント
-    Private txtEmployeeNo As TextBox
-    Private txtCardNo As TextBox
-    Private btnVerify As Button
-    Private btnCancel As Button
-    Private lblMessage As Label
-    Private dgvConditions As DataGridView
-
     ' サービス
     Private _appConfig As AppConfig
     Private _cardLoader As CardConditionLoader
@@ -23,101 +15,21 @@ Public Class MainForm
 
     Public Sub New()
         InitializeComponent()
-        InitializeCustomComponents()
+        InitializeEventHandlers()
         InitializeServices()
     End Sub
 
     ''' <summary>
-    ''' カスタムUIコンポーネントを初期化
+    ''' イベントハンドラーを登録
     ''' </summary>
-    Private Sub InitializeCustomComponents()
-        Me.Text = "検品デスクトップアプリ"
-        Me.Size = New Size(800, 500)
-        Me.StartPosition = FormStartPosition.CenterScreen
-        Me.FormBorderStyle = FormBorderStyle.FixedDialog
-        Me.MaximizeBox = False
-
-        ' ラベル: 従業員No
-        Dim lblEmployeeNo As New Label()
-        lblEmployeeNo.Text = "従業員No:"
-        lblEmployeeNo.Location = New Point(20, 20)
-        lblEmployeeNo.Size = New Size(100, 20)
-        Me.Controls.Add(lblEmployeeNo)
-
-        ' テキストボックス: 従業員No
-        txtEmployeeNo = New TextBox()
-        txtEmployeeNo.Location = New Point(130, 20)
-        txtEmployeeNo.Size = New Size(150, 20)
-        txtEmployeeNo.MaxLength = 6
+    Private Sub InitializeEventHandlers()
         AddHandler txtEmployeeNo.KeyPress, AddressOf TextBox_KeyPress
         AddHandler txtEmployeeNo.TextChanged, AddressOf TxtEmployeeNo_TextChanged
-        Me.Controls.Add(txtEmployeeNo)
-
-        ' ラベル: カードNo
-        Dim lblCardNo As New Label()
-        lblCardNo.Text = "カードNo:"
-        lblCardNo.Location = New Point(300, 20)
-        lblCardNo.Size = New Size(100, 20)
-        Me.Controls.Add(lblCardNo)
-
-        ' テキストボックス: カードNo
-        txtCardNo = New TextBox()
-        txtCardNo.Location = New Point(410, 20)
-        txtCardNo.Size = New Size(150, 20)
-        txtCardNo.MaxLength = 6
-        txtCardNo.Enabled = False  ' 初期状態で非活性
         AddHandler txtCardNo.KeyPress, AddressOf TextBox_KeyPress
         AddHandler txtCardNo.TextChanged, AddressOf TxtCardNo_TextChanged
         AddHandler txtCardNo.Leave, AddressOf TxtCardNo_Leave
-        Me.Controls.Add(txtCardNo)
-
-        ' ボタン: 照合
-        btnVerify = New Button()
-        btnVerify.Text = "照合"
-        btnVerify.Location = New Point(580, 15)
-        btnVerify.Size = New Size(80, 30)
-        btnVerify.Enabled = False
         AddHandler btnVerify.Click, AddressOf BtnVerify_Click
-        Me.Controls.Add(btnVerify)
-
-        ' ボタン: キャンセル
-        btnCancel = New Button()
-        btnCancel.Text = "キャンセル"
-        btnCancel.Location = New Point(680, 15)
-        btnCancel.Size = New Size(100, 30)
         AddHandler btnCancel.Click, AddressOf BtnCancel_Click
-        Me.Controls.Add(btnCancel)
-
-        ' ラベル: メッセージ
-        lblMessage = New Label()
-        lblMessage.Text = "従業員Noを入力してください"
-        lblMessage.Location = New Point(20, 60)
-        lblMessage.Size = New Size(760, 40)
-        lblMessage.Font = New Font(lblMessage.Font.FontFamily, 10, FontStyle.Regular)
-        lblMessage.ForeColor = Color.Black
-        Me.Controls.Add(lblMessage)
-
-        ' DataGridView: 使用部材条件
-        dgvConditions = New DataGridView()
-        dgvConditions.Location = New Point(20, 110)
-        dgvConditions.Size = New Size(760, 80)
-        dgvConditions.AllowUserToAddRows = False
-        dgvConditions.AllowUserToDeleteRows = False
-        dgvConditions.ReadOnly = True
-        dgvConditions.RowHeadersVisible = False
-        dgvConditions.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-        dgvConditions.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-        dgvConditions.MultiSelect = False
-        
-        ' 列を追加
-        dgvConditions.Columns.Add("ColPre10mm", "投入前10mmクッション材")
-        dgvConditions.Columns.Add("Col1mm", "投入後1mmクッション材")
-        dgvConditions.Columns.Add("Col5mm", "投入後5mmクッション材")
-        dgvConditions.Columns.Add("Col10mm", "投入後10mmクッション材")
-        dgvConditions.Columns.Add("ColEdge", "エッジガード")
-        dgvConditions.Columns.Add("ColBubble", "気泡緩衝材")
-        
-        Me.Controls.Add(dgvConditions)
     End Sub
 
     ''' <summary>

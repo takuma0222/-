@@ -293,19 +293,19 @@ Public Class Form1
                 ' Pendingで接続があるかチェックしてからAccept
                 If server.Pending() Then
                     Dim client As TcpClient = server.AcceptTcpClient()
-                    
+
                     Me.Invoke(Sub()
-                                 UpdateStatus(balanceNum, "接続中", Color.Green)
-                                 LogMessage("天秤" & balanceNum.ToString() & ": クライアント接続")
-                             End Sub)
-                    
+                                  UpdateStatus(balanceNum, "接続中", Color.Green)
+                                  LogMessage("天秤" & balanceNum.ToString() & ": クライアント接続")
+                              End Sub)
+
                     ' クライアント処理を別スレッドで実行
                     Task.Run(Sub() HandleClient(client, balanceNum))
                 Else
                     ' 接続待ちの間は少し待機
                     Thread.Sleep(100)
                 End If
-                
+
             Catch ex As SocketException
                 ' ソケットエラー（停止時など）は無視
                 If _isRunning Then
