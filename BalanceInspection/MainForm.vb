@@ -123,6 +123,9 @@ Public Class MainForm
     ''' カード情報をラベルに表示
     ''' </summary>
     Private Sub DisplayCardInfo(condition As CardCondition)
+        ' カードNoを表示
+        lblCardNoDisplayValue.Text = condition.CardNo
+
         ' 品名、枚数、所在を表示
         lblProductNameValue.Text = If(String.IsNullOrEmpty(condition.ProductName), "", condition.ProductName)
         lblQuantityValue.Text = If(condition.Quantity > 0, condition.Quantity.ToString(), "")
@@ -136,25 +139,25 @@ Public Class MainForm
         If _currentCondition Is Nothing Then
             Return
         End If
-        
+
         Dim employeeNo As String = txtEmployeeNo.Text.Trim()
-        
+
         ' 従業員Noチェック
         If employeeNo.Length <> 6 Then
             ShowMessage("従業員Noは6桁で入力してください", Color.Red)
             Return
         End If
-        
+
         Try
             ' 照合時計測
             _balanceManager.PerformVerificationReading()
-            
+
             ' 差分計算
             Dim differences As Dictionary(Of String, Double) = _balanceManager.CalculateDifferences()
-            
+
             ' 照合判定
             Dim isValid As Boolean = ValidateDifferences(differences, _currentCondition)
-            
+
             If isValid Then
                 ' OK: ログ出力
                 _logManager.WriteInspectionLog(employeeNo, txtCardNo.Text.Trim(), _currentCondition, "OK")
@@ -169,7 +172,7 @@ Public Class MainForm
                 ShowMessage(ngMessage, Color.Red)
                 _logManager.WriteInspectionLog(employeeNo, txtCardNo.Text.Trim(), _currentCondition, "NG")
             End If
-            
+
         Catch ex As Exception
             ShowMessage("照合エラー:" & ex.Message.Substring(0, Math.Min(20, ex.Message.Length)), Color.Red)
             _logManager.WriteErrorLog("照合時エラー: " & ex.Message)
@@ -181,7 +184,7 @@ Public Class MainForm
     ''' </summary>
     Private Function ValidateDifferences(differences As Dictionary(Of String, Double), condition As CardCondition) As Boolean
         Dim isValid As Boolean = True
-        
+
         ' Pre_10mm
         If differences.ContainsKey("Pre_10mm") Then
             Dim diff As Integer = CInt(Math.Round(differences("Pre_10mm")))
@@ -191,7 +194,7 @@ Public Class MainForm
         Else
             isValid = False
         End If
-        
+
         ' Post_1mm
         If differences.ContainsKey("Post_1mm") Then
             Dim diff As Integer = CInt(Math.Round(differences("Post_1mm")))
@@ -201,7 +204,7 @@ Public Class MainForm
         Else
             isValid = False
         End If
-        
+
         ' Post_5mm
         If differences.ContainsKey("Post_5mm") Then
             Dim diff As Integer = CInt(Math.Round(differences("Post_5mm")))
@@ -211,7 +214,7 @@ Public Class MainForm
         Else
             isValid = False
         End If
-        
+
         Return isValid
     End Function
 
@@ -220,35 +223,35 @@ Public Class MainForm
     ''' </summary>
     Private Function BuildNgMessage(differences As Dictionary(Of String, Double), condition As CardCondition) As String
         Dim errors As New List(Of String)()
-        
+
         If differences.ContainsKey("Pre_10mm") Then
             Dim diff As Integer = CInt(Math.Round(differences("Pre_10mm")))
             If diff <> condition.Pre10mm Then
                 errors.Add("10mm:" & diff.ToString() & "≠" & condition.Pre10mm.ToString())
             End If
         End If
-        
+
         If differences.ContainsKey("Post_1mm") Then
             Dim diff As Integer = CInt(Math.Round(differences("Post_1mm")))
             If diff <> condition.Post1mm Then
                 errors.Add("1mm:" & diff.ToString() & "≠" & condition.Post1mm.ToString())
             End If
         End If
-        
+
         If differences.ContainsKey("Post_5mm") Then
             Dim diff As Integer = CInt(Math.Round(differences("Post_5mm")))
             If diff <> condition.Post5mm Then
                 errors.Add("5mm:" & diff.ToString() & "≠" & condition.Post5mm.ToString())
             End If
         End If
-        
+
         Dim message As String = "NG:" & String.Join(",", errors)
-        
+
         ' 30文字制限
         If message.Length > 30 Then
             message = message.Substring(0, 27) & "..."
         End If
-        
+
         Return message
     End Function
 
@@ -267,6 +270,7 @@ Public Class MainForm
         txtCardNo.Text = ""
         txtCardNo.Enabled = False  ' カードNoを非活性化
         dgvConditions.Rows.Clear()
+        lblCardNoDisplayValue.Text = ""
         lblProductNameValue.Text = ""
         lblQuantityValue.Text = ""
         lblLocationValue.Text = ""
@@ -292,7 +296,7 @@ Public Class MainForm
     ''' </summary>
     Protected Overrides Sub OnFormClosing(e As FormClosingEventArgs)
         MyBase.OnFormClosing(e)
-        
+
         Try
             If _balanceManager IsNot Nothing Then
                 _balanceManager.CloseAll()
@@ -307,7 +311,7 @@ Public Class MainForm
     ''' </summary>
     Private Sub TxtEmployeeNo_TextChanged(sender As Object, e As EventArgs)
         Dim employeeNo As String = txtEmployeeNo.Text.Trim()
-        
+
         If employeeNo.Length = 6 Then
             ' 6桁入力完了：カードNoを活性化してフォーカス移動
             txtCardNo.Enabled = True
@@ -319,7 +323,7 @@ Public Class MainForm
             txtCardNo.Text = ""
             dgvConditions.Rows.Clear()
             btnVerify.Enabled = False
-            
+
             If employeeNo.Length > 0 Then
                 ShowMessage("従業員Noを6桁で入力してください", Color.Black)
             Else
@@ -333,7 +337,7 @@ Public Class MainForm
     ''' </summary>
     Private Sub TxtCardNo_TextChanged(sender As Object, e As EventArgs)
         Dim cardNo As String = txtCardNo.Text.Trim()
-        
+
         ' 6桁入力完了時に自動でカードNo入力後の処理を実行
         If cardNo.Length = 6 Then
             ProcessCardNoInput()
@@ -345,46 +349,51 @@ Public Class MainForm
     ''' </summary>
     Private Sub ProcessCardNoInput()
         Dim cardNo As String = txtCardNo.Text.Trim()
-        
+
         If String.IsNullOrEmpty(cardNo) Then
             Return
         End If
-        
+
         ' 6桁チェック
         If cardNo.Length <> 6 Then
             ShowMessage("カードNoは6桁で入力してください", Color.Red)
             dgvConditions.Rows.Clear()
+            lblCardNoDisplayValue.Text = ""
             lblProductNameValue.Text = ""
             lblQuantityValue.Text = ""
             lblLocationValue.Text = ""
             btnVerify.Enabled = False
             Return
         End If
-        
+
         ' カード条件を取得
         _currentCondition = _cardLoader.GetCondition(cardNo)
-        
+
         If _currentCondition Is Nothing Then
             ShowMessage("条件なし", Color.Black)
             dgvConditions.Rows.Clear()
+            lblCardNoDisplayValue.Text = ""
             lblProductNameValue.Text = ""
             lblQuantityValue.Text = ""
             lblLocationValue.Text = ""
             btnVerify.Enabled = False
             Return
         End If
-        
+
         ' 条件を表示
         DisplayCondition(_currentCondition)
-        
+
         ' カード情報を表示
         DisplayCardInfo(_currentCondition)
-        
+
         ' 初回計測を実行
         Try
             _balanceManager.PerformInitialReading()
             ShowMessage("使用部材条件を表示しました", Color.Green)
             btnVerify.Enabled = True
+
+            ' カードNo入力欄をクリア
+            txtCardNo.Text = ""
         Catch ex As Exception
             ShowMessage("計測エラー:" & ex.Message.Substring(0, Math.Min(20, ex.Message.Length)), Color.Red)
             _logManager.WriteErrorLog("初回計測エラー: " & ex.Message)
