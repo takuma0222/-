@@ -113,28 +113,52 @@ Public Class MainForm
         lblPost1mmRequired.Text = condition.Post1mm.ToString() & "枚"
         lblPost5mmRequired.Text = condition.Post5mm.ToString() & "枚"
         lblPost10mmRequired.Text = condition.Post10mm.ToString() & "枚"
-        lblEdgeRequired.Text = condition.EdgeGuard.ToString() & "枚"
-        lblBubbleRequired.Text = condition.BubbleInterference.ToString("D2") & "枚"
+        
+        ' エッジガードと気泡緩衝材は0の場合"不要"を表示（他の列はDisplayInitialBalanceReadingsで設定）
+        If condition.EdgeGuard = 0 Then
+            lblEdgeRequired.Text = "不要"
+        Else
+            lblEdgeRequired.Text = condition.EdgeGuard.ToString() & "枚"
+        End If
+        
+        If condition.BubbleInterference = 0 Then
+            lblBubbleRequired.Text = "不要"
+        Else
+            lblBubbleRequired.Text = condition.BubbleInterference.ToString("D2") & "枚"
+        End If
 
-        ' 残数、使用枚数、判定は初期検量後に設定される
+        ' 秤入力時、確保枚数、現在枚数、判定は初期検量後に設定される
         lblPre10mmRemaining.Text = ""
+        lblPre10mmSecured.Text = ""
         lblPre10mmUsed.Text = ""
         lblPre10mmJudgment.Text = ""
         lblPost1mmRemaining.Text = ""
+        lblPost1mmSecured.Text = ""
         lblPost1mmUsed.Text = ""
         lblPost1mmJudgment.Text = ""
         lblPost5mmRemaining.Text = ""
+        lblPost5mmSecured.Text = ""
         lblPost5mmUsed.Text = ""
         lblPost5mmJudgment.Text = ""
         lblPost10mmRemaining.Text = ""
+        lblPost10mmSecured.Text = ""
         lblPost10mmUsed.Text = ""
         lblPost10mmJudgment.Text = ""
-        lblEdgeRemaining.Text = ""
-        lblEdgeUsed.Text = ""
-        lblEdgeJudgment.Text = ""
-        lblBubbleRemaining.Text = ""
-        lblBubbleUsed.Text = ""
-        lblBubbleJudgment.Text = ""
+        
+        ' エッジガードと気泡緩衝材が0でない場合のみクリア（0の場合はDisplayInitialBalanceReadingsで"不要"設定）
+        If condition.EdgeGuard <> 0 Then
+            lblEdgeRemaining.Text = ""
+            lblEdgeSecured.Text = ""
+            lblEdgeUsed.Text = ""
+            lblEdgeJudgment.Text = ""
+        End If
+        
+        If condition.BubbleInterference <> 0 Then
+            lblBubbleRemaining.Text = ""
+            lblBubbleSecured.Text = ""
+            lblBubbleUsed.Text = ""
+            lblBubbleJudgment.Text = ""
+        End If
     End Sub
 
     ''' <summary>
@@ -148,6 +172,47 @@ Public Class MainForm
         lblProductNameValue.Text = If(String.IsNullOrEmpty(condition.ProductName), "", condition.ProductName)
         lblQuantityValue.Text = If(condition.Quantity > 0, condition.Quantity.ToString(), "")
         lblLocationValue.Text = If(String.IsNullOrEmpty(condition.Location), "", condition.Location)
+    End Sub
+
+    ''' <summary>
+    ''' 初回計測値を表示（秤 入力時列）
+    ''' </summary>
+    Private Sub DisplayInitialBalanceReadings(condition As CardCondition)
+        Dim readings As Dictionary(Of String, Double) = _balanceManager.InitialReadings
+
+        ' 秤(9001)の値を投入前10mmと投入後10mmに表示
+        If readings.ContainsKey("Pre_10mm") Then
+            lblPre10mmRemaining.Text = readings("Pre_10mm").ToString("F1") & "枚"
+            lblPost10mmRemaining.Text = readings("Pre_10mm").ToString("F1") & "枚"
+        End If
+
+        ' 秤(9002)の値を投入後1mmに表示
+        If readings.ContainsKey("Post_1mm") Then
+            lblPost1mmRemaining.Text = readings("Post_1mm").ToString("F1") & "枚"
+        End If
+
+        ' 秤(9003)の値を投入後5mmに表示
+        If readings.ContainsKey("Post_5mm") Then
+            lblPost5mmRemaining.Text = readings("Post_5mm").ToString("F1") & "枚"
+        End If
+
+        ' エッジガードが0の場合は全列に"不要"を表示
+        If condition.EdgeGuard = 0 Then
+            lblEdgeRequired.Text = "不要"
+            lblEdgeRemaining.Text = "不要"
+            lblEdgeSecured.Text = "不要"
+            lblEdgeUsed.Text = "不要"
+            lblEdgeJudgment.Text = "不要"
+        End If
+
+        ' 気泡緩衝材が0の場合は全列に"不要"を表示
+        If condition.BubbleInterference = 0 Then
+            lblBubbleRequired.Text = "不要"
+            lblBubbleRemaining.Text = "不要"
+            lblBubbleSecured.Text = "不要"
+            lblBubbleUsed.Text = "不要"
+            lblBubbleJudgment.Text = "不要"
+        End If
     End Sub
 
     ''' <summary>
@@ -412,6 +477,10 @@ Public Class MainForm
         ' 初回計測を実行
         Try
             _balanceManager.PerformInitialReading()
+            
+            ' 天秤から取得した値を表示
+            DisplayInitialBalanceReadings(_currentCondition)
+            
             ShowMessage("使用部材条件を表示しました", Color.Green)
             btnVerify.Enabled = True
 

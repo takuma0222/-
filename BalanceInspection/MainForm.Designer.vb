@@ -243,7 +243,7 @@ Partial Class MainForm
         Me.lblHeaderRemaining.Name = "lblHeaderRemaining"
         Me.lblHeaderRemaining.Size = New System.Drawing.Size(130, 39)
         Me.lblHeaderRemaining.TabIndex = 3
-        Me.lblHeaderRemaining.Text = "秤 入力時枚数"
+        Me.lblHeaderRemaining.Text = "秤 入力時"
         Me.lblHeaderRemaining.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'lblHeaderSecured
