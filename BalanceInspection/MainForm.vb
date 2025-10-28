@@ -120,6 +120,20 @@ Public Class MainForm
     End Sub
 
     ''' <summary>
+    ''' カード情報をDataGridViewに表示
+    ''' </summary>
+    Private Sub DisplayCardInfo(condition As CardCondition)
+        dgvCardInfo.Rows.Clear()
+        
+        ' 品名、枚数、所在を表示
+        Dim productName As String = If(String.IsNullOrEmpty(condition.ProductName), "", condition.ProductName)
+        Dim quantity As String = If(condition.Quantity > 0, condition.Quantity.ToString(), "")
+        Dim location As String = If(String.IsNullOrEmpty(condition.Location), "", condition.Location)
+        
+        dgvCardInfo.Rows.Add(productName, quantity, location)
+    End Sub
+
+    ''' <summary>
     ''' 照合ボタンクリック
     ''' </summary>
     Private Sub BtnVerify_Click(sender As Object, e As EventArgs)
@@ -257,6 +271,7 @@ Public Class MainForm
         txtCardNo.Text = ""
         txtCardNo.Enabled = False  ' カードNoを非活性化
         dgvConditions.Rows.Clear()
+        dgvCardInfo.Rows.Clear()
         ShowMessage("従業員Noを入力してください", Color.Black)
         btnVerify.Enabled = False
         _currentCondition = Nothing
@@ -341,6 +356,7 @@ Public Class MainForm
         If cardNo.Length <> 6 Then
             ShowMessage("カードNoは6桁で入力してください", Color.Red)
             dgvConditions.Rows.Clear()
+            dgvCardInfo.Rows.Clear()
             btnVerify.Enabled = False
             Return
         End If
@@ -351,12 +367,16 @@ Public Class MainForm
         If _currentCondition Is Nothing Then
             ShowMessage("条件なし", Color.Black)
             dgvConditions.Rows.Clear()
+            dgvCardInfo.Rows.Clear()
             btnVerify.Enabled = False
             Return
         End If
         
         ' 条件を表示
         DisplayCondition(_currentCondition)
+        
+        ' カード情報を表示
+        DisplayCardInfo(_currentCondition)
         
         ' 初回計測を実行
         Try
@@ -368,6 +388,14 @@ Public Class MainForm
             _logManager.WriteErrorLog("初回計測エラー: " & ex.Message)
             btnVerify.Enabled = False
         End Try
+    End Sub
+
+    Private Sub dgvConditions_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvConditions.CellContentClick
+
+    End Sub
+
+    Private Sub lblMessage_Click(sender As Object, e As EventArgs) Handles lblMessage.Click
+
     End Sub
 End Class
 
