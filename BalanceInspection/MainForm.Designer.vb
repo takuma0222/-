@@ -243,7 +243,7 @@ Partial Class MainForm
         Me.lblHeaderRemaining.Name = "lblHeaderRemaining"
         Me.lblHeaderRemaining.Size = New System.Drawing.Size(130, 39)
         Me.lblHeaderRemaining.TabIndex = 3
-        Me.lblHeaderRemaining.Text = "秤 入力時"
+        Me.lblHeaderRemaining.Text = "BEFORE"
         Me.lblHeaderRemaining.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'lblHeaderSecured
@@ -256,7 +256,7 @@ Partial Class MainForm
         Me.lblHeaderSecured.Name = "lblHeaderSecured"
         Me.lblHeaderSecured.Size = New System.Drawing.Size(130, 39)
         Me.lblHeaderSecured.TabIndex = 4
-        Me.lblHeaderSecured.Text = "確保枚数"
+        Me.lblHeaderSecured.Text = "AFTER"
         Me.lblHeaderSecured.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'lblHeaderUsed
@@ -269,7 +269,7 @@ Partial Class MainForm
         Me.lblHeaderUsed.Name = "lblHeaderUsed"
         Me.lblHeaderUsed.Size = New System.Drawing.Size(130, 39)
         Me.lblHeaderUsed.TabIndex = 5
-        Me.lblHeaderUsed.Text = "秤 現在枚数"
+        Me.lblHeaderUsed.Text = "確保枚数"
         Me.lblHeaderUsed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'lblHeaderJudgment

@@ -216,6 +216,94 @@ Public Class MainForm
     End Sub
 
     ''' <summary>
+    ''' 照合時計測値を表示（AFTER列）し、確保枚数（差分）を計算して表示
+    ''' </summary>
+    Private Sub DisplayVerificationReadings(condition As CardCondition)
+        Dim verificationReadings As Dictionary(Of String, Double) = _balanceManager.VerificationReadings
+        Dim initialReadings As Dictionary(Of String, Double) = _balanceManager.InitialReadings
+
+        ' 秤(9001)の値を投入前10mmと投入後10mmのAFTER列に表示し、確保枚数を計算
+        If verificationReadings.ContainsKey("Pre_10mm") And initialReadings.ContainsKey("Pre_10mm") Then
+            Dim afterValue As Double = verificationReadings("Pre_10mm")
+            Dim beforeValue As Double = initialReadings("Pre_10mm")
+            Dim secured As Double = beforeValue - afterValue
+            
+            ' 投入前10mm
+            lblPre10mmSecured.Text = afterValue.ToString("F1") & "枚"
+            lblPre10mmUsed.Text = secured.ToString("F1") & "枚"
+            
+            ' 投入後10mm
+            lblPost10mmSecured.Text = afterValue.ToString("F1") & "枚"
+            lblPost10mmUsed.Text = secured.ToString("F1") & "枚"
+        End If
+
+        ' 秤(9002)の値を投入後1mmのAFTER列に表示し、確保枚数を計算
+        If verificationReadings.ContainsKey("Post_1mm") And initialReadings.ContainsKey("Post_1mm") Then
+            Dim afterValue As Double = verificationReadings("Post_1mm")
+            Dim beforeValue As Double = initialReadings("Post_1mm")
+            Dim secured As Double = beforeValue - afterValue
+            
+            lblPost1mmSecured.Text = afterValue.ToString("F1") & "枚"
+            lblPost1mmUsed.Text = secured.ToString("F1") & "枚"
+        End If
+
+        ' 秤(9003)の値を投入後5mmのAFTER列に表示し、確保枚数を計算
+        If verificationReadings.ContainsKey("Post_5mm") And initialReadings.ContainsKey("Post_5mm") Then
+            Dim afterValue As Double = verificationReadings("Post_5mm")
+            Dim beforeValue As Double = initialReadings("Post_5mm")
+            Dim secured As Double = beforeValue - afterValue
+            
+            lblPost5mmSecured.Text = afterValue.ToString("F1") & "枚"
+            lblPost5mmUsed.Text = secured.ToString("F1") & "枚"
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 判定を表示（必要枚数＝確保枚数でOK、それ以外はNG）
+    ''' </summary>
+    Private Sub DisplayJudgment(condition As CardCondition)
+        ' 投入前10mmの判定
+        If Not String.IsNullOrEmpty(lblPre10mmUsed.Text) AndAlso lblPre10mmUsed.Text <> "不要" Then
+            Dim secured As Double = Double.Parse(lblPre10mmUsed.Text.Replace("枚", ""))
+            lblPre10mmJudgment.Text = If(Math.Round(secured) = condition.Pre10mm, "OK", "NG")
+            lblPre10mmJudgment.ForeColor = If(lblPre10mmJudgment.Text = "OK", Color.Green, Color.Red)
+        End If
+
+        ' 投入後1mmの判定
+        If Not String.IsNullOrEmpty(lblPost1mmUsed.Text) AndAlso lblPost1mmUsed.Text <> "不要" Then
+            Dim secured As Double = Double.Parse(lblPost1mmUsed.Text.Replace("枚", ""))
+            lblPost1mmJudgment.Text = If(Math.Round(secured) = condition.Post1mm, "OK", "NG")
+            lblPost1mmJudgment.ForeColor = If(lblPost1mmJudgment.Text = "OK", Color.Green, Color.Red)
+        End If
+
+        ' 投入後5mmの判定
+        If Not String.IsNullOrEmpty(lblPost5mmUsed.Text) AndAlso lblPost5mmUsed.Text <> "不要" Then
+            Dim secured As Double = Double.Parse(lblPost5mmUsed.Text.Replace("枚", ""))
+            lblPost5mmJudgment.Text = If(Math.Round(secured) = condition.Post5mm, "OK", "NG")
+            lblPost5mmJudgment.ForeColor = If(lblPost5mmJudgment.Text = "OK", Color.Green, Color.Red)
+        End If
+
+        ' 投入後10mmの判定
+        If Not String.IsNullOrEmpty(lblPost10mmUsed.Text) AndAlso lblPost10mmUsed.Text <> "不要" Then
+            Dim secured As Double = Double.Parse(lblPost10mmUsed.Text.Replace("枚", ""))
+            lblPost10mmJudgment.Text = If(Math.Round(secured) = condition.Post10mm, "OK", "NG")
+            lblPost10mmJudgment.ForeColor = If(lblPost10mmJudgment.Text = "OK", Color.Green, Color.Red)
+        End If
+
+        ' エッジガードの判定（必要枚数が0でない場合）
+        If condition.EdgeGuard <> 0 Then
+            ' エッジガードは天秤計測対象外のため、現時点では判定なし
+            lblEdgeJudgment.Text = "-"
+        End If
+
+        ' 気泡緩衝材の判定（必要枚数が0でない場合）
+        If condition.BubbleInterference <> 0 Then
+            ' 気泡緩衝材は天秤計測対象外のため、現時点では判定なし
+            lblBubbleJudgment.Text = "-"
+        End If
+    End Sub
+
+    ''' <summary>
     ''' 照合ボタンクリック
     ''' </summary>
     Private Sub BtnVerify_Click(sender As Object, e As EventArgs)
@@ -235,7 +323,13 @@ Public Class MainForm
             ' 照合時計測
             _balanceManager.PerformVerificationReading()
 
-            ' 差分計算
+            ' 照合時の値をAFTER列に表示し、確保枚数(差分)を計算して表示
+            DisplayVerificationReadings(_currentCondition)
+
+            ' 判定を表示
+            DisplayJudgment(_currentCondition)
+
+            ' 差分計算（既存のロジック用）
             Dim differences As Dictionary(Of String, Double) = _balanceManager.CalculateDifferences()
 
             ' 照合判定
@@ -541,6 +635,10 @@ Public Class MainForm
     End Sub
 
     Private Sub lblHeaderJudgment_Click(sender As Object, e As EventArgs) Handles lblHeaderJudgment.Click
+
+    End Sub
+
+    Private Sub lblHeaderSecured_Click(sender As Object, e As EventArgs) Handles lblHeaderSecured.Click
 
     End Sub
 End Class
