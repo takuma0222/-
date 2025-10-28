@@ -398,6 +398,9 @@ Public Class MainForm
             ShowMessage("計測エラー:" & ex.Message.Substring(0, Math.Min(20, ex.Message.Length)), Color.Red)
             _logManager.WriteErrorLog("初回計測エラー: " & ex.Message)
             btnVerify.Enabled = False
+            
+            ' エラー時もカードNo入力欄をクリア
+            txtCardNo.Text = ""
         End Try
     End Sub
 
