@@ -1,4 +1,4 @@
-Imports System.Net.Sockets
+﻿Imports System.Net.Sockets
 Imports System.Text
 Imports System.Threading
 
@@ -41,7 +41,7 @@ Public Class TcpCommunicationManager
             _stream = _client.GetStream()
             
         Catch ex As Exception
-            Throw New Exception($"TCP接続 {_config.TcpAddress}:{_config.TcpPort} を開けませんでした: {ex.Message}", ex)
+            Throw New Exception("TCP接続 {_config.TcpAddress}:{_config.TcpPort} を開けませんでした: " & (ex.Message).ToString() & "", ex)
         End Try
     End Sub
     
@@ -50,8 +50,12 @@ Public Class TcpCommunicationManager
     ''' </summary>
     Public Sub Close()
         Try
-            _stream?.Close()
-            _client?.Close()
+            If _stream IsNot Nothing Then
+                _stream.Close()
+            End If
+            If _client IsNot Nothing Then
+                _client.Close()
+            End If
         Catch ex As Exception
             ' 閉じる際のエラーは無視
         End Try
@@ -91,13 +95,13 @@ Public Class TcpCommunicationManager
             Catch ex As Exception
                 retryCount += 1
                 If retryCount >= _maxRetries Then
-                    Throw New Exception($"TCP読み取りエラー: {_config.TcpAddress}:{_config.TcpPort} ({_config.LogicalName}) - {ex.Message}")
+                    Throw New Exception("TCP読み取りエラー: {_config.TcpAddress}:{_config.TcpPort} ({_config.LogicalName}) - " & (ex.Message).ToString() & "")
                 End If
                 Thread.Sleep(500)
             End Try
         End While
         
-        Throw New Exception($"TCP計測値の取得に失敗しました: {_config.TcpAddress}:{_config.TcpPort}")
+        Throw New Exception("TCP計測値の取得に失敗しました: {_config.TcpAddress}:" & (_config.TcpPort).ToString() & "")
     End Function
     
     ''' <summary>
@@ -140,13 +144,13 @@ Public Class TcpCommunicationManager
                 Catch ex As Exception
                     retryCount += 1
                     If retryCount >= _maxRetries Then
-                        Throw New Exception($"TCP初回計測タイムアウト({timeoutMs}ms): {_config.TcpAddress}:{_config.TcpPort} ({_config.LogicalName})")
+                        Throw New Exception("TCP初回計測タイムアウト({timeoutMs}ms): {_config.TcpAddress}:{_config.TcpPort} (" & (_config.LogicalName).ToString() & ")")
                     End If
                     Thread.Sleep(500)
                 End Try
             End While
             
-            Throw New Exception($"TCP初回計測値の取得に失敗しました: {_config.TcpAddress}:{_config.TcpPort}")
+            Throw New Exception("TCP初回計測値の取得に失敗しました: {_config.TcpAddress}:" & (_config.TcpPort).ToString() & "")
             
         Finally
             ' タイムアウトを元に戻す
@@ -183,14 +187,14 @@ Public Class TcpCommunicationManager
                 If Double.TryParse(weightPart, weight) Then
                     Return weight
                 Else
-                    Throw New Exception($"重量データの変換に失敗: {weightPart}")
+                    Throw New Exception("重量データの変換に失敗: " & (weightPart).ToString() & "")
                 End If
             Else
-                Throw New Exception($"応答フォーマットが不正: {response}")
+                Throw New Exception("応答フォーマットが不正: " & (response).ToString() & "")
             End If
             
         Catch ex As Exception
-            Throw New Exception($"重量データの解析に失敗: {response} - {ex.Message}")
+            Throw New Exception("重量データの解析に失敗: {response} - " & (ex.Message).ToString() & "")
         End Try
     End Function
     

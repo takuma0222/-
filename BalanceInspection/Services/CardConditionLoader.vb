@@ -1,4 +1,4 @@
-Imports System.IO
+﻿Imports System.IO
 Imports System.Text
 
 ''' <summary>
@@ -90,3 +90,4 @@ Public Class CardConditionLoader
         LoadConditions()
     End Sub
 End Class
+

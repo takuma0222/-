@@ -1,4 +1,4 @@
-Imports System.Windows.Forms
+﻿Imports System.Windows.Forms
 
 ''' <summary>
 ''' メインフォーム
@@ -144,11 +144,11 @@ Public Class MainForm
                 _balanceManager.OpenAll()
             Catch ex As Exception
                 ' 開発/テスト時はポートが無くてもOK
-                _logManager.WriteErrorLog($"ポートオープン時の警告: {ex.Message}")
+                _logManager.WriteErrorLog("ポートオープン時の警告: " & ex.Message)
             End Try
             
         Catch ex As Exception
-            MessageBox.Show($"初期化エラー: {ex.Message}", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("初期化エラー: " & ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Application.Exit()
         End Try
     End Sub
@@ -250,7 +250,7 @@ Public Class MainForm
             
         Catch ex As Exception
             ShowMessage("照合エラー:" & ex.Message.Substring(0, Math.Min(20, ex.Message.Length)), Color.Red)
-            _logManager.WriteErrorLog($"照合時エラー: {ex.Message}")
+            _logManager.WriteErrorLog("照合時エラー: " & ex.Message)
         End Try
     End Sub
 
@@ -302,21 +302,21 @@ Public Class MainForm
         If differences.ContainsKey("Pre_10mm") Then
             Dim diff As Integer = CInt(Math.Round(differences("Pre_10mm")))
             If diff <> condition.Pre10mm Then
-                errors.Add($"10mm:{diff}≠{condition.Pre10mm}")
+                errors.Add("10mm:" & diff.ToString() & "≠" & condition.Pre10mm.ToString())
             End If
         End If
         
         If differences.ContainsKey("Post_1mm") Then
             Dim diff As Integer = CInt(Math.Round(differences("Post_1mm")))
             If diff <> condition.Post1mm Then
-                errors.Add($"1mm:{diff}≠{condition.Post1mm}")
+                errors.Add("1mm:" & diff.ToString() & "≠" & condition.Post1mm.ToString())
             End If
         End If
         
         If differences.ContainsKey("Post_5mm") Then
             Dim diff As Integer = CInt(Math.Round(differences("Post_5mm")))
             If diff <> condition.Post5mm Then
-                errors.Add($"5mm:{diff}≠{condition.Post5mm}")
+                errors.Add("5mm:" & diff.ToString() & "≠" & condition.Post5mm.ToString())
             End If
         End If
         
@@ -453,8 +453,9 @@ Public Class MainForm
             btnVerify.Enabled = True
         Catch ex As Exception
             ShowMessage("計測エラー:" & ex.Message.Substring(0, Math.Min(20, ex.Message.Length)), Color.Red)
-            _logManager.WriteErrorLog($"初回計測エラー: {ex.Message}")
+            _logManager.WriteErrorLog("初回計測エラー: " & ex.Message)
             btnVerify.Enabled = False
         End Try
     End Sub
 End Class
+

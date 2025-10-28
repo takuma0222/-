@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class MainForm
     Inherits System.Windows.Forms.Form
 
@@ -29,3 +29,4 @@ Partial Class MainForm
     End Sub
 
 End Class
+

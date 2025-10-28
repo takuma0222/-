@@ -1,4 +1,4 @@
-''' <summary>
+﻿''' <summary>
 ''' カード条件を保持するクラス
 ''' </summary>
 Public Class CardCondition
@@ -37,3 +37,4 @@ Public Class CardCondition
     ''' </summary>
     Public Property BubbleInterference As Integer
 End Class
+

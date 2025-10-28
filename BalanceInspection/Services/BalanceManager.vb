@@ -1,4 +1,4 @@
-Imports System.Collections.Generic
+﻿Imports System.Collections.Generic
 
 ''' <summary>
 ''' 3台の天秤を管理するクラス
@@ -42,7 +42,7 @@ Public Class BalanceManager
             Try
                 manager.Open()
             Catch ex As Exception
-                errors.Add($"{manager.LogicalName}: {ex.Message}")
+                errors.Add(manager.LogicalName & ": " & ex.Message)
             End Try
         Next
         
@@ -89,7 +89,7 @@ Public Class BalanceManager
                 Dim value As Double = manager.ReadValueWithTimeout(_initialReadingTimeoutMs)
                 _initialReadings(manager.LogicalName) = value
             Catch ex As Exception
-                errors.Add($"{manager.LogicalName}: {ex.Message}")
+                errors.Add("{manager.LogicalName}: " & (ex.Message).ToString() & "")
             End Try
         Next
         
@@ -100,7 +100,7 @@ Public Class BalanceManager
                 Dim value As Double = manager.ReadValueWithTimeout(_initialReadingTimeoutMs)
                 _initialReadings(manager.LogicalName) = value
             Catch ex As Exception
-                errors.Add($"{manager.LogicalName}: {ex.Message}")
+                errors.Add("{manager.LogicalName}: " & (ex.Message).ToString() & "")
             End Try
         Next
         
@@ -123,7 +123,7 @@ Public Class BalanceManager
                 Dim value As Double = manager.ReadValue()
                 _verificationReadings(manager.LogicalName) = value
             Catch ex As Exception
-                errors.Add($"{manager.LogicalName}: {ex.Message}")
+                errors.Add("{manager.LogicalName}: " & (ex.Message).ToString() & "")
             End Try
         Next
         
@@ -133,7 +133,7 @@ Public Class BalanceManager
                 Dim value As Double = manager.ReadValue()
                 _verificationReadings(manager.LogicalName) = value
             Catch ex As Exception
-                errors.Add($"{manager.LogicalName}: {ex.Message}")
+                errors.Add("{manager.LogicalName}: " & (ex.Message).ToString() & "")
             End Try
         Next
         
@@ -176,3 +176,4 @@ Public Class BalanceManager
         End Get
     End Property
 End Class
+

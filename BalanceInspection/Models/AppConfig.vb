@@ -1,4 +1,4 @@
-''' <summary>
+﻿''' <summary>
 ''' アプリケーション設定を保持するクラス
 ''' </summary>
 Public Class AppConfig
@@ -27,3 +27,4 @@ Public Class AppConfig
     ''' </summary>
     Public Property MaxRetries As Integer = 3
 End Class
+
