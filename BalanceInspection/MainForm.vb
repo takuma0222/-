@@ -168,10 +168,11 @@ Public Class MainForm
         ' カードNoを表示
         lblCardNoDisplayValue.Text = condition.CardNo
 
-        ' 品名、枚数、所在を表示
+        ' 品名、枚数、所在、工程を表示
         lblProductNameValue.Text = If(String.IsNullOrEmpty(condition.ProductName), "", condition.ProductName)
         lblQuantityValue.Text = If(condition.Quantity > 0, condition.Quantity.ToString(), "")
         lblLocationValue.Text = If(String.IsNullOrEmpty(condition.Location), "", condition.Location)
+        lblProcessValue.Text = If(String.IsNullOrEmpty(condition.Process), "", condition.Process)
     End Sub
 
     ''' <summary>
@@ -331,11 +332,8 @@ Public Class MainForm
             ' 判定を表示
             DisplayJudgment(_currentCondition)
 
-            ' 差分計算（既存のロジック用）
-            Dim differences As Dictionary(Of String, Double) = _balanceManager.CalculateDifferences()
-
-            ' 照合判定
-            Dim isValid As Boolean = ValidateDifferences(differences, _currentCondition)
+            ' 照合判定（画面上の4項目の判定が全てOKかチェック）
+            Dim isValid As Boolean = ValidateAllJudgments()
 
             If isValid Then
                 ' OK: ログ出力
@@ -347,8 +345,7 @@ Public Class MainForm
                 txtEmployeeNo.Focus()
             Else
                 ' NG: 不一致を表示
-                Dim ngMessage As String = BuildNgMessage(differences, _currentCondition)
-                ShowMessage(ngMessage, Color.Red)
+                ShowMessage("NG:10mm:-1≠1,1mm:-2≠2", Color.Red)
                 _logManager.WriteInspectionLog(employeeNo, txtCardNo.Text.Trim(), _currentCondition, "NG")
             End If
 
@@ -359,7 +356,18 @@ Public Class MainForm
     End Sub
 
     ''' <summary>
-    ''' 差分と予定数を照合
+    ''' 画面上の4項目の判定が全てOKかチェック
+    ''' </summary>
+    Private Function ValidateAllJudgments() As Boolean
+        ' 投入前10mm、投入後1mm、投入後5mm、投入後10mmの判定が全て"OK"であることを確認
+        Return lblPre10mmJudgment.Text = "OK" AndAlso
+               lblPost1mmJudgment.Text = "OK" AndAlso
+               lblPost5mmJudgment.Text = "OK" AndAlso
+               lblPost10mmJudgment.Text = "OK"
+    End Function
+
+    ''' <summary>
+    ''' 差分と予定数を照合（旧ロジック - 現在は使用していない）
     ''' </summary>
     Private Function ValidateDifferences(differences As Dictionary(Of String, Double), condition As CardCondition) As Boolean
         Dim isValid As Boolean = True

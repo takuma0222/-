@@ -51,5 +51,10 @@ Public Class CardCondition
     ''' 所在
     ''' </summary>
     Public Property Location As String
+
+    ''' <summary>
+    ''' 工程
+    ''' </summary>
+    Public Property Process As String
 End Class
 
