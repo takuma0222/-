@@ -72,8 +72,6 @@ Partial Class MainForm
         Me.lblBubbleUsed = New System.Windows.Forms.Label()
         Me.lblBubbleJudgment = New System.Windows.Forms.Label()
         Me.pnlCardInfo = New System.Windows.Forms.Panel()
-        Me.lblProcessValue = New System.Windows.Forms.Label()
-        Me.lblProcessLabel = New System.Windows.Forms.Label()
         Me.lblLocationValue = New System.Windows.Forms.Label()
         Me.lblLocationLabel = New System.Windows.Forms.Label()
         Me.lblQuantityValue = New System.Windows.Forms.Label()
@@ -735,8 +733,6 @@ Partial Class MainForm
         '
         Me.pnlCardInfo.BackColor = System.Drawing.Color.White
         Me.pnlCardInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.pnlCardInfo.Controls.Add(Me.lblProcessValue)
-        Me.pnlCardInfo.Controls.Add(Me.lblProcessLabel)
         Me.pnlCardInfo.Controls.Add(Me.lblLocationValue)
         Me.pnlCardInfo.Controls.Add(Me.lblLocationLabel)
         Me.pnlCardInfo.Controls.Add(Me.lblQuantityValue)
@@ -749,7 +745,7 @@ Partial Class MainForm
         Me.pnlCardInfo.Location = New System.Drawing.Point(30, 210)
         Me.pnlCardInfo.Margin = New System.Windows.Forms.Padding(4)
         Me.pnlCardInfo.Name = "pnlCardInfo"
-        Me.pnlCardInfo.Size = New System.Drawing.Size(500, 238)
+        Me.pnlCardInfo.Size = New System.Drawing.Size(500, 199)
         Me.pnlCardInfo.TabIndex = 8
         '
         'lblLocationValue
@@ -777,32 +773,6 @@ Partial Class MainForm
         Me.lblLocationLabel.TabIndex = 4
         Me.lblLocationLabel.Text = "所在"
         Me.lblLocationLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'lblProcessValue
-        '
-        Me.lblProcessValue.BackColor = System.Drawing.Color.White
-        Me.lblProcessValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblProcessValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
-        Me.lblProcessValue.Location = New System.Drawing.Point(149, 195)
-        Me.lblProcessValue.Margin = New System.Windows.Forms.Padding(0)
-        Me.lblProcessValue.Name = "lblProcessValue"
-        Me.lblProcessValue.Padding = New System.Windows.Forms.Padding(10, 0, 0, 0)
-        Me.lblProcessValue.Size = New System.Drawing.Size(350, 39)
-        Me.lblProcessValue.TabIndex = 7
-        Me.lblProcessValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'lblProcessLabel
-        '
-        Me.lblProcessLabel.BackColor = System.Drawing.Color.LightGray
-        Me.lblProcessLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblProcessLabel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
-        Me.lblProcessLabel.Location = New System.Drawing.Point(0, 195)
-        Me.lblProcessLabel.Margin = New System.Windows.Forms.Padding(0)
-        Me.lblProcessLabel.Name = "lblProcessLabel"
-        Me.lblProcessLabel.Size = New System.Drawing.Size(150, 39)
-        Me.lblProcessLabel.TabIndex = 6
-        Me.lblProcessLabel.Text = "工程"
-        Me.lblProcessLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'lblQuantityValue
         '
@@ -1004,8 +974,6 @@ Partial Class MainForm
     Friend WithEvents lblQuantityValue As Label
     Friend WithEvents lblLocationLabel As Label
     Friend WithEvents lblLocationValue As Label
-    Friend WithEvents lblProcessLabel As Label
-    Friend WithEvents lblProcessValue As Label
     Friend WithEvents lblEmployeeNo As Label
     Friend WithEvents lblCardNo As Label
 End Class

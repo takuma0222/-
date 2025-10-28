@@ -168,11 +168,10 @@ Public Class MainForm
         ' カードNoを表示
         lblCardNoDisplayValue.Text = condition.CardNo
 
-        ' 品名、枚数、所在、工程を表示
+        ' 品名、枚数、所在を表示
         lblProductNameValue.Text = If(String.IsNullOrEmpty(condition.ProductName), "", condition.ProductName)
         lblQuantityValue.Text = If(condition.Quantity > 0, condition.Quantity.ToString(), "")
         lblLocationValue.Text = If(String.IsNullOrEmpty(condition.Location), "", condition.Location)
-        lblProcessValue.Text = If(String.IsNullOrEmpty(condition.Process), "", condition.Process)
     End Sub
 
     ''' <summary>
@@ -340,8 +339,11 @@ Public Class MainForm
                 _logManager.WriteInspectionLog(employeeNo, txtCardNo.Text.Trim(), _currentCondition, "OK")
                 ShowMessage("検査合格", Color.Green)
                 btnVerify.Enabled = False
-                ' 照合OK時はカードNoを非活性化して従業員Noにフォーカス
-                txtCardNo.Enabled = False
+                ' 照合OK時は両方の入力欄をクリアして活性化
+                txtEmployeeNo.Text = ""
+                txtCardNo.Text = ""
+                txtEmployeeNo.Enabled = True
+                txtCardNo.Enabled = True
                 txtEmployeeNo.Focus()
             Else
                 ' NG: 不一致を表示
