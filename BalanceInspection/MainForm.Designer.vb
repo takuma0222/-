@@ -110,7 +110,7 @@ Partial Class MainForm
         Me.dgvConditions.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgvConditions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvConditions.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ColPre10mm, Me.Col1mm, Me.Col5mm, Me.Col10mm, Me.ColEdge, Me.ColBubble})
-        Me.dgvConditions.Location = New System.Drawing.Point(614, 161)
+        Me.dgvConditions.Location = New System.Drawing.Point(30, 531)
         Me.dgvConditions.Margin = New System.Windows.Forms.Padding(4)
         Me.dgvConditions.MultiSelect = False
         Me.dgvConditions.Name = "dgvConditions"
