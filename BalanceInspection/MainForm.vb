@@ -93,16 +93,11 @@ Public Class MainForm
         ' 6桁でない場合はエラーメッセージを表示
         If cardNo.Length <> 6 Then
             ShowMessage("カードNoは6桁で入力してください", Color.Red)
-            lblPre10mmValue.Text = ""
-            lblPost1mmValue.Text = ""
-            lblPost5mmValue.Text = ""
-            lblPost10mmValue.Text = ""
-            lblEdgeValue.Text = ""
-            lblBubbleValue.Text = ""
+            ClearConditionLabels()
             btnVerify.Enabled = False
             Return
         End If
-        
+
         ' 6桁の場合で、まだ処理されていない場合のみ処理（TextChangedで処理済みの場合は重複を避ける）
         If _currentCondition Is Nothing Then
             ProcessCardNoInput()
@@ -113,12 +108,33 @@ Public Class MainForm
     ''' 条件をラベルに表示
     ''' </summary>
     Private Sub DisplayCondition(condition As CardCondition)
-        lblPre10mmValue.Text = condition.Pre10mm.ToString()
-        lblPost1mmValue.Text = condition.Post1mm.ToString()
-        lblPost5mmValue.Text = condition.Post5mm.ToString()
-        lblPost10mmValue.Text = condition.Post10mm.ToString()
-        lblEdgeValue.Text = condition.EdgeGuard.ToString()
-        lblBubbleValue.Text = condition.BubbleInterference.ToString("D2")
+        ' 必要枚数を表示
+        lblPre10mmRequired.Text = condition.Pre10mm.ToString() & "枚"
+        lblPost1mmRequired.Text = condition.Post1mm.ToString() & "枚"
+        lblPost5mmRequired.Text = condition.Post5mm.ToString() & "枚"
+        lblPost10mmRequired.Text = condition.Post10mm.ToString() & "枚"
+        lblEdgeRequired.Text = condition.EdgeGuard.ToString() & "枚"
+        lblBubbleRequired.Text = condition.BubbleInterference.ToString("D2") & "枚"
+        
+        ' 残数、使用枚数、判定は初期検量後に設定される
+        lblPre10mmRemaining.Text = ""
+        lblPre10mmUsed.Text = ""
+        lblPre10mmJudgment.Text = ""
+        lblPost1mmRemaining.Text = ""
+        lblPost1mmUsed.Text = ""
+        lblPost1mmJudgment.Text = ""
+        lblPost5mmRemaining.Text = ""
+        lblPost5mmUsed.Text = ""
+        lblPost5mmJudgment.Text = ""
+        lblPost10mmRemaining.Text = ""
+        lblPost10mmUsed.Text = ""
+        lblPost10mmJudgment.Text = ""
+        lblEdgeRemaining.Text = ""
+        lblEdgeUsed.Text = ""
+        lblEdgeJudgment.Text = ""
+        lblBubbleRemaining.Text = ""
+        lblBubbleUsed.Text = ""
+        lblBubbleJudgment.Text = ""
     End Sub
 
     ''' <summary>
@@ -271,12 +287,9 @@ Public Class MainForm
         txtEmployeeNo.Text = ""
         txtCardNo.Text = ""
         txtCardNo.Enabled = False  ' カードNoを非活性化
-        lblPre10mmValue.Text = ""
-        lblPost1mmValue.Text = ""
-        lblPost5mmValue.Text = ""
-        lblPost10mmValue.Text = ""
-        lblEdgeValue.Text = ""
-        lblBubbleValue.Text = ""
+        ' 条件テーブルをクリア
+        ClearConditionLabels()
+        ' カード情報をクリア
         lblCardNoDisplayValue.Text = ""
         lblProductNameValue.Text = ""
         lblQuantityValue.Text = ""
@@ -328,12 +341,7 @@ Public Class MainForm
             ' 6桁未満：カードNoを非活性化
             txtCardNo.Enabled = False
             txtCardNo.Text = ""
-            lblPre10mmValue.Text = ""
-            lblPost1mmValue.Text = ""
-            lblPost5mmValue.Text = ""
-            lblPost10mmValue.Text = ""
-            lblEdgeValue.Text = ""
-            lblBubbleValue.Text = ""
+            ClearConditionLabels()
             btnVerify.Enabled = False
 
             If employeeNo.Length > 0 Then
@@ -369,12 +377,7 @@ Public Class MainForm
         ' 6桁チェック
         If cardNo.Length <> 6 Then
             ShowMessage("カードNoは6桁で入力してください", Color.Red)
-            lblPre10mmValue.Text = ""
-            lblPost1mmValue.Text = ""
-            lblPost5mmValue.Text = ""
-            lblPost10mmValue.Text = ""
-            lblEdgeValue.Text = ""
-            lblBubbleValue.Text = ""
+            ClearConditionLabels()
             lblCardNoDisplayValue.Text = ""
             lblProductNameValue.Text = ""
             lblQuantityValue.Text = ""
@@ -388,18 +391,13 @@ Public Class MainForm
 
         If _currentCondition Is Nothing Then
             ShowMessage("条件なし", Color.Black)
-            lblPre10mmValue.Text = ""
-            lblPost1mmValue.Text = ""
-            lblPost5mmValue.Text = ""
-            lblPost10mmValue.Text = ""
-            lblEdgeValue.Text = ""
-            lblBubbleValue.Text = ""
+            ClearConditionLabels()
             lblCardNoDisplayValue.Text = ""
             lblProductNameValue.Text = ""
             lblQuantityValue.Text = ""
             lblLocationValue.Text = ""
             btnVerify.Enabled = False
-            
+
             ' 条件なしの場合もカードNo入力欄をクリア
             txtCardNo.Text = ""
             Return
@@ -431,6 +429,36 @@ Public Class MainForm
 
     Private Sub lblMessage_Click(sender As Object, e As EventArgs) Handles lblMessage.Click
 
+    End Sub
+
+    ''' <summary>
+    ''' 条件ラベルをすべてクリア
+    ''' </summary>
+    Private Sub ClearConditionLabels()
+        lblPre10mmRequired.Text = ""
+        lblPre10mmRemaining.Text = ""
+        lblPre10mmUsed.Text = ""
+        lblPre10mmJudgment.Text = ""
+        lblPost1mmRequired.Text = ""
+        lblPost1mmRemaining.Text = ""
+        lblPost1mmUsed.Text = ""
+        lblPost1mmJudgment.Text = ""
+        lblPost5mmRequired.Text = ""
+        lblPost5mmRemaining.Text = ""
+        lblPost5mmUsed.Text = ""
+        lblPost5mmJudgment.Text = ""
+        lblPost10mmRequired.Text = ""
+        lblPost10mmRemaining.Text = ""
+        lblPost10mmUsed.Text = ""
+        lblPost10mmJudgment.Text = ""
+        lblEdgeRequired.Text = ""
+        lblEdgeRemaining.Text = ""
+        lblEdgeUsed.Text = ""
+        lblEdgeJudgment.Text = ""
+        lblBubbleRequired.Text = ""
+        lblBubbleRemaining.Text = ""
+        lblBubbleUsed.Text = ""
+        lblBubbleJudgment.Text = ""
     End Sub
 End Class
 

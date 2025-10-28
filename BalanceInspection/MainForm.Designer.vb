@@ -29,18 +29,41 @@ Partial Class MainForm
         Me.lblMessage = New System.Windows.Forms.Label()
         Me.pnlConditions = New System.Windows.Forms.Panel()
         Me.lblConditionsTitle = New System.Windows.Forms.Label()
-        Me.lblPre10mmLabel = New System.Windows.Forms.Label()
-        Me.lblPre10mmValue = New System.Windows.Forms.Label()
-        Me.lblPost1mmLabel = New System.Windows.Forms.Label()
-        Me.lblPost1mmValue = New System.Windows.Forms.Label()
-        Me.lblPost5mmLabel = New System.Windows.Forms.Label()
-        Me.lblPost5mmValue = New System.Windows.Forms.Label()
-        Me.lblPost10mmLabel = New System.Windows.Forms.Label()
-        Me.lblPost10mmValue = New System.Windows.Forms.Label()
-        Me.lblEdgeLabel = New System.Windows.Forms.Label()
-        Me.lblEdgeValue = New System.Windows.Forms.Label()
-        Me.lblBubbleLabel = New System.Windows.Forms.Label()
-        Me.lblBubbleValue = New System.Windows.Forms.Label()
+        Me.lblHeaderMaterial = New System.Windows.Forms.Label()
+        Me.lblHeaderRequired = New System.Windows.Forms.Label()
+        Me.lblHeaderRemaining = New System.Windows.Forms.Label()
+        Me.lblHeaderUsed = New System.Windows.Forms.Label()
+        Me.lblHeaderJudgment = New System.Windows.Forms.Label()
+        Me.lblPre10mmName = New System.Windows.Forms.Label()
+        Me.lblPre10mmRequired = New System.Windows.Forms.Label()
+        Me.lblPre10mmRemaining = New System.Windows.Forms.Label()
+        Me.lblPre10mmUsed = New System.Windows.Forms.Label()
+        Me.lblPre10mmJudgment = New System.Windows.Forms.Label()
+        Me.lblPost1mmName = New System.Windows.Forms.Label()
+        Me.lblPost1mmRequired = New System.Windows.Forms.Label()
+        Me.lblPost1mmRemaining = New System.Windows.Forms.Label()
+        Me.lblPost1mmUsed = New System.Windows.Forms.Label()
+        Me.lblPost1mmJudgment = New System.Windows.Forms.Label()
+        Me.lblPost5mmName = New System.Windows.Forms.Label()
+        Me.lblPost5mmRequired = New System.Windows.Forms.Label()
+        Me.lblPost5mmRemaining = New System.Windows.Forms.Label()
+        Me.lblPost5mmUsed = New System.Windows.Forms.Label()
+        Me.lblPost5mmJudgment = New System.Windows.Forms.Label()
+        Me.lblPost10mmName = New System.Windows.Forms.Label()
+        Me.lblPost10mmRequired = New System.Windows.Forms.Label()
+        Me.lblPost10mmRemaining = New System.Windows.Forms.Label()
+        Me.lblPost10mmUsed = New System.Windows.Forms.Label()
+        Me.lblPost10mmJudgment = New System.Windows.Forms.Label()
+        Me.lblEdgeName = New System.Windows.Forms.Label()
+        Me.lblEdgeRequired = New System.Windows.Forms.Label()
+        Me.lblEdgeRemaining = New System.Windows.Forms.Label()
+        Me.lblEdgeUsed = New System.Windows.Forms.Label()
+        Me.lblEdgeJudgment = New System.Windows.Forms.Label()
+        Me.lblBubbleName = New System.Windows.Forms.Label()
+        Me.lblBubbleRequired = New System.Windows.Forms.Label()
+        Me.lblBubbleRemaining = New System.Windows.Forms.Label()
+        Me.lblBubbleUsed = New System.Windows.Forms.Label()
+        Me.lblBubbleJudgment = New System.Windows.Forms.Label()
         Me.pnlCardInfo = New System.Windows.Forms.Panel()
         Me.lblLocationValue = New System.Windows.Forms.Label()
         Me.lblLocationLabel = New System.Windows.Forms.Label()
@@ -114,23 +137,46 @@ Partial Class MainForm
         '
         Me.pnlConditions.BackColor = System.Drawing.Color.White
         Me.pnlConditions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.pnlConditions.Controls.Add(Me.lblBubbleValue)
-        Me.pnlConditions.Controls.Add(Me.lblBubbleLabel)
-        Me.pnlConditions.Controls.Add(Me.lblEdgeValue)
-        Me.pnlConditions.Controls.Add(Me.lblEdgeLabel)
-        Me.pnlConditions.Controls.Add(Me.lblPost10mmValue)
-        Me.pnlConditions.Controls.Add(Me.lblPost10mmLabel)
-        Me.pnlConditions.Controls.Add(Me.lblPost5mmValue)
-        Me.pnlConditions.Controls.Add(Me.lblPost5mmLabel)
-        Me.pnlConditions.Controls.Add(Me.lblPost1mmValue)
-        Me.pnlConditions.Controls.Add(Me.lblPost1mmLabel)
-        Me.pnlConditions.Controls.Add(Me.lblPre10mmValue)
-        Me.pnlConditions.Controls.Add(Me.lblPre10mmLabel)
         Me.pnlConditions.Controls.Add(Me.lblConditionsTitle)
+        Me.pnlConditions.Controls.Add(Me.lblHeaderMaterial)
+        Me.pnlConditions.Controls.Add(Me.lblHeaderRequired)
+        Me.pnlConditions.Controls.Add(Me.lblHeaderRemaining)
+        Me.pnlConditions.Controls.Add(Me.lblHeaderUsed)
+        Me.pnlConditions.Controls.Add(Me.lblHeaderJudgment)
+        Me.pnlConditions.Controls.Add(Me.lblPre10mmName)
+        Me.pnlConditions.Controls.Add(Me.lblPre10mmRequired)
+        Me.pnlConditions.Controls.Add(Me.lblPre10mmRemaining)
+        Me.pnlConditions.Controls.Add(Me.lblPre10mmUsed)
+        Me.pnlConditions.Controls.Add(Me.lblPre10mmJudgment)
+        Me.pnlConditions.Controls.Add(Me.lblPost1mmName)
+        Me.pnlConditions.Controls.Add(Me.lblPost1mmRequired)
+        Me.pnlConditions.Controls.Add(Me.lblPost1mmRemaining)
+        Me.pnlConditions.Controls.Add(Me.lblPost1mmUsed)
+        Me.pnlConditions.Controls.Add(Me.lblPost1mmJudgment)
+        Me.pnlConditions.Controls.Add(Me.lblPost5mmName)
+        Me.pnlConditions.Controls.Add(Me.lblPost5mmRequired)
+        Me.pnlConditions.Controls.Add(Me.lblPost5mmRemaining)
+        Me.pnlConditions.Controls.Add(Me.lblPost5mmUsed)
+        Me.pnlConditions.Controls.Add(Me.lblPost5mmJudgment)
+        Me.pnlConditions.Controls.Add(Me.lblPost10mmName)
+        Me.pnlConditions.Controls.Add(Me.lblPost10mmRequired)
+        Me.pnlConditions.Controls.Add(Me.lblPost10mmRemaining)
+        Me.pnlConditions.Controls.Add(Me.lblPost10mmUsed)
+        Me.pnlConditions.Controls.Add(Me.lblPost10mmJudgment)
+        Me.pnlConditions.Controls.Add(Me.lblEdgeName)
+        Me.pnlConditions.Controls.Add(Me.lblEdgeRequired)
+        Me.pnlConditions.Controls.Add(Me.lblEdgeRemaining)
+        Me.pnlConditions.Controls.Add(Me.lblEdgeUsed)
+        Me.pnlConditions.Controls.Add(Me.lblEdgeJudgment)
+        Me.pnlConditions.Controls.Add(Me.lblBubbleName)
+        Me.pnlConditions.Controls.Add(Me.lblBubbleRequired)
+        Me.pnlConditions.Controls.Add(Me.lblBubbleRemaining)
+        Me.pnlConditions.Controls.Add(Me.lblBubbleUsed)
+        Me.pnlConditions.Controls.Add(Me.lblBubbleJudgment)
         Me.pnlConditions.Location = New System.Drawing.Point(30, 430)
         Me.pnlConditions.Margin = New System.Windows.Forms.Padding(4)
         Me.pnlConditions.Name = "pnlConditions"
-        Me.pnlConditions.Size = New System.Drawing.Size(800, 278)
+        Me.pnlConditions.Size = New System.Drawing.Size(800, 317)
         Me.pnlConditions.TabIndex = 7
         '
         'lblConditionsTitle
@@ -147,161 +193,442 @@ Partial Class MainForm
         Me.lblConditionsTitle.Text = "使用部材条件"
         Me.lblConditionsTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'lblPre10mmLabel
+        'lblHeaderMaterial
         '
-        Me.lblPre10mmLabel.BackColor = System.Drawing.Color.LightGray
-        Me.lblPre10mmLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblPre10mmLabel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
-        Me.lblPre10mmLabel.Location = New System.Drawing.Point(0, 39)
-        Me.lblPre10mmLabel.Margin = New System.Windows.Forms.Padding(0)
-        Me.lblPre10mmLabel.Name = "lblPre10mmLabel"
-        Me.lblPre10mmLabel.Size = New System.Drawing.Size(250, 39)
-        Me.lblPre10mmLabel.TabIndex = 1
-        Me.lblPre10mmLabel.Text = "投入前10mmクッション材"
-        Me.lblPre10mmLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblHeaderMaterial.BackColor = System.Drawing.Color.LightGray
+        Me.lblHeaderMaterial.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblHeaderMaterial.Font = New System.Drawing.Font("MS UI Gothic", 10.0!, System.Drawing.FontStyle.Bold)
+        Me.lblHeaderMaterial.Location = New System.Drawing.Point(0, 39)
+        Me.lblHeaderMaterial.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblHeaderMaterial.Name = "lblHeaderMaterial"
+        Me.lblHeaderMaterial.Size = New System.Drawing.Size(200, 39)
+        Me.lblHeaderMaterial.TabIndex = 1
+        Me.lblHeaderMaterial.Text = "部材名"
+        Me.lblHeaderMaterial.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'lblPre10mmValue
+        'lblHeaderRequired
         '
-        Me.lblPre10mmValue.BackColor = System.Drawing.Color.White
-        Me.lblPre10mmValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblPre10mmValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
-        Me.lblPre10mmValue.Location = New System.Drawing.Point(249, 39)
-        Me.lblPre10mmValue.Margin = New System.Windows.Forms.Padding(0)
-        Me.lblPre10mmValue.Name = "lblPre10mmValue"
-        Me.lblPre10mmValue.Size = New System.Drawing.Size(550, 39)
-        Me.lblPre10mmValue.TabIndex = 2
-        Me.lblPre10mmValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.lblPre10mmValue.Padding = New System.Windows.Forms.Padding(10, 0, 0, 0)
+        Me.lblHeaderRequired.BackColor = System.Drawing.Color.LightGray
+        Me.lblHeaderRequired.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblHeaderRequired.Font = New System.Drawing.Font("MS UI Gothic", 10.0!, System.Drawing.FontStyle.Bold)
+        Me.lblHeaderRequired.Location = New System.Drawing.Point(199, 39)
+        Me.lblHeaderRequired.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblHeaderRequired.Name = "lblHeaderRequired"
+        Me.lblHeaderRequired.Size = New System.Drawing.Size(150, 39)
+        Me.lblHeaderRequired.TabIndex = 2
+        Me.lblHeaderRequired.Text = "必要枚数"
+        Me.lblHeaderRequired.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'lblPost1mmLabel
+        'lblHeaderRemaining
         '
-        Me.lblPost1mmLabel.BackColor = System.Drawing.Color.LightGray
-        Me.lblPost1mmLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblPost1mmLabel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
-        Me.lblPost1mmLabel.Location = New System.Drawing.Point(0, 78)
-        Me.lblPost1mmLabel.Margin = New System.Windows.Forms.Padding(0)
-        Me.lblPost1mmLabel.Name = "lblPost1mmLabel"
-        Me.lblPost1mmLabel.Size = New System.Drawing.Size(250, 39)
-        Me.lblPost1mmLabel.TabIndex = 3
-        Me.lblPost1mmLabel.Text = "投入後1mmクッション材"
-        Me.lblPost1mmLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblHeaderRemaining.BackColor = System.Drawing.Color.LightGray
+        Me.lblHeaderRemaining.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblHeaderRemaining.Font = New System.Drawing.Font("MS UI Gothic", 10.0!, System.Drawing.FontStyle.Bold)
+        Me.lblHeaderRemaining.Location = New System.Drawing.Point(348, 39)
+        Me.lblHeaderRemaining.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblHeaderRemaining.Name = "lblHeaderRemaining"
+        Me.lblHeaderRemaining.Size = New System.Drawing.Size(150, 39)
+        Me.lblHeaderRemaining.TabIndex = 3
+        Me.lblHeaderRemaining.Text = "残数(受信値)"
+        Me.lblHeaderRemaining.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'lblPost1mmValue
+        'lblHeaderUsed
         '
-        Me.lblPost1mmValue.BackColor = System.Drawing.Color.White
-        Me.lblPost1mmValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblPost1mmValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
-        Me.lblPost1mmValue.Location = New System.Drawing.Point(249, 78)
-        Me.lblPost1mmValue.Margin = New System.Windows.Forms.Padding(0)
-        Me.lblPost1mmValue.Name = "lblPost1mmValue"
-        Me.lblPost1mmValue.Size = New System.Drawing.Size(550, 39)
-        Me.lblPost1mmValue.TabIndex = 4
-        Me.lblPost1mmValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.lblPost1mmValue.Padding = New System.Windows.Forms.Padding(10, 0, 0, 0)
+        Me.lblHeaderUsed.BackColor = System.Drawing.Color.LightGray
+        Me.lblHeaderUsed.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblHeaderUsed.Font = New System.Drawing.Font("MS UI Gothic", 10.0!, System.Drawing.FontStyle.Bold)
+        Me.lblHeaderUsed.Location = New System.Drawing.Point(497, 39)
+        Me.lblHeaderUsed.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblHeaderUsed.Name = "lblHeaderUsed"
+        Me.lblHeaderUsed.Size = New System.Drawing.Size(150, 39)
+        Me.lblHeaderUsed.TabIndex = 4
+        Me.lblHeaderUsed.Text = "使用枚数(計算値)"
+        Me.lblHeaderUsed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'lblPost5mmLabel
+        'lblHeaderJudgment
         '
-        Me.lblPost5mmLabel.BackColor = System.Drawing.Color.LightGray
-        Me.lblPost5mmLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblPost5mmLabel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
-        Me.lblPost5mmLabel.Location = New System.Drawing.Point(0, 117)
-        Me.lblPost5mmLabel.Margin = New System.Windows.Forms.Padding(0)
-        Me.lblPost5mmLabel.Name = "lblPost5mmLabel"
-        Me.lblPost5mmLabel.Size = New System.Drawing.Size(250, 39)
-        Me.lblPost5mmLabel.TabIndex = 5
-        Me.lblPost5mmLabel.Text = "投入後5mmクッション材"
-        Me.lblPost5mmLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblHeaderJudgment.BackColor = System.Drawing.Color.LightGray
+        Me.lblHeaderJudgment.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblHeaderJudgment.Font = New System.Drawing.Font("MS UI Gothic", 10.0!, System.Drawing.FontStyle.Bold)
+        Me.lblHeaderJudgment.Location = New System.Drawing.Point(646, 39)
+        Me.lblHeaderJudgment.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblHeaderJudgment.Name = "lblHeaderJudgment"
+        Me.lblHeaderJudgment.Size = New System.Drawing.Size(153, 39)
+        Me.lblHeaderJudgment.TabIndex = 5
+        Me.lblHeaderJudgment.Text = "判定"
+        Me.lblHeaderJudgment.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'lblPost5mmValue
+        'lblPre10mmName
         '
-        Me.lblPost5mmValue.BackColor = System.Drawing.Color.White
-        Me.lblPost5mmValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblPost5mmValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
-        Me.lblPost5mmValue.Location = New System.Drawing.Point(249, 117)
-        Me.lblPost5mmValue.Margin = New System.Windows.Forms.Padding(0)
-        Me.lblPost5mmValue.Name = "lblPost5mmValue"
-        Me.lblPost5mmValue.Size = New System.Drawing.Size(550, 39)
-        Me.lblPost5mmValue.TabIndex = 6
-        Me.lblPost5mmValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.lblPost5mmValue.Padding = New System.Windows.Forms.Padding(10, 0, 0, 0)
+        Me.lblPre10mmName.BackColor = System.Drawing.Color.White
+        Me.lblPre10mmName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPre10mmName.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblPre10mmName.Location = New System.Drawing.Point(0, 78)
+        Me.lblPre10mmName.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblPre10mmName.Name = "lblPre10mmName"
+        Me.lblPre10mmName.Padding = New System.Windows.Forms.Padding(5, 0, 0, 0)
+        Me.lblPre10mmName.Size = New System.Drawing.Size(200, 39)
+        Me.lblPre10mmName.TabIndex = 6
+        Me.lblPre10mmName.Text = "投入前10mmクッション材"
+        Me.lblPre10mmName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'lblPost10mmLabel
+        'lblPre10mmRequired
         '
-        Me.lblPost10mmLabel.BackColor = System.Drawing.Color.LightGray
-        Me.lblPost10mmLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblPost10mmLabel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
-        Me.lblPost10mmLabel.Location = New System.Drawing.Point(0, 156)
-        Me.lblPost10mmLabel.Margin = New System.Windows.Forms.Padding(0)
-        Me.lblPost10mmLabel.Name = "lblPost10mmLabel"
-        Me.lblPost10mmLabel.Size = New System.Drawing.Size(250, 39)
-        Me.lblPost10mmLabel.TabIndex = 7
-        Me.lblPost10mmLabel.Text = "投入後10mmクッション材"
-        Me.lblPost10mmLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblPre10mmRequired.BackColor = System.Drawing.Color.White
+        Me.lblPre10mmRequired.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPre10mmRequired.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblPre10mmRequired.Location = New System.Drawing.Point(199, 78)
+        Me.lblPre10mmRequired.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblPre10mmRequired.Name = "lblPre10mmRequired"
+        Me.lblPre10mmRequired.Size = New System.Drawing.Size(150, 39)
+        Me.lblPre10mmRequired.TabIndex = 7
+        Me.lblPre10mmRequired.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'lblPost10mmValue
+        'lblPre10mmRemaining
         '
-        Me.lblPost10mmValue.BackColor = System.Drawing.Color.White
-        Me.lblPost10mmValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblPost10mmValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
-        Me.lblPost10mmValue.Location = New System.Drawing.Point(249, 156)
-        Me.lblPost10mmValue.Margin = New System.Windows.Forms.Padding(0)
-        Me.lblPost10mmValue.Name = "lblPost10mmValue"
-        Me.lblPost10mmValue.Size = New System.Drawing.Size(550, 39)
-        Me.lblPost10mmValue.TabIndex = 8
-        Me.lblPost10mmValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.lblPost10mmValue.Padding = New System.Windows.Forms.Padding(10, 0, 0, 0)
+        Me.lblPre10mmRemaining.BackColor = System.Drawing.Color.White
+        Me.lblPre10mmRemaining.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPre10mmRemaining.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblPre10mmRemaining.Location = New System.Drawing.Point(348, 78)
+        Me.lblPre10mmRemaining.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblPre10mmRemaining.Name = "lblPre10mmRemaining"
+        Me.lblPre10mmRemaining.Size = New System.Drawing.Size(150, 39)
+        Me.lblPre10mmRemaining.TabIndex = 8
+        Me.lblPre10mmRemaining.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'lblEdgeLabel
+        'lblPre10mmUsed
         '
-        Me.lblEdgeLabel.BackColor = System.Drawing.Color.LightGray
-        Me.lblEdgeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblEdgeLabel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
-        Me.lblEdgeLabel.Location = New System.Drawing.Point(0, 195)
-        Me.lblEdgeLabel.Margin = New System.Windows.Forms.Padding(0)
-        Me.lblEdgeLabel.Name = "lblEdgeLabel"
-        Me.lblEdgeLabel.Size = New System.Drawing.Size(250, 39)
-        Me.lblEdgeLabel.TabIndex = 9
-        Me.lblEdgeLabel.Text = "エッジガード"
-        Me.lblEdgeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblPre10mmUsed.BackColor = System.Drawing.Color.White
+        Me.lblPre10mmUsed.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPre10mmUsed.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblPre10mmUsed.Location = New System.Drawing.Point(497, 78)
+        Me.lblPre10mmUsed.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblPre10mmUsed.Name = "lblPre10mmUsed"
+        Me.lblPre10mmUsed.Size = New System.Drawing.Size(150, 39)
+        Me.lblPre10mmUsed.TabIndex = 9
+        Me.lblPre10mmUsed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'lblEdgeValue
+        'lblPre10mmJudgment
         '
-        Me.lblEdgeValue.BackColor = System.Drawing.Color.White
-        Me.lblEdgeValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblEdgeValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
-        Me.lblEdgeValue.Location = New System.Drawing.Point(249, 195)
-        Me.lblEdgeValue.Margin = New System.Windows.Forms.Padding(0)
-        Me.lblEdgeValue.Name = "lblEdgeValue"
-        Me.lblEdgeValue.Size = New System.Drawing.Size(550, 39)
-        Me.lblEdgeValue.TabIndex = 10
-        Me.lblEdgeValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.lblEdgeValue.Padding = New System.Windows.Forms.Padding(10, 0, 0, 0)
+        Me.lblPre10mmJudgment.BackColor = System.Drawing.Color.White
+        Me.lblPre10mmJudgment.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPre10mmJudgment.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblPre10mmJudgment.Location = New System.Drawing.Point(646, 78)
+        Me.lblPre10mmJudgment.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblPre10mmJudgment.Name = "lblPre10mmJudgment"
+        Me.lblPre10mmJudgment.Size = New System.Drawing.Size(153, 39)
+        Me.lblPre10mmJudgment.TabIndex = 10
+        Me.lblPre10mmJudgment.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'lblBubbleLabel
+        'lblPost1mmName
         '
-        Me.lblBubbleLabel.BackColor = System.Drawing.Color.LightGray
-        Me.lblBubbleLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblBubbleLabel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
-        Me.lblBubbleLabel.Location = New System.Drawing.Point(0, 234)
-        Me.lblBubbleLabel.Margin = New System.Windows.Forms.Padding(0)
-        Me.lblBubbleLabel.Name = "lblBubbleLabel"
-        Me.lblBubbleLabel.Size = New System.Drawing.Size(250, 39)
-        Me.lblBubbleLabel.TabIndex = 11
-        Me.lblBubbleLabel.Text = "気泡緩衝材"
-        Me.lblBubbleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.lblPost1mmName.BackColor = System.Drawing.Color.White
+        Me.lblPost1mmName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPost1mmName.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblPost1mmName.Location = New System.Drawing.Point(0, 117)
+        Me.lblPost1mmName.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblPost1mmName.Name = "lblPost1mmName"
+        Me.lblPost1mmName.Padding = New System.Windows.Forms.Padding(5, 0, 0, 0)
+        Me.lblPost1mmName.Size = New System.Drawing.Size(200, 39)
+        Me.lblPost1mmName.TabIndex = 11
+        Me.lblPost1mmName.Text = "投入後1mmクッション材"
+        Me.lblPost1mmName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'lblBubbleValue
+        'lblPost1mmRequired
         '
-        Me.lblBubbleValue.BackColor = System.Drawing.Color.White
-        Me.lblBubbleValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblBubbleValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
-        Me.lblBubbleValue.Location = New System.Drawing.Point(249, 234)
-        Me.lblBubbleValue.Margin = New System.Windows.Forms.Padding(0)
-        Me.lblBubbleValue.Name = "lblBubbleValue"
-        Me.lblBubbleValue.Size = New System.Drawing.Size(550, 39)
-        Me.lblBubbleValue.TabIndex = 12
-        Me.lblBubbleValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.lblBubbleValue.Padding = New System.Windows.Forms.Padding(10, 0, 0, 0)
+        Me.lblPost1mmRequired.BackColor = System.Drawing.Color.White
+        Me.lblPost1mmRequired.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPost1mmRequired.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblPost1mmRequired.Location = New System.Drawing.Point(199, 117)
+        Me.lblPost1mmRequired.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblPost1mmRequired.Name = "lblPost1mmRequired"
+        Me.lblPost1mmRequired.Size = New System.Drawing.Size(150, 39)
+        Me.lblPost1mmRequired.TabIndex = 12
+        Me.lblPost1mmRequired.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblPost1mmRemaining
+        '
+        Me.lblPost1mmRemaining.BackColor = System.Drawing.Color.White
+        Me.lblPost1mmRemaining.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPost1mmRemaining.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblPost1mmRemaining.Location = New System.Drawing.Point(348, 117)
+        Me.lblPost1mmRemaining.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblPost1mmRemaining.Name = "lblPost1mmRemaining"
+        Me.lblPost1mmRemaining.Size = New System.Drawing.Size(150, 39)
+        Me.lblPost1mmRemaining.TabIndex = 13
+        Me.lblPost1mmRemaining.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblPost1mmUsed
+        '
+        Me.lblPost1mmUsed.BackColor = System.Drawing.Color.White
+        Me.lblPost1mmUsed.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPost1mmUsed.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblPost1mmUsed.Location = New System.Drawing.Point(497, 117)
+        Me.lblPost1mmUsed.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblPost1mmUsed.Name = "lblPost1mmUsed"
+        Me.lblPost1mmUsed.Size = New System.Drawing.Size(150, 39)
+        Me.lblPost1mmUsed.TabIndex = 14
+        Me.lblPost1mmUsed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblPost1mmJudgment
+        '
+        Me.lblPost1mmJudgment.BackColor = System.Drawing.Color.White
+        Me.lblPost1mmJudgment.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPost1mmJudgment.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblPost1mmJudgment.Location = New System.Drawing.Point(646, 117)
+        Me.lblPost1mmJudgment.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblPost1mmJudgment.Name = "lblPost1mmJudgment"
+        Me.lblPost1mmJudgment.Size = New System.Drawing.Size(153, 39)
+        Me.lblPost1mmJudgment.TabIndex = 15
+        Me.lblPost1mmJudgment.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblPost5mmName
+        '
+        Me.lblPost5mmName.BackColor = System.Drawing.Color.White
+        Me.lblPost5mmName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPost5mmName.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblPost5mmName.Location = New System.Drawing.Point(0, 156)
+        Me.lblPost5mmName.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblPost5mmName.Name = "lblPost5mmName"
+        Me.lblPost5mmName.Padding = New System.Windows.Forms.Padding(5, 0, 0, 0)
+        Me.lblPost5mmName.Size = New System.Drawing.Size(200, 39)
+        Me.lblPost5mmName.TabIndex = 16
+        Me.lblPost5mmName.Text = "投入後5mmクッション材"
+        Me.lblPost5mmName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'lblPost5mmRequired
+        '
+        Me.lblPost5mmRequired.BackColor = System.Drawing.Color.White
+        Me.lblPost5mmRequired.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPost5mmRequired.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblPost5mmRequired.Location = New System.Drawing.Point(199, 156)
+        Me.lblPost5mmRequired.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblPost5mmRequired.Name = "lblPost5mmRequired"
+        Me.lblPost5mmRequired.Size = New System.Drawing.Size(150, 39)
+        Me.lblPost5mmRequired.TabIndex = 17
+        Me.lblPost5mmRequired.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblPost5mmRemaining
+        '
+        Me.lblPost5mmRemaining.BackColor = System.Drawing.Color.White
+        Me.lblPost5mmRemaining.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPost5mmRemaining.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblPost5mmRemaining.Location = New System.Drawing.Point(348, 156)
+        Me.lblPost5mmRemaining.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblPost5mmRemaining.Name = "lblPost5mmRemaining"
+        Me.lblPost5mmRemaining.Size = New System.Drawing.Size(150, 39)
+        Me.lblPost5mmRemaining.TabIndex = 18
+        Me.lblPost5mmRemaining.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblPost5mmUsed
+        '
+        Me.lblPost5mmUsed.BackColor = System.Drawing.Color.White
+        Me.lblPost5mmUsed.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPost5mmUsed.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblPost5mmUsed.Location = New System.Drawing.Point(497, 156)
+        Me.lblPost5mmUsed.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblPost5mmUsed.Name = "lblPost5mmUsed"
+        Me.lblPost5mmUsed.Size = New System.Drawing.Size(150, 39)
+        Me.lblPost5mmUsed.TabIndex = 19
+        Me.lblPost5mmUsed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblPost5mmJudgment
+        '
+        Me.lblPost5mmJudgment.BackColor = System.Drawing.Color.White
+        Me.lblPost5mmJudgment.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPost5mmJudgment.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblPost5mmJudgment.Location = New System.Drawing.Point(646, 156)
+        Me.lblPost5mmJudgment.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblPost5mmJudgment.Name = "lblPost5mmJudgment"
+        Me.lblPost5mmJudgment.Size = New System.Drawing.Size(153, 39)
+        Me.lblPost5mmJudgment.TabIndex = 20
+        Me.lblPost5mmJudgment.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblPost10mmName
+        '
+        Me.lblPost10mmName.BackColor = System.Drawing.Color.White
+        Me.lblPost10mmName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPost10mmName.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblPost10mmName.Location = New System.Drawing.Point(0, 195)
+        Me.lblPost10mmName.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblPost10mmName.Name = "lblPost10mmName"
+        Me.lblPost10mmName.Padding = New System.Windows.Forms.Padding(5, 0, 0, 0)
+        Me.lblPost10mmName.Size = New System.Drawing.Size(200, 39)
+        Me.lblPost10mmName.TabIndex = 21
+        Me.lblPost10mmName.Text = "投入後10mmクッション材"
+        Me.lblPost10mmName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'lblPost10mmRequired
+        '
+        Me.lblPost10mmRequired.BackColor = System.Drawing.Color.White
+        Me.lblPost10mmRequired.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPost10mmRequired.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblPost10mmRequired.Location = New System.Drawing.Point(199, 195)
+        Me.lblPost10mmRequired.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblPost10mmRequired.Name = "lblPost10mmRequired"
+        Me.lblPost10mmRequired.Size = New System.Drawing.Size(150, 39)
+        Me.lblPost10mmRequired.TabIndex = 22
+        Me.lblPost10mmRequired.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblPost10mmRemaining
+        '
+        Me.lblPost10mmRemaining.BackColor = System.Drawing.Color.White
+        Me.lblPost10mmRemaining.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPost10mmRemaining.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblPost10mmRemaining.Location = New System.Drawing.Point(348, 195)
+        Me.lblPost10mmRemaining.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblPost10mmRemaining.Name = "lblPost10mmRemaining"
+        Me.lblPost10mmRemaining.Size = New System.Drawing.Size(150, 39)
+        Me.lblPost10mmRemaining.TabIndex = 23
+        Me.lblPost10mmRemaining.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblPost10mmUsed
+        '
+        Me.lblPost10mmUsed.BackColor = System.Drawing.Color.White
+        Me.lblPost10mmUsed.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPost10mmUsed.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblPost10mmUsed.Location = New System.Drawing.Point(497, 195)
+        Me.lblPost10mmUsed.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblPost10mmUsed.Name = "lblPost10mmUsed"
+        Me.lblPost10mmUsed.Size = New System.Drawing.Size(150, 39)
+        Me.lblPost10mmUsed.TabIndex = 24
+        Me.lblPost10mmUsed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblPost10mmJudgment
+        '
+        Me.lblPost10mmJudgment.BackColor = System.Drawing.Color.White
+        Me.lblPost10mmJudgment.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPost10mmJudgment.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblPost10mmJudgment.Location = New System.Drawing.Point(646, 195)
+        Me.lblPost10mmJudgment.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblPost10mmJudgment.Name = "lblPost10mmJudgment"
+        Me.lblPost10mmJudgment.Size = New System.Drawing.Size(153, 39)
+        Me.lblPost10mmJudgment.TabIndex = 25
+        Me.lblPost10mmJudgment.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblEdgeName
+        '
+        Me.lblEdgeName.BackColor = System.Drawing.Color.White
+        Me.lblEdgeName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblEdgeName.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblEdgeName.Location = New System.Drawing.Point(0, 234)
+        Me.lblEdgeName.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblEdgeName.Name = "lblEdgeName"
+        Me.lblEdgeName.Padding = New System.Windows.Forms.Padding(5, 0, 0, 0)
+        Me.lblEdgeName.Size = New System.Drawing.Size(200, 39)
+        Me.lblEdgeName.TabIndex = 26
+        Me.lblEdgeName.Text = "エッジガード"
+        Me.lblEdgeName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'lblEdgeRequired
+        '
+        Me.lblEdgeRequired.BackColor = System.Drawing.Color.White
+        Me.lblEdgeRequired.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblEdgeRequired.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblEdgeRequired.Location = New System.Drawing.Point(199, 234)
+        Me.lblEdgeRequired.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblEdgeRequired.Name = "lblEdgeRequired"
+        Me.lblEdgeRequired.Size = New System.Drawing.Size(150, 39)
+        Me.lblEdgeRequired.TabIndex = 27
+        Me.lblEdgeRequired.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblEdgeRemaining
+        '
+        Me.lblEdgeRemaining.BackColor = System.Drawing.Color.White
+        Me.lblEdgeRemaining.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblEdgeRemaining.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblEdgeRemaining.Location = New System.Drawing.Point(348, 234)
+        Me.lblEdgeRemaining.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblEdgeRemaining.Name = "lblEdgeRemaining"
+        Me.lblEdgeRemaining.Size = New System.Drawing.Size(150, 39)
+        Me.lblEdgeRemaining.TabIndex = 28
+        Me.lblEdgeRemaining.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblEdgeUsed
+        '
+        Me.lblEdgeUsed.BackColor = System.Drawing.Color.White
+        Me.lblEdgeUsed.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblEdgeUsed.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblEdgeUsed.Location = New System.Drawing.Point(497, 234)
+        Me.lblEdgeUsed.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblEdgeUsed.Name = "lblEdgeUsed"
+        Me.lblEdgeUsed.Size = New System.Drawing.Size(150, 39)
+        Me.lblEdgeUsed.TabIndex = 29
+        Me.lblEdgeUsed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblEdgeJudgment
+        '
+        Me.lblEdgeJudgment.BackColor = System.Drawing.Color.White
+        Me.lblEdgeJudgment.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblEdgeJudgment.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblEdgeJudgment.Location = New System.Drawing.Point(646, 234)
+        Me.lblEdgeJudgment.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblEdgeJudgment.Name = "lblEdgeJudgment"
+        Me.lblEdgeJudgment.Size = New System.Drawing.Size(153, 39)
+        Me.lblEdgeJudgment.TabIndex = 30
+        Me.lblEdgeJudgment.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblBubbleName
+        '
+        Me.lblBubbleName.BackColor = System.Drawing.Color.White
+        Me.lblBubbleName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblBubbleName.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblBubbleName.Location = New System.Drawing.Point(0, 273)
+        Me.lblBubbleName.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblBubbleName.Name = "lblBubbleName"
+        Me.lblBubbleName.Padding = New System.Windows.Forms.Padding(5, 0, 0, 0)
+        Me.lblBubbleName.Size = New System.Drawing.Size(200, 39)
+        Me.lblBubbleName.TabIndex = 31
+        Me.lblBubbleName.Text = "気泡緩衝材"
+        Me.lblBubbleName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'lblBubbleRequired
+        '
+        Me.lblBubbleRequired.BackColor = System.Drawing.Color.White
+        Me.lblBubbleRequired.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblBubbleRequired.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblBubbleRequired.Location = New System.Drawing.Point(199, 273)
+        Me.lblBubbleRequired.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblBubbleRequired.Name = "lblBubbleRequired"
+        Me.lblBubbleRequired.Size = New System.Drawing.Size(150, 39)
+        Me.lblBubbleRequired.TabIndex = 32
+        Me.lblBubbleRequired.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblBubbleRemaining
+        '
+        Me.lblBubbleRemaining.BackColor = System.Drawing.Color.White
+        Me.lblBubbleRemaining.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblBubbleRemaining.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblBubbleRemaining.Location = New System.Drawing.Point(348, 273)
+        Me.lblBubbleRemaining.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblBubbleRemaining.Name = "lblBubbleRemaining"
+        Me.lblBubbleRemaining.Size = New System.Drawing.Size(150, 39)
+        Me.lblBubbleRemaining.TabIndex = 33
+        Me.lblBubbleRemaining.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblBubbleUsed
+        '
+        Me.lblBubbleUsed.BackColor = System.Drawing.Color.White
+        Me.lblBubbleUsed.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblBubbleUsed.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblBubbleUsed.Location = New System.Drawing.Point(497, 273)
+        Me.lblBubbleUsed.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblBubbleUsed.Name = "lblBubbleUsed"
+        Me.lblBubbleUsed.Size = New System.Drawing.Size(150, 39)
+        Me.lblBubbleUsed.TabIndex = 34
+        Me.lblBubbleUsed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblBubbleJudgment
+        '
+        Me.lblBubbleJudgment.BackColor = System.Drawing.Color.White
+        Me.lblBubbleJudgment.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblBubbleJudgment.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblBubbleJudgment.Location = New System.Drawing.Point(646, 273)
+        Me.lblBubbleJudgment.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblBubbleJudgment.Name = "lblBubbleJudgment"
+        Me.lblBubbleJudgment.Size = New System.Drawing.Size(153, 39)
+        Me.lblBubbleJudgment.TabIndex = 35
+        Me.lblBubbleJudgment.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'pnlCardInfo
         '
@@ -496,18 +823,41 @@ Partial Class MainForm
     Friend WithEvents lblMessage As Label
     Friend WithEvents pnlConditions As Panel
     Friend WithEvents lblConditionsTitle As Label
-    Friend WithEvents lblPre10mmLabel As Label
-    Friend WithEvents lblPre10mmValue As Label
-    Friend WithEvents lblPost1mmLabel As Label
-    Friend WithEvents lblPost1mmValue As Label
-    Friend WithEvents lblPost5mmLabel As Label
-    Friend WithEvents lblPost5mmValue As Label
-    Friend WithEvents lblPost10mmLabel As Label
-    Friend WithEvents lblPost10mmValue As Label
-    Friend WithEvents lblEdgeLabel As Label
-    Friend WithEvents lblEdgeValue As Label
-    Friend WithEvents lblBubbleLabel As Label
-    Friend WithEvents lblBubbleValue As Label
+    Friend WithEvents lblHeaderMaterial As Label
+    Friend WithEvents lblHeaderRequired As Label
+    Friend WithEvents lblHeaderRemaining As Label
+    Friend WithEvents lblHeaderUsed As Label
+    Friend WithEvents lblHeaderJudgment As Label
+    Friend WithEvents lblPre10mmName As Label
+    Friend WithEvents lblPre10mmRequired As Label
+    Friend WithEvents lblPre10mmRemaining As Label
+    Friend WithEvents lblPre10mmUsed As Label
+    Friend WithEvents lblPre10mmJudgment As Label
+    Friend WithEvents lblPost1mmName As Label
+    Friend WithEvents lblPost1mmRequired As Label
+    Friend WithEvents lblPost1mmRemaining As Label
+    Friend WithEvents lblPost1mmUsed As Label
+    Friend WithEvents lblPost1mmJudgment As Label
+    Friend WithEvents lblPost5mmName As Label
+    Friend WithEvents lblPost5mmRequired As Label
+    Friend WithEvents lblPost5mmRemaining As Label
+    Friend WithEvents lblPost5mmUsed As Label
+    Friend WithEvents lblPost5mmJudgment As Label
+    Friend WithEvents lblPost10mmName As Label
+    Friend WithEvents lblPost10mmRequired As Label
+    Friend WithEvents lblPost10mmRemaining As Label
+    Friend WithEvents lblPost10mmUsed As Label
+    Friend WithEvents lblPost10mmJudgment As Label
+    Friend WithEvents lblEdgeName As Label
+    Friend WithEvents lblEdgeRequired As Label
+    Friend WithEvents lblEdgeRemaining As Label
+    Friend WithEvents lblEdgeUsed As Label
+    Friend WithEvents lblEdgeJudgment As Label
+    Friend WithEvents lblBubbleName As Label
+    Friend WithEvents lblBubbleRequired As Label
+    Friend WithEvents lblBubbleRemaining As Label
+    Friend WithEvents lblBubbleUsed As Label
+    Friend WithEvents lblBubbleJudgment As Label
     Friend WithEvents pnlCardInfo As Panel
     Friend WithEvents lblCardInfoTitle As Label
     Friend WithEvents lblCardNoDisplayLabel As Label
