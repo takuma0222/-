@@ -115,7 +115,7 @@ Public Class MainForm
         lblPost10mmRequired.Text = condition.Post10mm.ToString() & "枚"
         lblEdgeRequired.Text = condition.EdgeGuard.ToString() & "枚"
         lblBubbleRequired.Text = condition.BubbleInterference.ToString("D2") & "枚"
-        
+
         ' 残数、使用枚数、判定は初期検量後に設定される
         lblPre10mmRemaining.Text = ""
         lblPre10mmUsed.Text = ""
@@ -437,28 +437,42 @@ Public Class MainForm
     Private Sub ClearConditionLabels()
         lblPre10mmRequired.Text = ""
         lblPre10mmRemaining.Text = ""
+        lblPre10mmSecured.Text = ""
         lblPre10mmUsed.Text = ""
         lblPre10mmJudgment.Text = ""
         lblPost1mmRequired.Text = ""
         lblPost1mmRemaining.Text = ""
+        lblPost1mmSecured.Text = ""
         lblPost1mmUsed.Text = ""
         lblPost1mmJudgment.Text = ""
         lblPost5mmRequired.Text = ""
         lblPost5mmRemaining.Text = ""
+        lblPost5mmSecured.Text = ""
         lblPost5mmUsed.Text = ""
         lblPost5mmJudgment.Text = ""
         lblPost10mmRequired.Text = ""
         lblPost10mmRemaining.Text = ""
+        lblPost10mmSecured.Text = ""
         lblPost10mmUsed.Text = ""
         lblPost10mmJudgment.Text = ""
         lblEdgeRequired.Text = ""
         lblEdgeRemaining.Text = ""
+        lblEdgeSecured.Text = ""
         lblEdgeUsed.Text = ""
         lblEdgeJudgment.Text = ""
         lblBubbleRequired.Text = ""
         lblBubbleRemaining.Text = ""
+        lblBubbleSecured.Text = ""
         lblBubbleUsed.Text = ""
         lblBubbleJudgment.Text = ""
+    End Sub
+
+    Private Sub lblHeaderRemaining_Click(sender As Object, e As EventArgs) Handles lblHeaderRemaining.Click
+
+    End Sub
+
+    Private Sub lblHeaderJudgment_Click(sender As Object, e As EventArgs) Handles lblHeaderJudgment.Click
+
     End Sub
 End Class
 
