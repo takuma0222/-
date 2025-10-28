@@ -120,25 +120,13 @@ Public Class MainForm
     End Sub
 
     ''' <summary>
-    ''' カード情報をDataGridViewに表示
+    ''' カード情報をラベルに表示
     ''' </summary>
     Private Sub DisplayCardInfo(condition As CardCondition)
-        dgvCardInfo.Rows.Clear()
-        
-        ' 品名、枚数、所在を縦方向に表示（行ヘッダーに項目名、セルに値）
-        Dim productName As String = If(String.IsNullOrEmpty(condition.ProductName), "", condition.ProductName)
-        Dim quantity As String = If(condition.Quantity > 0, condition.Quantity.ToString(), "")
-        Dim location As String = If(String.IsNullOrEmpty(condition.Location), "", condition.Location)
-        
-        ' 3行追加
-        dgvCardInfo.Rows.Add(productName)
-        dgvCardInfo.Rows.Add(quantity)
-        dgvCardInfo.Rows.Add(location)
-        
-        ' 行ヘッダーに項目名を設定
-        dgvCardInfo.Rows(0).HeaderCell.Value = "品名"
-        dgvCardInfo.Rows(1).HeaderCell.Value = "枚数"
-        dgvCardInfo.Rows(2).HeaderCell.Value = "所在"
+        ' 品名、枚数、所在を表示
+        lblProductNameValue.Text = If(String.IsNullOrEmpty(condition.ProductName), "", condition.ProductName)
+        lblQuantityValue.Text = If(condition.Quantity > 0, condition.Quantity.ToString(), "")
+        lblLocationValue.Text = If(String.IsNullOrEmpty(condition.Location), "", condition.Location)
     End Sub
 
     ''' <summary>
@@ -279,7 +267,9 @@ Public Class MainForm
         txtCardNo.Text = ""
         txtCardNo.Enabled = False  ' カードNoを非活性化
         dgvConditions.Rows.Clear()
-        dgvCardInfo.Rows.Clear()
+        lblProductNameValue.Text = ""
+        lblQuantityValue.Text = ""
+        lblLocationValue.Text = ""
         ShowMessage("従業員Noを入力してください", Color.Black)
         btnVerify.Enabled = False
         _currentCondition = Nothing
@@ -364,7 +354,9 @@ Public Class MainForm
         If cardNo.Length <> 6 Then
             ShowMessage("カードNoは6桁で入力してください", Color.Red)
             dgvConditions.Rows.Clear()
-            dgvCardInfo.Rows.Clear()
+            lblProductNameValue.Text = ""
+            lblQuantityValue.Text = ""
+            lblLocationValue.Text = ""
             btnVerify.Enabled = False
             Return
         End If
@@ -375,7 +367,9 @@ Public Class MainForm
         If _currentCondition Is Nothing Then
             ShowMessage("条件なし", Color.Black)
             dgvConditions.Rows.Clear()
-            dgvCardInfo.Rows.Clear()
+            lblProductNameValue.Text = ""
+            lblQuantityValue.Text = ""
+            lblLocationValue.Text = ""
             btnVerify.Enabled = False
             Return
         End If

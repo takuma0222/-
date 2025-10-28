@@ -34,14 +34,16 @@ Partial Class MainForm
         Me.Col10mm = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ColEdge = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ColBubble = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dgvCardInfo = New System.Windows.Forms.DataGridView()
-        Me.ColProductName = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ColQuantity = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ColLocation = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.lblCardInfoTitle = New System.Windows.Forms.Label()
+        Me.lblProductNameLabel = New System.Windows.Forms.Label()
+        Me.lblProductNameValue = New System.Windows.Forms.Label()
+        Me.lblQuantityLabel = New System.Windows.Forms.Label()
+        Me.lblQuantityValue = New System.Windows.Forms.Label()
+        Me.lblLocationLabel = New System.Windows.Forms.Label()
+        Me.lblLocationValue = New System.Windows.Forms.Label()
         Me.lblEmployeeNo = New System.Windows.Forms.Label()
         Me.lblCardNo = New System.Windows.Forms.Label()
         CType(Me.dgvConditions, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.dgvCardInfo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'txtEmployeeNo
@@ -158,48 +160,79 @@ Partial Class MainForm
         Me.ColBubble.Name = "ColBubble"
         Me.ColBubble.ReadOnly = True
         '
-        'dgvCardInfo
+        'lblCardInfoTitle
         '
-        Me.dgvCardInfo.AllowUserToAddRows = False
-        Me.dgvCardInfo.AllowUserToDeleteRows = False
-        Me.dgvCardInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvCardInfo.ColumnHeadersVisible = False
-        Me.dgvCardInfo.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ColProductName, Me.ColQuantity})
-        Me.dgvCardInfo.Location = New System.Drawing.Point(30, 210)
-        Me.dgvCardInfo.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
-        Me.dgvCardInfo.MultiSelect = False
-        Me.dgvCardInfo.Name = "dgvCardInfo"
-        Me.dgvCardInfo.ReadOnly = True
-        Me.dgvCardInfo.RowHeadersVisible = True
-        Me.dgvCardInfo.RowHeadersWidth = 100
-        Me.dgvCardInfo.RowTemplate.Height = 25
-        Me.dgvCardInfo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvCardInfo.Size = New System.Drawing.Size(400, 120)
-        Me.dgvCardInfo.TabIndex = 8
+        Me.lblCardInfoTitle.AutoSize = True
+        Me.lblCardInfoTitle.Font = New System.Drawing.Font("MS UI Gothic", 10.0!, System.Drawing.FontStyle.Bold)
+        Me.lblCardInfoTitle.Location = New System.Drawing.Point(30, 210)
+        Me.lblCardInfoTitle.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblCardInfoTitle.Name = "lblCardInfoTitle"
+        Me.lblCardInfoTitle.Size = New System.Drawing.Size(120, 20)
+        Me.lblCardInfoTitle.TabIndex = 8
+        Me.lblCardInfoTitle.Text = "【カード情報】"
         '
-        'ColProductName
+        'lblProductNameLabel
         '
-        Me.ColProductName.HeaderText = "値"
-        Me.ColProductName.MinimumWidth = 8
-        Me.ColProductName.Name = "ColProductName"
-        Me.ColProductName.ReadOnly = True
-        Me.ColProductName.Width = 280
+        Me.lblProductNameLabel.AutoSize = True
+        Me.lblProductNameLabel.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblProductNameLabel.Location = New System.Drawing.Point(30, 240)
+        Me.lblProductNameLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblProductNameLabel.Name = "lblProductNameLabel"
+        Me.lblProductNameLabel.Size = New System.Drawing.Size(60, 20)
+        Me.lblProductNameLabel.TabIndex = 9
+        Me.lblProductNameLabel.Text = "品名："
         '
-        'ColQuantity
+        'lblProductNameValue
         '
-        Me.ColQuantity.HeaderText = ""
-        Me.ColQuantity.MinimumWidth = 8
-        Me.ColQuantity.Name = "ColQuantity"
-        Me.ColQuantity.ReadOnly = True
-        Me.ColQuantity.Visible = False
+        Me.lblProductNameValue.AutoSize = True
+        Me.lblProductNameValue.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblProductNameValue.Location = New System.Drawing.Point(100, 240)
+        Me.lblProductNameValue.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblProductNameValue.Name = "lblProductNameValue"
+        Me.lblProductNameValue.Size = New System.Drawing.Size(0, 20)
+        Me.lblProductNameValue.TabIndex = 10
         '
-        'ColLocation
+        'lblQuantityLabel
         '
-        Me.ColLocation.HeaderText = ""
-        Me.ColLocation.MinimumWidth = 8
-        Me.ColLocation.Name = "ColLocation"
-        Me.ColLocation.ReadOnly = True
-        Me.ColLocation.Visible = False
+        Me.lblQuantityLabel.AutoSize = True
+        Me.lblQuantityLabel.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblQuantityLabel.Location = New System.Drawing.Point(30, 270)
+        Me.lblQuantityLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblQuantityLabel.Name = "lblQuantityLabel"
+        Me.lblQuantityLabel.Size = New System.Drawing.Size(60, 20)
+        Me.lblQuantityLabel.TabIndex = 11
+        Me.lblQuantityLabel.Text = "枚数："
+        '
+        'lblQuantityValue
+        '
+        Me.lblQuantityValue.AutoSize = True
+        Me.lblQuantityValue.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblQuantityValue.Location = New System.Drawing.Point(100, 270)
+        Me.lblQuantityValue.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblQuantityValue.Name = "lblQuantityValue"
+        Me.lblQuantityValue.Size = New System.Drawing.Size(0, 20)
+        Me.lblQuantityValue.TabIndex = 12
+        '
+        'lblLocationLabel
+        '
+        Me.lblLocationLabel.AutoSize = True
+        Me.lblLocationLabel.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblLocationLabel.Location = New System.Drawing.Point(30, 300)
+        Me.lblLocationLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblLocationLabel.Name = "lblLocationLabel"
+        Me.lblLocationLabel.Size = New System.Drawing.Size(60, 20)
+        Me.lblLocationLabel.TabIndex = 13
+        Me.lblLocationLabel.Text = "所在："
+        '
+        'lblLocationValue
+        '
+        Me.lblLocationValue.AutoSize = True
+        Me.lblLocationValue.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblLocationValue.Location = New System.Drawing.Point(100, 300)
+        Me.lblLocationValue.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblLocationValue.Name = "lblLocationValue"
+        Me.lblLocationValue.Size = New System.Drawing.Size(0, 20)
+        Me.lblLocationValue.TabIndex = 14
         '
         'lblEmployeeNo
         '
@@ -228,7 +261,13 @@ Partial Class MainForm
         Me.AutoScaleDimensions = New System.Drawing.SizeF(10.0!, 18.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1713, 922)
-        Me.Controls.Add(Me.dgvCardInfo)
+        Me.Controls.Add(Me.lblLocationValue)
+        Me.Controls.Add(Me.lblLocationLabel)
+        Me.Controls.Add(Me.lblQuantityValue)
+        Me.Controls.Add(Me.lblQuantityLabel)
+        Me.Controls.Add(Me.lblProductNameValue)
+        Me.Controls.Add(Me.lblProductNameLabel)
+        Me.Controls.Add(Me.lblCardInfoTitle)
         Me.Controls.Add(Me.dgvConditions)
         Me.Controls.Add(Me.lblMessage)
         Me.Controls.Add(Me.btnCancel)
@@ -244,7 +283,6 @@ Partial Class MainForm
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "検品デスクトップアプリ"
         CType(Me.dgvConditions, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.dgvCardInfo, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -262,10 +300,13 @@ Partial Class MainForm
     Friend WithEvents Col10mm As DataGridViewTextBoxColumn
     Friend WithEvents ColEdge As DataGridViewTextBoxColumn
     Friend WithEvents ColBubble As DataGridViewTextBoxColumn
-    Friend WithEvents dgvCardInfo As DataGridView
-    Friend WithEvents ColProductName As DataGridViewTextBoxColumn
-    Friend WithEvents ColQuantity As DataGridViewTextBoxColumn
-    Friend WithEvents ColLocation As DataGridViewTextBoxColumn
+    Friend WithEvents lblCardInfoTitle As Label
+    Friend WithEvents lblProductNameLabel As Label
+    Friend WithEvents lblProductNameValue As Label
+    Friend WithEvents lblQuantityLabel As Label
+    Friend WithEvents lblQuantityValue As Label
+    Friend WithEvents lblLocationLabel As Label
+    Friend WithEvents lblLocationValue As Label
     Friend WithEvents lblEmployeeNo As Label
     Friend WithEvents lblCardNo As Label
 End Class
