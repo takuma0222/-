@@ -34,7 +34,7 @@ Partial Class MainForm
         Me.Col10mm = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ColEdge = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ColBubble = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.lblCardInfoTitle = New System.Windows.Forms.Label()
+        Me.pnlCardInfo = New System.Windows.Forms.Panel()
         Me.lblProductNameLabel = New System.Windows.Forms.Label()
         Me.lblProductNameValue = New System.Windows.Forms.Label()
         Me.lblQuantityLabel = New System.Windows.Forms.Label()
@@ -43,6 +43,7 @@ Partial Class MainForm
         Me.lblLocationValue = New System.Windows.Forms.Label()
         Me.lblEmployeeNo = New System.Windows.Forms.Label()
         Me.lblCardNo = New System.Windows.Forms.Label()
+        Me.pnlCardInfo.SuspendLayout()
         CType(Me.dgvConditions, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -160,79 +161,99 @@ Partial Class MainForm
         Me.ColBubble.Name = "ColBubble"
         Me.ColBubble.ReadOnly = True
         '
-        'lblCardInfoTitle
+        'pnlCardInfo
         '
-        Me.lblCardInfoTitle.AutoSize = True
-        Me.lblCardInfoTitle.Font = New System.Drawing.Font("MS UI Gothic", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.lblCardInfoTitle.Location = New System.Drawing.Point(30, 210)
-        Me.lblCardInfoTitle.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
-        Me.lblCardInfoTitle.Name = "lblCardInfoTitle"
-        Me.lblCardInfoTitle.Size = New System.Drawing.Size(120, 20)
-        Me.lblCardInfoTitle.TabIndex = 8
-        Me.lblCardInfoTitle.Text = "【カード情報】"
+        Me.pnlCardInfo.BackColor = System.Drawing.Color.White
+        Me.pnlCardInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnlCardInfo.Controls.Add(Me.lblLocationValue)
+        Me.pnlCardInfo.Controls.Add(Me.lblLocationLabel)
+        Me.pnlCardInfo.Controls.Add(Me.lblQuantityValue)
+        Me.pnlCardInfo.Controls.Add(Me.lblQuantityLabel)
+        Me.pnlCardInfo.Controls.Add(Me.lblProductNameValue)
+        Me.pnlCardInfo.Controls.Add(Me.lblProductNameLabel)
+        Me.pnlCardInfo.Location = New System.Drawing.Point(30, 210)
+        Me.pnlCardInfo.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.pnlCardInfo.Name = "pnlCardInfo"
+        Me.pnlCardInfo.Size = New System.Drawing.Size(500, 120)
+        Me.pnlCardInfo.TabIndex = 8
         '
         'lblProductNameLabel
         '
-        Me.lblProductNameLabel.AutoSize = True
-        Me.lblProductNameLabel.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
-        Me.lblProductNameLabel.Location = New System.Drawing.Point(30, 240)
-        Me.lblProductNameLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblProductNameLabel.BackColor = System.Drawing.Color.LightGray
+        Me.lblProductNameLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblProductNameLabel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblProductNameLabel.Location = New System.Drawing.Point(0, 0)
+        Me.lblProductNameLabel.Margin = New System.Windows.Forms.Padding(0)
         Me.lblProductNameLabel.Name = "lblProductNameLabel"
-        Me.lblProductNameLabel.Size = New System.Drawing.Size(60, 20)
-        Me.lblProductNameLabel.TabIndex = 9
-        Me.lblProductNameLabel.Text = "品名："
+        Me.lblProductNameLabel.Size = New System.Drawing.Size(150, 39)
+        Me.lblProductNameLabel.TabIndex = 0
+        Me.lblProductNameLabel.Text = "品名"
+        Me.lblProductNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'lblProductNameValue
         '
-        Me.lblProductNameValue.AutoSize = True
-        Me.lblProductNameValue.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
-        Me.lblProductNameValue.Location = New System.Drawing.Point(100, 240)
-        Me.lblProductNameValue.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblProductNameValue.BackColor = System.Drawing.Color.White
+        Me.lblProductNameValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblProductNameValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblProductNameValue.Location = New System.Drawing.Point(149, 0)
+        Me.lblProductNameValue.Margin = New System.Windows.Forms.Padding(0)
         Me.lblProductNameValue.Name = "lblProductNameValue"
-        Me.lblProductNameValue.Size = New System.Drawing.Size(0, 20)
-        Me.lblProductNameValue.TabIndex = 10
+        Me.lblProductNameValue.Size = New System.Drawing.Size(350, 39)
+        Me.lblProductNameValue.TabIndex = 1
+        Me.lblProductNameValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblProductNameValue.Padding = New System.Windows.Forms.Padding(10, 0, 0, 0)
         '
         'lblQuantityLabel
         '
-        Me.lblQuantityLabel.AutoSize = True
-        Me.lblQuantityLabel.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
-        Me.lblQuantityLabel.Location = New System.Drawing.Point(30, 270)
-        Me.lblQuantityLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblQuantityLabel.BackColor = System.Drawing.Color.LightGray
+        Me.lblQuantityLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblQuantityLabel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblQuantityLabel.Location = New System.Drawing.Point(0, 39)
+        Me.lblQuantityLabel.Margin = New System.Windows.Forms.Padding(0)
         Me.lblQuantityLabel.Name = "lblQuantityLabel"
-        Me.lblQuantityLabel.Size = New System.Drawing.Size(60, 20)
-        Me.lblQuantityLabel.TabIndex = 11
-        Me.lblQuantityLabel.Text = "枚数："
+        Me.lblQuantityLabel.Size = New System.Drawing.Size(150, 39)
+        Me.lblQuantityLabel.TabIndex = 2
+        Me.lblQuantityLabel.Text = "枚数"
+        Me.lblQuantityLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'lblQuantityValue
         '
-        Me.lblQuantityValue.AutoSize = True
-        Me.lblQuantityValue.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
-        Me.lblQuantityValue.Location = New System.Drawing.Point(100, 270)
-        Me.lblQuantityValue.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblQuantityValue.BackColor = System.Drawing.Color.White
+        Me.lblQuantityValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblQuantityValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblQuantityValue.Location = New System.Drawing.Point(149, 39)
+        Me.lblQuantityValue.Margin = New System.Windows.Forms.Padding(0)
         Me.lblQuantityValue.Name = "lblQuantityValue"
-        Me.lblQuantityValue.Size = New System.Drawing.Size(0, 20)
-        Me.lblQuantityValue.TabIndex = 12
+        Me.lblQuantityValue.Size = New System.Drawing.Size(350, 39)
+        Me.lblQuantityValue.TabIndex = 3
+        Me.lblQuantityValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblQuantityValue.Padding = New System.Windows.Forms.Padding(10, 0, 0, 0)
         '
         'lblLocationLabel
         '
-        Me.lblLocationLabel.AutoSize = True
-        Me.lblLocationLabel.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
-        Me.lblLocationLabel.Location = New System.Drawing.Point(30, 300)
-        Me.lblLocationLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblLocationLabel.BackColor = System.Drawing.Color.LightGray
+        Me.lblLocationLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblLocationLabel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblLocationLabel.Location = New System.Drawing.Point(0, 78)
+        Me.lblLocationLabel.Margin = New System.Windows.Forms.Padding(0)
         Me.lblLocationLabel.Name = "lblLocationLabel"
-        Me.lblLocationLabel.Size = New System.Drawing.Size(60, 20)
-        Me.lblLocationLabel.TabIndex = 13
-        Me.lblLocationLabel.Text = "所在："
+        Me.lblLocationLabel.Size = New System.Drawing.Size(150, 39)
+        Me.lblLocationLabel.TabIndex = 4
+        Me.lblLocationLabel.Text = "所在"
+        Me.lblLocationLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'lblLocationValue
         '
-        Me.lblLocationValue.AutoSize = True
-        Me.lblLocationValue.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
-        Me.lblLocationValue.Location = New System.Drawing.Point(100, 300)
-        Me.lblLocationValue.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblLocationValue.BackColor = System.Drawing.Color.White
+        Me.lblLocationValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblLocationValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblLocationValue.Location = New System.Drawing.Point(149, 78)
+        Me.lblLocationValue.Margin = New System.Windows.Forms.Padding(0)
         Me.lblLocationValue.Name = "lblLocationValue"
-        Me.lblLocationValue.Size = New System.Drawing.Size(0, 20)
-        Me.lblLocationValue.TabIndex = 14
+        Me.lblLocationValue.Size = New System.Drawing.Size(350, 39)
+        Me.lblLocationValue.TabIndex = 5
+        Me.lblLocationValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblLocationValue.Padding = New System.Windows.Forms.Padding(10, 0, 0, 0)
         '
         'lblEmployeeNo
         '
@@ -261,13 +282,7 @@ Partial Class MainForm
         Me.AutoScaleDimensions = New System.Drawing.SizeF(10.0!, 18.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1713, 922)
-        Me.Controls.Add(Me.lblLocationValue)
-        Me.Controls.Add(Me.lblLocationLabel)
-        Me.Controls.Add(Me.lblQuantityValue)
-        Me.Controls.Add(Me.lblQuantityLabel)
-        Me.Controls.Add(Me.lblProductNameValue)
-        Me.Controls.Add(Me.lblProductNameLabel)
-        Me.Controls.Add(Me.lblCardInfoTitle)
+        Me.Controls.Add(Me.pnlCardInfo)
         Me.Controls.Add(Me.dgvConditions)
         Me.Controls.Add(Me.lblMessage)
         Me.Controls.Add(Me.btnCancel)
@@ -282,6 +297,7 @@ Partial Class MainForm
         Me.Name = "MainForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "検品デスクトップアプリ"
+        Me.pnlCardInfo.ResumeLayout(False)
         CType(Me.dgvConditions, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -300,7 +316,7 @@ Partial Class MainForm
     Friend WithEvents Col10mm As DataGridViewTextBoxColumn
     Friend WithEvents ColEdge As DataGridViewTextBoxColumn
     Friend WithEvents ColBubble As DataGridViewTextBoxColumn
-    Friend WithEvents lblCardInfoTitle As Label
+    Friend WithEvents pnlCardInfo As Panel
     Friend WithEvents lblProductNameLabel As Label
     Friend WithEvents lblProductNameValue As Label
     Friend WithEvents lblQuantityLabel As Label
