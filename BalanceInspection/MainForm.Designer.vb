@@ -27,13 +27,20 @@ Partial Class MainForm
         Me.btnVerify = New System.Windows.Forms.Button()
         Me.btnCancel = New System.Windows.Forms.Button()
         Me.lblMessage = New System.Windows.Forms.Label()
-        Me.dgvConditions = New System.Windows.Forms.DataGridView()
-        Me.ColPre10mm = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Col1mm = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Col5mm = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Col10mm = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ColEdge = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ColBubble = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.pnlConditions = New System.Windows.Forms.Panel()
+        Me.lblConditionsTitle = New System.Windows.Forms.Label()
+        Me.lblPre10mmLabel = New System.Windows.Forms.Label()
+        Me.lblPre10mmValue = New System.Windows.Forms.Label()
+        Me.lblPost1mmLabel = New System.Windows.Forms.Label()
+        Me.lblPost1mmValue = New System.Windows.Forms.Label()
+        Me.lblPost5mmLabel = New System.Windows.Forms.Label()
+        Me.lblPost5mmValue = New System.Windows.Forms.Label()
+        Me.lblPost10mmLabel = New System.Windows.Forms.Label()
+        Me.lblPost10mmValue = New System.Windows.Forms.Label()
+        Me.lblEdgeLabel = New System.Windows.Forms.Label()
+        Me.lblEdgeValue = New System.Windows.Forms.Label()
+        Me.lblBubbleLabel = New System.Windows.Forms.Label()
+        Me.lblBubbleValue = New System.Windows.Forms.Label()
         Me.pnlCardInfo = New System.Windows.Forms.Panel()
         Me.lblLocationValue = New System.Windows.Forms.Label()
         Me.lblLocationLabel = New System.Windows.Forms.Label()
@@ -46,7 +53,7 @@ Partial Class MainForm
         Me.lblCardInfoTitle = New System.Windows.Forms.Label()
         Me.lblEmployeeNo = New System.Windows.Forms.Label()
         Me.lblCardNo = New System.Windows.Forms.Label()
-        CType(Me.dgvConditions, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.pnlConditions.SuspendLayout()
         Me.pnlCardInfo.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -103,66 +110,198 @@ Partial Class MainForm
         Me.lblMessage.TabIndex = 6
         Me.lblMessage.Text = "従業員Noを入力してください"
         '
-        'dgvConditions
+        'pnlConditions
         '
-        Me.dgvConditions.AllowUserToAddRows = False
-        Me.dgvConditions.AllowUserToDeleteRows = False
-        Me.dgvConditions.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.dgvConditions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvConditions.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.ColPre10mm, Me.Col1mm, Me.Col5mm, Me.Col10mm, Me.ColEdge, Me.ColBubble})
-        Me.dgvConditions.Location = New System.Drawing.Point(30, 531)
-        Me.dgvConditions.Margin = New System.Windows.Forms.Padding(4)
-        Me.dgvConditions.MultiSelect = False
-        Me.dgvConditions.Name = "dgvConditions"
-        Me.dgvConditions.ReadOnly = True
-        Me.dgvConditions.RowHeadersVisible = False
-        Me.dgvConditions.RowHeadersWidth = 62
-        Me.dgvConditions.RowTemplate.Height = 25
-        Me.dgvConditions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvConditions.Size = New System.Drawing.Size(1086, 96)
-        Me.dgvConditions.TabIndex = 7
+        Me.pnlConditions.BackColor = System.Drawing.Color.White
+        Me.pnlConditions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnlConditions.Controls.Add(Me.lblBubbleValue)
+        Me.pnlConditions.Controls.Add(Me.lblBubbleLabel)
+        Me.pnlConditions.Controls.Add(Me.lblEdgeValue)
+        Me.pnlConditions.Controls.Add(Me.lblEdgeLabel)
+        Me.pnlConditions.Controls.Add(Me.lblPost10mmValue)
+        Me.pnlConditions.Controls.Add(Me.lblPost10mmLabel)
+        Me.pnlConditions.Controls.Add(Me.lblPost5mmValue)
+        Me.pnlConditions.Controls.Add(Me.lblPost5mmLabel)
+        Me.pnlConditions.Controls.Add(Me.lblPost1mmValue)
+        Me.pnlConditions.Controls.Add(Me.lblPost1mmLabel)
+        Me.pnlConditions.Controls.Add(Me.lblPre10mmValue)
+        Me.pnlConditions.Controls.Add(Me.lblPre10mmLabel)
+        Me.pnlConditions.Controls.Add(Me.lblConditionsTitle)
+        Me.pnlConditions.Location = New System.Drawing.Point(30, 430)
+        Me.pnlConditions.Margin = New System.Windows.Forms.Padding(4)
+        Me.pnlConditions.Name = "pnlConditions"
+        Me.pnlConditions.Size = New System.Drawing.Size(800, 278)
+        Me.pnlConditions.TabIndex = 7
         '
-        'ColPre10mm
+        'lblConditionsTitle
         '
-        Me.ColPre10mm.HeaderText = "投入前10mmクッション材"
-        Me.ColPre10mm.MinimumWidth = 8
-        Me.ColPre10mm.Name = "ColPre10mm"
-        Me.ColPre10mm.ReadOnly = True
+        Me.lblConditionsTitle.BackColor = System.Drawing.Color.DarkGray
+        Me.lblConditionsTitle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblConditionsTitle.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.lblConditionsTitle.ForeColor = System.Drawing.Color.White
+        Me.lblConditionsTitle.Location = New System.Drawing.Point(0, 0)
+        Me.lblConditionsTitle.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblConditionsTitle.Name = "lblConditionsTitle"
+        Me.lblConditionsTitle.Size = New System.Drawing.Size(799, 39)
+        Me.lblConditionsTitle.TabIndex = 0
+        Me.lblConditionsTitle.Text = "使用部材条件"
+        Me.lblConditionsTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'Col1mm
+        'lblPre10mmLabel
         '
-        Me.Col1mm.HeaderText = "投入後1mmクッション材"
-        Me.Col1mm.MinimumWidth = 8
-        Me.Col1mm.Name = "Col1mm"
-        Me.Col1mm.ReadOnly = True
+        Me.lblPre10mmLabel.BackColor = System.Drawing.Color.LightGray
+        Me.lblPre10mmLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPre10mmLabel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblPre10mmLabel.Location = New System.Drawing.Point(0, 39)
+        Me.lblPre10mmLabel.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblPre10mmLabel.Name = "lblPre10mmLabel"
+        Me.lblPre10mmLabel.Size = New System.Drawing.Size(250, 39)
+        Me.lblPre10mmLabel.TabIndex = 1
+        Me.lblPre10mmLabel.Text = "投入前10mmクッション材"
+        Me.lblPre10mmLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'Col5mm
+        'lblPre10mmValue
         '
-        Me.Col5mm.HeaderText = "投入後5mmクッション材"
-        Me.Col5mm.MinimumWidth = 8
-        Me.Col5mm.Name = "Col5mm"
-        Me.Col5mm.ReadOnly = True
+        Me.lblPre10mmValue.BackColor = System.Drawing.Color.White
+        Me.lblPre10mmValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPre10mmValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblPre10mmValue.Location = New System.Drawing.Point(249, 39)
+        Me.lblPre10mmValue.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblPre10mmValue.Name = "lblPre10mmValue"
+        Me.lblPre10mmValue.Size = New System.Drawing.Size(550, 39)
+        Me.lblPre10mmValue.TabIndex = 2
+        Me.lblPre10mmValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblPre10mmValue.Padding = New System.Windows.Forms.Padding(10, 0, 0, 0)
         '
-        'Col10mm
+        'lblPost1mmLabel
         '
-        Me.Col10mm.HeaderText = "投入後10mmクッション材"
-        Me.Col10mm.MinimumWidth = 8
-        Me.Col10mm.Name = "Col10mm"
-        Me.Col10mm.ReadOnly = True
+        Me.lblPost1mmLabel.BackColor = System.Drawing.Color.LightGray
+        Me.lblPost1mmLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPost1mmLabel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblPost1mmLabel.Location = New System.Drawing.Point(0, 78)
+        Me.lblPost1mmLabel.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblPost1mmLabel.Name = "lblPost1mmLabel"
+        Me.lblPost1mmLabel.Size = New System.Drawing.Size(250, 39)
+        Me.lblPost1mmLabel.TabIndex = 3
+        Me.lblPost1mmLabel.Text = "投入後1mmクッション材"
+        Me.lblPost1mmLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'ColEdge
+        'lblPost1mmValue
         '
-        Me.ColEdge.HeaderText = "エッジガード"
-        Me.ColEdge.MinimumWidth = 8
-        Me.ColEdge.Name = "ColEdge"
-        Me.ColEdge.ReadOnly = True
+        Me.lblPost1mmValue.BackColor = System.Drawing.Color.White
+        Me.lblPost1mmValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPost1mmValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblPost1mmValue.Location = New System.Drawing.Point(249, 78)
+        Me.lblPost1mmValue.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblPost1mmValue.Name = "lblPost1mmValue"
+        Me.lblPost1mmValue.Size = New System.Drawing.Size(550, 39)
+        Me.lblPost1mmValue.TabIndex = 4
+        Me.lblPost1mmValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblPost1mmValue.Padding = New System.Windows.Forms.Padding(10, 0, 0, 0)
         '
-        'ColBubble
+        'lblPost5mmLabel
         '
-        Me.ColBubble.HeaderText = "気泡緩衝材"
-        Me.ColBubble.MinimumWidth = 8
-        Me.ColBubble.Name = "ColBubble"
-        Me.ColBubble.ReadOnly = True
+        Me.lblPost5mmLabel.BackColor = System.Drawing.Color.LightGray
+        Me.lblPost5mmLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPost5mmLabel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblPost5mmLabel.Location = New System.Drawing.Point(0, 117)
+        Me.lblPost5mmLabel.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblPost5mmLabel.Name = "lblPost5mmLabel"
+        Me.lblPost5mmLabel.Size = New System.Drawing.Size(250, 39)
+        Me.lblPost5mmLabel.TabIndex = 5
+        Me.lblPost5mmLabel.Text = "投入後5mmクッション材"
+        Me.lblPost5mmLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblPost5mmValue
+        '
+        Me.lblPost5mmValue.BackColor = System.Drawing.Color.White
+        Me.lblPost5mmValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPost5mmValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblPost5mmValue.Location = New System.Drawing.Point(249, 117)
+        Me.lblPost5mmValue.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblPost5mmValue.Name = "lblPost5mmValue"
+        Me.lblPost5mmValue.Size = New System.Drawing.Size(550, 39)
+        Me.lblPost5mmValue.TabIndex = 6
+        Me.lblPost5mmValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblPost5mmValue.Padding = New System.Windows.Forms.Padding(10, 0, 0, 0)
+        '
+        'lblPost10mmLabel
+        '
+        Me.lblPost10mmLabel.BackColor = System.Drawing.Color.LightGray
+        Me.lblPost10mmLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPost10mmLabel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblPost10mmLabel.Location = New System.Drawing.Point(0, 156)
+        Me.lblPost10mmLabel.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblPost10mmLabel.Name = "lblPost10mmLabel"
+        Me.lblPost10mmLabel.Size = New System.Drawing.Size(250, 39)
+        Me.lblPost10mmLabel.TabIndex = 7
+        Me.lblPost10mmLabel.Text = "投入後10mmクッション材"
+        Me.lblPost10mmLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblPost10mmValue
+        '
+        Me.lblPost10mmValue.BackColor = System.Drawing.Color.White
+        Me.lblPost10mmValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblPost10mmValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblPost10mmValue.Location = New System.Drawing.Point(249, 156)
+        Me.lblPost10mmValue.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblPost10mmValue.Name = "lblPost10mmValue"
+        Me.lblPost10mmValue.Size = New System.Drawing.Size(550, 39)
+        Me.lblPost10mmValue.TabIndex = 8
+        Me.lblPost10mmValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblPost10mmValue.Padding = New System.Windows.Forms.Padding(10, 0, 0, 0)
+        '
+        'lblEdgeLabel
+        '
+        Me.lblEdgeLabel.BackColor = System.Drawing.Color.LightGray
+        Me.lblEdgeLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblEdgeLabel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblEdgeLabel.Location = New System.Drawing.Point(0, 195)
+        Me.lblEdgeLabel.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblEdgeLabel.Name = "lblEdgeLabel"
+        Me.lblEdgeLabel.Size = New System.Drawing.Size(250, 39)
+        Me.lblEdgeLabel.TabIndex = 9
+        Me.lblEdgeLabel.Text = "エッジガード"
+        Me.lblEdgeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblEdgeValue
+        '
+        Me.lblEdgeValue.BackColor = System.Drawing.Color.White
+        Me.lblEdgeValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblEdgeValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblEdgeValue.Location = New System.Drawing.Point(249, 195)
+        Me.lblEdgeValue.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblEdgeValue.Name = "lblEdgeValue"
+        Me.lblEdgeValue.Size = New System.Drawing.Size(550, 39)
+        Me.lblEdgeValue.TabIndex = 10
+        Me.lblEdgeValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblEdgeValue.Padding = New System.Windows.Forms.Padding(10, 0, 0, 0)
+        '
+        'lblBubbleLabel
+        '
+        Me.lblBubbleLabel.BackColor = System.Drawing.Color.LightGray
+        Me.lblBubbleLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblBubbleLabel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblBubbleLabel.Location = New System.Drawing.Point(0, 234)
+        Me.lblBubbleLabel.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblBubbleLabel.Name = "lblBubbleLabel"
+        Me.lblBubbleLabel.Size = New System.Drawing.Size(250, 39)
+        Me.lblBubbleLabel.TabIndex = 11
+        Me.lblBubbleLabel.Text = "気泡緩衝材"
+        Me.lblBubbleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblBubbleValue
+        '
+        Me.lblBubbleValue.BackColor = System.Drawing.Color.White
+        Me.lblBubbleValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblBubbleValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblBubbleValue.Location = New System.Drawing.Point(249, 234)
+        Me.lblBubbleValue.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblBubbleValue.Name = "lblBubbleValue"
+        Me.lblBubbleValue.Size = New System.Drawing.Size(550, 39)
+        Me.lblBubbleValue.TabIndex = 12
+        Me.lblBubbleValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.lblBubbleValue.Padding = New System.Windows.Forms.Padding(10, 0, 0, 0)
         '
         'pnlCardInfo
         '
@@ -328,8 +467,8 @@ Partial Class MainForm
         Me.AutoScaleDimensions = New System.Drawing.SizeF(10.0!, 18.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1713, 922)
+        Me.Controls.Add(Me.pnlConditions)
         Me.Controls.Add(Me.pnlCardInfo)
-        Me.Controls.Add(Me.dgvConditions)
         Me.Controls.Add(Me.lblMessage)
         Me.Controls.Add(Me.btnCancel)
         Me.Controls.Add(Me.btnVerify)
@@ -343,7 +482,7 @@ Partial Class MainForm
         Me.Name = "MainForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "検品デスクトップアプリ"
-        CType(Me.dgvConditions, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.pnlConditions.ResumeLayout(False)
         Me.pnlCardInfo.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -355,13 +494,20 @@ Partial Class MainForm
     Friend WithEvents btnVerify As Button
     Friend WithEvents btnCancel As Button
     Friend WithEvents lblMessage As Label
-    Friend WithEvents dgvConditions As DataGridView
-    Friend WithEvents ColPre10mm As DataGridViewTextBoxColumn
-    Friend WithEvents Col1mm As DataGridViewTextBoxColumn
-    Friend WithEvents Col5mm As DataGridViewTextBoxColumn
-    Friend WithEvents Col10mm As DataGridViewTextBoxColumn
-    Friend WithEvents ColEdge As DataGridViewTextBoxColumn
-    Friend WithEvents ColBubble As DataGridViewTextBoxColumn
+    Friend WithEvents pnlConditions As Panel
+    Friend WithEvents lblConditionsTitle As Label
+    Friend WithEvents lblPre10mmLabel As Label
+    Friend WithEvents lblPre10mmValue As Label
+    Friend WithEvents lblPost1mmLabel As Label
+    Friend WithEvents lblPost1mmValue As Label
+    Friend WithEvents lblPost5mmLabel As Label
+    Friend WithEvents lblPost5mmValue As Label
+    Friend WithEvents lblPost10mmLabel As Label
+    Friend WithEvents lblPost10mmValue As Label
+    Friend WithEvents lblEdgeLabel As Label
+    Friend WithEvents lblEdgeValue As Label
+    Friend WithEvents lblBubbleLabel As Label
+    Friend WithEvents lblBubbleValue As Label
     Friend WithEvents pnlCardInfo As Panel
     Friend WithEvents lblCardInfoTitle As Label
     Friend WithEvents lblCardNoDisplayLabel As Label

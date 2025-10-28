@@ -93,7 +93,12 @@ Public Class MainForm
         ' 6桁でない場合はエラーメッセージを表示
         If cardNo.Length <> 6 Then
             ShowMessage("カードNoは6桁で入力してください", Color.Red)
-            dgvConditions.Rows.Clear()
+            lblPre10mmValue.Text = ""
+            lblPost1mmValue.Text = ""
+            lblPost5mmValue.Text = ""
+            lblPost10mmValue.Text = ""
+            lblEdgeValue.Text = ""
+            lblBubbleValue.Text = ""
             btnVerify.Enabled = False
             Return
         End If
@@ -105,18 +110,15 @@ Public Class MainForm
     End Sub
 
     ''' <summary>
-    ''' 条件をDataGridViewに表示
+    ''' 条件をラベルに表示
     ''' </summary>
     Private Sub DisplayCondition(condition As CardCondition)
-        dgvConditions.Rows.Clear()
-        dgvConditions.Rows.Add(
-            condition.Pre10mm.ToString(),
-            condition.Post1mm.ToString(),
-            condition.Post5mm.ToString(),
-            condition.Post10mm.ToString(),
-            condition.EdgeGuard.ToString(),
-            condition.BubbleInterference.ToString("D2")
-        )
+        lblPre10mmValue.Text = condition.Pre10mm.ToString()
+        lblPost1mmValue.Text = condition.Post1mm.ToString()
+        lblPost5mmValue.Text = condition.Post5mm.ToString()
+        lblPost10mmValue.Text = condition.Post10mm.ToString()
+        lblEdgeValue.Text = condition.EdgeGuard.ToString()
+        lblBubbleValue.Text = condition.BubbleInterference.ToString("D2")
     End Sub
 
     ''' <summary>
@@ -269,7 +271,12 @@ Public Class MainForm
         txtEmployeeNo.Text = ""
         txtCardNo.Text = ""
         txtCardNo.Enabled = False  ' カードNoを非活性化
-        dgvConditions.Rows.Clear()
+        lblPre10mmValue.Text = ""
+        lblPost1mmValue.Text = ""
+        lblPost5mmValue.Text = ""
+        lblPost10mmValue.Text = ""
+        lblEdgeValue.Text = ""
+        lblBubbleValue.Text = ""
         lblCardNoDisplayValue.Text = ""
         lblProductNameValue.Text = ""
         lblQuantityValue.Text = ""
@@ -321,7 +328,12 @@ Public Class MainForm
             ' 6桁未満：カードNoを非活性化
             txtCardNo.Enabled = False
             txtCardNo.Text = ""
-            dgvConditions.Rows.Clear()
+            lblPre10mmValue.Text = ""
+            lblPost1mmValue.Text = ""
+            lblPost5mmValue.Text = ""
+            lblPost10mmValue.Text = ""
+            lblEdgeValue.Text = ""
+            lblBubbleValue.Text = ""
             btnVerify.Enabled = False
 
             If employeeNo.Length > 0 Then
@@ -357,7 +369,12 @@ Public Class MainForm
         ' 6桁チェック
         If cardNo.Length <> 6 Then
             ShowMessage("カードNoは6桁で入力してください", Color.Red)
-            dgvConditions.Rows.Clear()
+            lblPre10mmValue.Text = ""
+            lblPost1mmValue.Text = ""
+            lblPost5mmValue.Text = ""
+            lblPost10mmValue.Text = ""
+            lblEdgeValue.Text = ""
+            lblBubbleValue.Text = ""
             lblCardNoDisplayValue.Text = ""
             lblProductNameValue.Text = ""
             lblQuantityValue.Text = ""
@@ -371,7 +388,12 @@ Public Class MainForm
 
         If _currentCondition Is Nothing Then
             ShowMessage("条件なし", Color.Black)
-            dgvConditions.Rows.Clear()
+            lblPre10mmValue.Text = ""
+            lblPost1mmValue.Text = ""
+            lblPost5mmValue.Text = ""
+            lblPost10mmValue.Text = ""
+            lblEdgeValue.Text = ""
+            lblBubbleValue.Text = ""
             lblCardNoDisplayValue.Text = ""
             lblProductNameValue.Text = ""
             lblQuantityValue.Text = ""
@@ -405,10 +427,6 @@ Public Class MainForm
             ' エラー時もカードNo入力欄をクリア
             txtCardNo.Text = ""
         End Try
-    End Sub
-
-    Private Sub dgvConditions_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvConditions.CellContentClick
-
     End Sub
 
     Private Sub lblMessage_Click(sender As Object, e As EventArgs) Handles lblMessage.Click
