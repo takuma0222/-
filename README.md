@@ -105,6 +105,46 @@ BalanceSimulator/                  # 🧪 電子天秤シミュレータ ✨ 新
 - 投入後10mmクッション材
 - エッジガード
 - 気泡緩衝材
+- 品名: 製品名
+- 枚数: ロット枚数
+- 所在: 保管場所
+
+## セットアップ（他端末での環境構築）
+
+### 必要な環境
+- Windows 10/11
+- Visual Studio 2017以降（.NET Framework 4.7.1以降対応）
+- または MSBuild 15.0以降
+
+### クローンとビルド
+
+1. **リポジトリをクローン**
+   ```cmd
+   git clone https://github.com/takuma0222/-.git
+   cd -
+   ```
+
+2. **ビルド実行**
+   ```cmd
+   "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe" BalanceInspection.sln /p:Configuration=Release
+   ```
+   
+   または Visual Studio で `BalanceInspection.sln` を開いてビルド
+
+3. **実行ファイルの場所**
+   ```
+   BalanceInspection\bin\Release\BalanceInspection.exe
+   ```
+
+4. **初回起動時の自動生成**
+   - `appsettings.json`: アプリ設定（サンプルから自動生成）
+   - `card_conditions.csv`: カード条件データ（サンプルから自動生成）
+   - `logs/`: ログディレクトリ（自動作成）
+
+### 注意事項
+- NuGet パッケージは自動復元されます
+- 設定ファイルのサンプルは `examples/` フォルダにあります
+- 必要に応じて `appsettings.json` と `card_conditions.csv` を編集してください
 
 ## 使用方法
 
