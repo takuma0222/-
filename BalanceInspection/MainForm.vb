@@ -104,24 +104,7 @@ Public Class MainForm
     ''' カードNo入力後の処理（フォーカス離脱時）
     ''' </summary>
     Private Sub TxtCardNo_Leave(sender As Object, e As EventArgs)
-        Dim cardNo As String = txtCardNo.Text.Trim()
-        
-        If String.IsNullOrEmpty(cardNo) Then
-            Return
-        End If
-        
-        ' 6桁でない場合はエラーメッセージを表示
-        If cardNo.Length <> 6 Then
-            ShowMessage("カードNoは6桁で入力してください", Color.Red)
-            ClearConditionLabels()
-            btnVerify.Enabled = False
-            Return
-        End If
-
-        ' 6桁の場合で、まだ処理されていない場合のみ処理（TextChangedで処理済みの場合は重複を避ける）
-        If _currentCondition Is Nothing Then
-            ProcessCardNoInput()
-        End If
+        ' TextChangedで処理されるため、特に追加処理は不要
     End Sub
 
     ''' <summary>
