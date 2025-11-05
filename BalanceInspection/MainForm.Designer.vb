@@ -23,6 +23,7 @@ Partial Class MainForm
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.txtEmployeeNo = New System.Windows.Forms.TextBox()
+        Me.lblEmployeeNameValue = New System.Windows.Forms.Label()
         Me.txtCardNo = New System.Windows.Forms.TextBox()
         Me.btnVerify = New System.Windows.Forms.Button()
         Me.btnCancel = New System.Windows.Forms.Button()
@@ -96,6 +97,16 @@ Partial Class MainForm
         Me.txtEmployeeNo.Name = "txtEmployeeNo"
         Me.txtEmployeeNo.Size = New System.Drawing.Size(213, 31)
         Me.txtEmployeeNo.TabIndex = 1
+        '
+        'lblEmployeeNameValue
+        '
+        Me.lblEmployeeNameValue.AutoSize = True
+        Me.lblEmployeeNameValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblEmployeeNameValue.Location = New System.Drawing.Point(420, 120)
+        Me.lblEmployeeNameValue.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblEmployeeNameValue.Name = "lblEmployeeNameValue"
+        Me.lblEmployeeNameValue.Size = New System.Drawing.Size(0, 24)
+        Me.lblEmployeeNameValue.TabIndex = 7
         '
         'txtCardNo
         '
@@ -900,6 +911,7 @@ Partial Class MainForm
         Me.Controls.Add(Me.btnVerify)
         Me.Controls.Add(Me.txtCardNo)
         Me.Controls.Add(Me.lblCardNo)
+        Me.Controls.Add(Me.lblEmployeeNameValue)
         Me.Controls.Add(Me.txtEmployeeNo)
         Me.Controls.Add(Me.lblEmployeeNo)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
@@ -916,6 +928,7 @@ Partial Class MainForm
     End Sub
 
     Friend WithEvents txtEmployeeNo As TextBox
+    Friend WithEvents lblEmployeeNameValue As Label
     Friend WithEvents txtCardNo As TextBox
     Friend WithEvents btnVerify As Button
     Friend WithEvents btnCancel As Button
