@@ -517,12 +517,19 @@ Public Class MainForm
         If employeeNo.Length = 6 Then
             ' 6桁が数字かチェック
             If Not IsNumeric(employeeNo) Then
-                ' 数字以外は何もしない
+                ' 数字以外の場合：エラー表示して入力欄をクリア
+                lblEmployeeNameValue.Text = "該当するユーザがありません。"
+                lblEmployeeNameValue.ForeColor = Color.Red
+                ShowMessage("従業員Noは数字6桁で入力してください", Color.Red)
+                
                 txtCardNo.Enabled = False
                 txtCardNo.Text = ""
                 ClearConditionLabels()
                 btnVerify.Enabled = False
-                ShowMessage("従業員Noは数字6桁で入力してください", Color.Black)
+                
+                ' 入力欄をクリアしてフォーカスを戻す
+                txtEmployeeNo.Text = ""
+                txtEmployeeNo.Focus()
                 Return
             End If
 
@@ -557,12 +564,15 @@ Public Class MainForm
                     ShowMessage("該当するユーザがありません。", Color.Red)
 
                     ' 入力欄をクリアしてフォーカスを戻す
+                    ' 注: TextChangedイベントを一時的に無効化してメッセージ上書きを防ぐ
+                    RemoveHandler txtEmployeeNo.TextChanged, AddressOf TxtEmployeeNo_TextChanged
                     txtEmployeeNo.Text = ""
+                    AddHandler txtEmployeeNo.TextChanged, AddressOf TxtEmployeeNo_TextChanged
                     txtEmployeeNo.Focus()
                 End If
 
             Catch ex As FileNotFoundException
-                ' ファイル未検出
+                ' ファイル未検出：エラー表示して入力欄をクリア
                 lblEmployeeNameValue.Text = "データ読み取りエラーが発生しました"
                 lblEmployeeNameValue.ForeColor = Color.Red
                 ShowMessage("データ読み取りエラーが発生しました", Color.Red)
@@ -571,8 +581,14 @@ Public Class MainForm
                 txtCardNo.Enabled = False
                 txtCardNo.Text = ""
 
+                ' 入力欄をクリアしてフォーカスを戻す
+                RemoveHandler txtEmployeeNo.TextChanged, AddressOf TxtEmployeeNo_TextChanged
+                txtEmployeeNo.Text = ""
+                AddHandler txtEmployeeNo.TextChanged, AddressOf TxtEmployeeNo_TextChanged
+                txtEmployeeNo.Focus()
+
             Catch ex As Exception
-                ' その他のエラー
+                ' その他のエラー：エラー表示して入力欄をクリア
                 lblEmployeeNameValue.Text = "データ読み取りエラーが発生しました"
                 lblEmployeeNameValue.ForeColor = Color.Red
                 ShowMessage("データ読み取りエラーが発生しました", Color.Red)
@@ -580,6 +596,12 @@ Public Class MainForm
 
                 txtCardNo.Enabled = False
                 txtCardNo.Text = ""
+
+                ' 入力欄をクリアしてフォーカスを戻す
+                RemoveHandler txtEmployeeNo.TextChanged, AddressOf TxtEmployeeNo_TextChanged
+                txtEmployeeNo.Text = ""
+                AddHandler txtEmployeeNo.TextChanged, AddressOf TxtEmployeeNo_TextChanged
+                txtEmployeeNo.Focus()
 
             Finally
                 _isSearchingEmployee = False
