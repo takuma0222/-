@@ -81,15 +81,15 @@ Public Class EmployeeLoader
             End If
 
             ' 検索キーをログに記録（開発/運用ログとして利用）
+            ' 注: 既存LogManagerにはinfo/debugログメソッドがないため、WriteErrorLogを使用
             _logManager.WriteErrorLog("従業員NO検索: " & employeeNo)
 
-            Return Await Task.Run(Function()
-                If _employees.ContainsKey(employeeNo) Then
-                    Return _employees(employeeNo)
-                Else
-                    Return Nothing
-                End If
-            End Function)
+            ' Dictionary検索は高速(O(1))なため、Task.Runは不要
+            If _employees.ContainsKey(employeeNo) Then
+                Return _employees(employeeNo)
+            Else
+                Return Nothing
+            End If
 
         Catch ex As Exception
             _logManager.WriteErrorLog("従業員NO検索エラー: " & ex.Message)
