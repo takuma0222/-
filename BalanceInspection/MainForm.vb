@@ -462,6 +462,7 @@ Public Class MainForm
     ''' </summary>
     Private Sub ResetForm()
         txtEmployeeNo.Text = ""
+        txtEmployeeNo.Enabled = True  ' 従業員No入力欄を活性化
         txtCardNo.Text = ""
         txtCardNo.Enabled = False  ' カードNoを非活性化
         lblEmployeeNameValue.Text = ""  ' 従業員名をクリア
@@ -515,24 +516,6 @@ Public Class MainForm
         lblEmployeeNameValue.ForeColor = Color.Black
 
         If employeeNo.Length = 6 Then
-            ' 6桁が数字かチェック
-            If Not IsNumeric(employeeNo) Then
-                ' 数字以外の場合：エラー表示して入力欄をクリア
-                lblEmployeeNameValue.Text = "該当するユーザがありません。"
-                lblEmployeeNameValue.ForeColor = Color.Red
-                ShowMessage("従業員Noは数字6桁で入力してください", Color.Red)
-                
-                txtCardNo.Enabled = False
-                txtCardNo.Text = ""
-                ClearConditionLabels()
-                btnVerify.Enabled = False
-                
-                ' 入力欄をクリアしてフォーカスを戻す
-                txtEmployeeNo.Text = ""
-                txtEmployeeNo.Focus()
-                Return
-            End If
-
             ' 検索中フラグをチェック（二重実行防止）
             If _isSearchingEmployee Then
                 Return
@@ -553,13 +536,16 @@ Public Class MainForm
                     lblEmployeeNameValue.Text = employeeName
                     lblEmployeeNameValue.ForeColor = Color.Black
 
+                    ' 従業員No入力欄を非活性化
+                    txtEmployeeNo.Enabled = False
+
                     ' カードNoを活性化してフォーカス移動
                     txtCardNo.Enabled = True
                     txtCardNo.Focus()
                     ShowMessage("カードNoを入力してください", Color.Black)
                 Else
-                    ' 該当なし：赤文字でメッセージ表示、入力欄をクリア
-                    lblEmployeeNameValue.Text = "該当するユーザがありません。"
+                    ' 該当なし：氏名表示欄に「ユーザなし」を表示
+                    lblEmployeeNameValue.Text = "ユーザなし"
                     lblEmployeeNameValue.ForeColor = Color.Red
                     ShowMessage("該当するユーザがありません。", Color.Red)
 
@@ -573,7 +559,7 @@ Public Class MainForm
 
             Catch ex As FileNotFoundException
                 ' ファイル未検出：エラー表示して入力欄をクリア
-                lblEmployeeNameValue.Text = "データ読み取りエラーが発生しました"
+                lblEmployeeNameValue.Text = "ユーザなし"
                 lblEmployeeNameValue.ForeColor = Color.Red
                 ShowMessage("データ読み取りエラーが発生しました", Color.Red)
                 _logManager.WriteErrorLog("従業員CSV未検出: " & ex.Message)
@@ -589,7 +575,7 @@ Public Class MainForm
 
             Catch ex As Exception
                 ' その他のエラー：エラー表示して入力欄をクリア
-                lblEmployeeNameValue.Text = "データ読み取りエラーが発生しました"
+                lblEmployeeNameValue.Text = "ユーザなし"
                 lblEmployeeNameValue.ForeColor = Color.Red
                 ShowMessage("データ読み取りエラーが発生しました", Color.Red)
                 _logManager.WriteErrorLog("従業員検索エラー: " & ex.Message & vbCrLf & ex.StackTrace)

@@ -64,8 +64,8 @@ Public Class EmployeeLoader
             Dim employeeNo As String = parts(0).Trim()
             Dim employeeName As String = parts(1).Trim()
 
-            ' 6桁の数字のみを有効な従業員NOとする
-            If employeeNo.Length = 6 AndAlso IsNumeric(employeeNo) Then
+            ' 6桁の従業員NOのみ有効（英数字混在も許可）
+            If employeeNo.Length = 6 Then
                 _employees(employeeNo) = employeeName
             End If
         Next
