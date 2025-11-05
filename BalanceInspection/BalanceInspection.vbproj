@@ -85,6 +85,7 @@
     <Compile Include="Models\BalanceConfig.vb" />
     <Compile Include="Services\ConfigLoader.vb" />
     <Compile Include="Services\CardConditionLoader.vb" />
+    <Compile Include="Services\EmployeeLoader.vb" />
     <Compile Include="Services\SerialPortManager.vb" />
     <Compile Include="Services\TcpCommunicationManager.vb" />
     <Compile Include="Services\BalanceManager.vb" />

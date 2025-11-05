@@ -11,7 +11,9 @@ Public Class MainForm
     Private _cardLoader As CardConditionLoader
     Private _balanceManager As BalanceManager
     Private _logManager As LogManager
+    Private _employeeLoader As EmployeeLoader
     Private _currentCondition As CardCondition
+    Private _isSearchingEmployee As Boolean = False
 
     Public Sub New()
         InitializeComponent()
@@ -40,16 +42,20 @@ Public Class MainForm
             ' 設定読み込み
             _appConfig = ConfigLoader.Load()
             
+            ' ログマネージャー初期化
+            Dim logDir As String = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _appConfig.LogDirectory)
+            _logManager = New LogManager(logDir)
+            
             ' カード条件読み込み
             Dim csvPath As String = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _appConfig.CardConditionCsvPath)
             _cardLoader = New CardConditionLoader(csvPath)
             
+            ' 従業員ローダー初期化
+            Dim employeeCsvPath As String = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _appConfig.EmployeeCsvPath)
+            _employeeLoader = New EmployeeLoader(employeeCsvPath, _logManager)
+            
             ' バランスマネージャー初期化
             _balanceManager = New BalanceManager(_appConfig)
-            
-            ' ログマネージャー初期化
-            Dim logDir As String = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _appConfig.LogDirectory)
-            _logManager = New LogManager(logDir)
             
             ' ポートを開く（エラーは後で処理）
             Try
@@ -458,6 +464,7 @@ Public Class MainForm
         txtEmployeeNo.Text = ""
         txtCardNo.Text = ""
         txtCardNo.Enabled = False  ' カードNoを非活性化
+        lblEmployeeNameValue.Text = ""  ' 従業員名をクリア
         ' 条件テーブルをクリア
         ClearConditionLabels()
         ' カード情報をクリア
@@ -500,14 +507,84 @@ Public Class MainForm
     ''' <summary>
     ''' 従業員No入力時の処理
     ''' </summary>
-    Private Sub TxtEmployeeNo_TextChanged(sender As Object, e As EventArgs)
+    Private Async Sub TxtEmployeeNo_TextChanged(sender As Object, e As EventArgs)
         Dim employeeNo As String = txtEmployeeNo.Text.Trim()
 
+        ' 従業員名をクリア
+        lblEmployeeNameValue.Text = ""
+        lblEmployeeNameValue.ForeColor = Color.Black
+
         If employeeNo.Length = 6 Then
-            ' 6桁入力完了：カードNoを活性化してフォーカス移動
-            txtCardNo.Enabled = True
-            txtCardNo.Focus()
-            ShowMessage("カードNoを入力してください", Color.Black)
+            ' 6桁が数字かチェック
+            If Not IsNumeric(employeeNo) Then
+                ' 数字以外は何もしない
+                txtCardNo.Enabled = False
+                txtCardNo.Text = ""
+                ClearConditionLabels()
+                btnVerify.Enabled = False
+                ShowMessage("従業員Noは数字6桁で入力してください", Color.Black)
+                Return
+            End If
+
+            ' 検索中フラグをチェック（二重実行防止）
+            If _isSearchingEmployee Then
+                Return
+            End If
+
+            _isSearchingEmployee = True
+
+            Try
+                ' ローディング表示
+                ShowMessage("読み込み中…", Color.Black)
+                lblEmployeeNameValue.Text = "検索中..."
+
+                ' 非同期で従業員を検索
+                Dim employeeName As String = Await _employeeLoader.SearchAsync(employeeNo)
+
+                If employeeName IsNot Nothing Then
+                    ' 該当あり：氏名を表示
+                    lblEmployeeNameValue.Text = employeeName
+                    lblEmployeeNameValue.ForeColor = Color.Black
+
+                    ' カードNoを活性化してフォーカス移動
+                    txtCardNo.Enabled = True
+                    txtCardNo.Focus()
+                    ShowMessage("カードNoを入力してください", Color.Black)
+                Else
+                    ' 該当なし：赤文字でメッセージ表示、入力欄をクリア
+                    lblEmployeeNameValue.Text = "該当するユーザがありません。"
+                    lblEmployeeNameValue.ForeColor = Color.Red
+                    ShowMessage("該当するユーザがありません。", Color.Red)
+
+                    ' 入力欄をクリアしてフォーカスを戻す
+                    txtEmployeeNo.Text = ""
+                    txtEmployeeNo.Focus()
+                End If
+
+            Catch ex As FileNotFoundException
+                ' ファイル未検出
+                lblEmployeeNameValue.Text = "データ読み取りエラーが発生しました"
+                lblEmployeeNameValue.ForeColor = Color.Red
+                ShowMessage("データ読み取りエラーが発生しました", Color.Red)
+                _logManager.WriteErrorLog("従業員CSV未検出: " & ex.Message)
+
+                txtCardNo.Enabled = False
+                txtCardNo.Text = ""
+
+            Catch ex As Exception
+                ' その他のエラー
+                lblEmployeeNameValue.Text = "データ読み取りエラーが発生しました"
+                lblEmployeeNameValue.ForeColor = Color.Red
+                ShowMessage("データ読み取りエラーが発生しました", Color.Red)
+                _logManager.WriteErrorLog("従業員検索エラー: " & ex.Message & vbCrLf & ex.StackTrace)
+
+                txtCardNo.Enabled = False
+                txtCardNo.Text = ""
+
+            Finally
+                _isSearchingEmployee = False
+            End Try
+
         Else
             ' 6桁未満：カードNoを非活性化
             txtCardNo.Enabled = False
