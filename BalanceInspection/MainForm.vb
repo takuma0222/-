@@ -23,6 +23,7 @@ Public Class MainForm
     Private _balanceManager As BalanceManager
     Private _logManager As LogManager
     Private _currentCondition As CardCondition
+    Private _lastEmployeeSearchNo As String = ""
 
     Public Sub New()
         InitializeComponent()
@@ -386,6 +387,7 @@ Public Class MainForm
         ShowMessage("従業員Noを入力してください", Color.Black)
         btnVerify.Enabled = False
         _currentCondition = Nothing
+        _lastEmployeeSearchNo = ""  ' 検索履歴もクリア
         txtEmployeeNo.Focus()  ' 従業員Noにフォーカス
     End Sub
 
@@ -438,9 +440,17 @@ Public Class MainForm
         If employeeNo.Length < 6 Then
             lblEmployeeName.Text = ""
             lblEmployeeName.ForeColor = Color.Blue
+            _lastEmployeeSearchNo = ""
         End If
         
         If employeeNo.Length = 6 Then
+            ' 既に同じ従業員NOで検索済みの場合はスキップ（重複検索防止）
+            If employeeNo = _lastEmployeeSearchNo Then
+                Return
+            End If
+            
+            _lastEmployeeSearchNo = employeeNo
+            
             ' 6桁が数字かチェック
             If Not IsNumeric(employeeNo) Then
                 lblEmployeeName.Text = ""

@@ -1,5 +1,6 @@
 Imports System.IO
 Imports System.Text
+Imports System.Threading
 Imports System.Threading.Tasks
 
 ''' <summary>
@@ -9,6 +10,7 @@ Public Class EmployeeLoader
     Private _employees As Dictionary(Of String, String)
     Private _csvPath As String
     Private _isLoaded As Boolean = False
+    Private _loadLock As New SemaphoreSlim(1, 1)
 
     Public Sub New(csvPath As String)
         _csvPath = csvPath
@@ -19,12 +21,20 @@ Public Class EmployeeLoader
     ''' CSVファイルを非同期で読み込む
     ''' </summary>
     Public Async Function LoadAsync() As Task
+        ' セマフォで排他制御（複数回の同時読み込みを防止）
+        Await _loadLock.WaitAsync()
+        
         Try
+            ' 既に読み込み済みの場合は何もしない
+            If _isLoaded Then
+                Return
+            End If
+            
             If Not File.Exists(_csvPath) Then
                 Throw New FileNotFoundException($"CSV file not found: {_csvPath}")
             End If
 
-            ' 非同期でファイル読み込み
+            ' ファイル読み込み（同期メソッドをTask.Runでラップ）
             Dim lines As String() = Await Task.Run(Function() File.ReadAllLines(_csvPath, Encoding.UTF8))
             
             If lines.Length < 2 Then
@@ -59,6 +69,8 @@ Public Class EmployeeLoader
         Catch ex As Exception
             _isLoaded = False
             Throw New Exception("CSVファイルの読み込みに失敗しました: " & ex.Message, ex)
+        Finally
+            _loadLock.Release()
         End Try
     End Function
 
@@ -66,7 +78,7 @@ Public Class EmployeeLoader
     ''' 従業員番号から氏名を非同期で取得
     ''' </summary>
     Public Async Function GetEmployeeNameAsync(employeeNo As String) As Task(Of String)
-        ' 初回アクセス時または未ロード時に読み込み
+        ' 初回アクセス時または未ロード時に読み込み（排他制御済み）
         If Not _isLoaded Then
             Await LoadAsync()
         End If
@@ -82,8 +94,16 @@ Public Class EmployeeLoader
     ''' すべての従業員データを再読み込み
     ''' </summary>
     Public Async Function ReloadAsync() As Task
-        _employees.Clear()
-        _isLoaded = False
+        ' セマフォで排他制御
+        Await _loadLock.WaitAsync()
+        
+        Try
+            _employees.Clear()
+            _isLoaded = False
+        Finally
+            _loadLock.Release()
+        End Try
+        
         Await LoadAsync()
     End Function
 End Class
