@@ -26,6 +26,7 @@ Public Class EmployeeLoader
                 Throw New FileNotFoundException("従業員CSVファイルが見つかりません: " & _csvPath)
             End If
 
+            ' Task.Runを使用してファイルI/Oを非同期化（.NET Framework 4.7.1にはFile.ReadAllLinesAsyncがないため）
             Await Task.Run(Sub() LoadEmployeesFromFile())
 
         Catch ex As FileNotFoundException
