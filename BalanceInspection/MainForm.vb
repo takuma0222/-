@@ -115,22 +115,22 @@ Public Class MainForm
     ''' </summary>
     Private Sub DisplayCondition(condition As CardCondition)
         ' 必要枚数を表示
-        lblPre10mmRequired.Text = condition.Pre10mm.ToString() & "枚"
-        lblPost1mmRequired.Text = condition.Post1mm.ToString() & "枚"
-        lblPost5mmRequired.Text = condition.Post5mm.ToString() & "枚"
-        lblPost10mmRequired.Text = condition.Post10mm.ToString() & "枚"
+        lblPre10mmRequired.Text = condition.Pre10mm.ToString() & "個"
+        lblPost1mmRequired.Text = condition.Post1mm.ToString() & "個"
+        lblPost5mmRequired.Text = condition.Post5mm.ToString() & "個"
+        lblPost10mmRequired.Text = condition.Post10mm.ToString() & "個"
         
         ' エッジガードと気泡緩衝材は0の場合"不要"を表示（他の列はDisplayInitialBalanceReadingsで設定）
         If condition.EdgeGuard = 0 Then
             lblEdgeRequired.Text = "不要"
         Else
-            lblEdgeRequired.Text = condition.EdgeGuard.ToString() & "枚"
+            lblEdgeRequired.Text = condition.EdgeGuard.ToString() & "個"
         End If
         
         If condition.BubbleInterference = 0 Then
             lblBubbleRequired.Text = "不要"
         Else
-            lblBubbleRequired.Text = condition.BubbleInterference.ToString("D2") & "枚"
+            lblBubbleRequired.Text = condition.BubbleInterference.ToString("D2") & "個"
         End If
 
         ' 秤入力時、確保枚数、現在枚数、判定は初期検量後に設定される
@@ -188,18 +188,18 @@ Public Class MainForm
 
         ' 秤(9001)の値を投入前10mmと投入後10mmに表示
         If readings.ContainsKey("Pre_10mm") Then
-            lblPre10mmRemaining.Text = readings("Pre_10mm").ToString("F1") & "枚"
-            lblPost10mmRemaining.Text = readings("Pre_10mm").ToString("F1") & "枚"
+            lblPre10mmRemaining.Text = readings("Pre_10mm").ToString("F0") & "個"
+            lblPost10mmRemaining.Text = readings("Pre_10mm").ToString("F0") & "個"
         End If
 
         ' 秤(9002)の値を投入後1mmに表示
         If readings.ContainsKey("Post_1mm") Then
-            lblPost1mmRemaining.Text = readings("Post_1mm").ToString("F1") & "枚"
+            lblPost1mmRemaining.Text = readings("Post_1mm").ToString("F0") & "個"
         End If
 
         ' 秤(9003)の値を投入後5mmに表示
         If readings.ContainsKey("Post_5mm") Then
-            lblPost5mmRemaining.Text = readings("Post_5mm").ToString("F1") & "枚"
+            lblPost5mmRemaining.Text = readings("Post_5mm").ToString("F0") & "個"
         End If
 
         ' エッジガードが0の場合は全列に"不要"を表示
@@ -235,12 +235,12 @@ Public Class MainForm
             Dim secured As Double = beforeValue - afterValue
             
             ' 投入前10mm
-            lblPre10mmSecured.Text = afterValue.ToString("F1") & "枚"
-            lblPre10mmUsed.Text = secured.ToString("F1") & "枚"
+            lblPre10mmSecured.Text = afterValue.ToString("F0") & "個"
+            lblPre10mmUsed.Text = secured.ToString("F0") & "個"
             
             ' 投入後10mm
-            lblPost10mmSecured.Text = afterValue.ToString("F1") & "枚"
-            lblPost10mmUsed.Text = secured.ToString("F1") & "枚"
+            lblPost10mmSecured.Text = afterValue.ToString("F0") & "個"
+            lblPost10mmUsed.Text = secured.ToString("F0") & "個"
         End If
 
         ' 秤(9002)の値を投入後1mmのAFTER列に表示し、確保枚数を計算
@@ -249,8 +249,8 @@ Public Class MainForm
             Dim beforeValue As Double = initialReadings("Post_1mm")
             Dim secured As Double = beforeValue - afterValue
             
-            lblPost1mmSecured.Text = afterValue.ToString("F1") & "枚"
-            lblPost1mmUsed.Text = secured.ToString("F1") & "枚"
+            lblPost1mmSecured.Text = afterValue.ToString("F0") & "個"
+            lblPost1mmUsed.Text = secured.ToString("F0") & "個"
         End If
 
         ' 秤(9003)の値を投入後5mmのAFTER列に表示し、確保枚数を計算
@@ -259,8 +259,8 @@ Public Class MainForm
             Dim beforeValue As Double = initialReadings("Post_5mm")
             Dim secured As Double = beforeValue - afterValue
             
-            lblPost5mmSecured.Text = afterValue.ToString("F1") & "枚"
-            lblPost5mmUsed.Text = secured.ToString("F1") & "枚"
+            lblPost5mmSecured.Text = afterValue.ToString("F0") & "個"
+            lblPost5mmUsed.Text = secured.ToString("F0") & "個"
         End If
     End Sub
 
@@ -271,7 +271,7 @@ Public Class MainForm
         ' 投入前10mmと投入後10mmの判定（同じ秤9001を使用）
         ' 両方の必要枚数の合計が確保枚数と一致していればOK
         If Not String.IsNullOrEmpty(lblPre10mmUsed.Text) AndAlso lblPre10mmUsed.Text <> "不要" Then
-            Dim secured As Double = Double.Parse(lblPre10mmUsed.Text.Replace("枚", ""))
+            Dim secured As Double = Double.Parse(lblPre10mmUsed.Text.Replace("個", ""))
             Dim totalRequired As Integer = condition.Pre10mm + condition.Post10mm
             Dim isOk As Boolean = Math.Round(secured) = totalRequired
             
@@ -286,14 +286,14 @@ Public Class MainForm
 
         ' 投入後1mmの判定
         If Not String.IsNullOrEmpty(lblPost1mmUsed.Text) AndAlso lblPost1mmUsed.Text <> "不要" Then
-            Dim secured As Double = Double.Parse(lblPost1mmUsed.Text.Replace("枚", ""))
+            Dim secured As Double = Double.Parse(lblPost1mmUsed.Text.Replace("個", ""))
             lblPost1mmJudgment.Text = If(Math.Round(secured) = condition.Post1mm, "OK", "NG")
             lblPost1mmJudgment.ForeColor = If(lblPost1mmJudgment.Text = "OK", Color.Green, Color.Red)
         End If
 
         ' 投入後5mmの判定
         If Not String.IsNullOrEmpty(lblPost5mmUsed.Text) AndAlso lblPost5mmUsed.Text <> "不要" Then
-            Dim secured As Double = Double.Parse(lblPost5mmUsed.Text.Replace("枚", ""))
+            Dim secured As Double = Double.Parse(lblPost5mmUsed.Text.Replace("個", ""))
             lblPost5mmJudgment.Text = If(Math.Round(secured) = condition.Post5mm, "OK", "NG")
             lblPost5mmJudgment.ForeColor = If(lblPost5mmJudgment.Text = "OK", Color.Green, Color.Red)
         End If
