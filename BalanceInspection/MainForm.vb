@@ -9,10 +9,12 @@ Public Class MainForm
     ' サービス
     Private _appConfig As AppConfig
     Private _cardLoader As CardConditionLoader
+    Private _materialLoader As MaterialConditionLoader
     Private _balanceManager As BalanceManager
     Private _logManager As LogManager
     Private _employeeLoader As EmployeeLoader
     Private _currentCondition As CardCondition
+    Private _currentMaterialCondition As MaterialCondition
     Private _isSearchingEmployee As Boolean = False
 
     Public Sub New()
@@ -30,6 +32,7 @@ Public Class MainForm
         AddHandler txtCardNo.KeyPress, AddressOf TextBox_KeyPress
         AddHandler txtCardNo.TextChanged, AddressOf TxtCardNo_TextChanged
         AddHandler txtCardNo.Leave, AddressOf TxtCardNo_Leave
+        AddHandler cmbLapThickness.SelectedIndexChanged, AddressOf CmbLapThickness_SelectedIndexChanged
         AddHandler btnVerify.Click, AddressOf BtnVerify_Click
         AddHandler btnCancel.Click, AddressOf BtnCancel_Click
     End Sub
@@ -49,6 +52,16 @@ Public Class MainForm
             ' カード条件読み込み
             Dim csvPath As String = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _appConfig.CardConditionCsvPath)
             _cardLoader = New CardConditionLoader(csvPath)
+            
+            ' 使用部材条件読み込み
+            Dim materialCsvPath As String = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _appConfig.MaterialConditionCsvPath)
+            _materialLoader = New MaterialConditionLoader(materialCsvPath)
+            
+            ' LAP厚プルダウンリストを設定
+            cmbLapThickness.Items.Clear()
+            For Each thickness In _appConfig.LapThicknessList
+                cmbLapThickness.Items.Add(thickness)
+            Next
             
             ' 従業員ローダー初期化
             Dim employeeCsvPath As String = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _appConfig.EmployeeCsvPath)
@@ -112,7 +125,7 @@ Public Class MainForm
     End Sub
 
     ''' <summary>
-    ''' 条件をラベルに表示
+    ''' 条件をラベルに表示（旧メソッド - 互換性のため残す）
     ''' </summary>
     Private Sub DisplayCondition(condition As CardCondition)
         ' 必要枚数を表示
@@ -153,6 +166,68 @@ Public Class MainForm
         lblPost10mmJudgment.Text = ""
         
         ' エッジガードと気泡緩衝材が0でない場合のみクリア（0の場合はDisplayInitialBalanceReadingsで"不要"設定）
+        If condition.EdgeGuard <> 0 Then
+            lblEdgeRemaining.Text = ""
+            lblEdgeSecured.Text = ""
+            lblEdgeUsed.Text = ""
+            lblEdgeJudgment.Text = ""
+        End If
+        
+        If condition.BubbleInterference <> 0 Then
+            lblBubbleRemaining.Text = ""
+            lblBubbleSecured.Text = ""
+            lblBubbleUsed.Text = ""
+            lblBubbleJudgment.Text = ""
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 使用部材条件を表示（MaterialConditionから）
+    ''' </summary>
+    Private Sub DisplayMaterialCondition(condition As MaterialCondition)
+        ' 必要枚数を表示
+        lblPre10mmRequired.Text = condition.Pre10mm.ToString() & "個"
+        lblPost1mmRequired.Text = condition.Post1mm.ToString() & "個"
+        lblPost5mmRequired.Text = condition.Post5mm.ToString() & "個"
+        lblPost10mmRequired.Text = condition.Post10mm.ToString() & "個"
+
+        ' 秤入力時、確保枚数、現在枚数、判定は初期検量後に設定される
+        lblPre10mmRemaining.Text = ""
+        lblPre10mmSecured.Text = ""
+        lblPre10mmUsed.Text = ""
+        lblPre10mmJudgment.Text = ""
+        lblPost1mmRemaining.Text = ""
+        lblPost1mmSecured.Text = ""
+        lblPost1mmUsed.Text = ""
+        lblPost1mmJudgment.Text = ""
+        lblPost5mmRemaining.Text = ""
+        lblPost5mmSecured.Text = ""
+        lblPost5mmUsed.Text = ""
+        lblPost5mmJudgment.Text = ""
+        lblPost10mmRemaining.Text = ""
+        lblPost10mmSecured.Text = ""
+        lblPost10mmUsed.Text = ""
+        lblPost10mmJudgment.Text = ""
+    End Sub
+
+    ''' <summary>
+    ''' エッジガードと気泡緩衝材の情報を表示（CardConditionから）
+    ''' </summary>
+    Private Sub DisplayEdgeAndBubbleInfo(condition As CardCondition)
+        ' エッジガードと気泡緩衝材は0の場合"不要"を表示
+        If condition.EdgeGuard = 0 Then
+            lblEdgeRequired.Text = "不要"
+        Else
+            lblEdgeRequired.Text = condition.EdgeGuard.ToString() & "個"
+        End If
+        
+        If condition.BubbleInterference = 0 Then
+            lblBubbleRequired.Text = "不要"
+        Else
+            lblBubbleRequired.Text = condition.BubbleInterference.ToString("D2") & "個"
+        End If
+
+        ' エッジガードと気泡緩衝材の他の列をクリア
         If condition.EdgeGuard <> 0 Then
             lblEdgeRemaining.Text = ""
             lblEdgeSecured.Text = ""
@@ -269,11 +344,17 @@ Public Class MainForm
     ''' 判定を表示（必要枚数＝確保枚数でOK、それ以外はNG）
     ''' </summary>
     Private Sub DisplayJudgment(condition As CardCondition)
+        ' 使用部材条件が取得できている場合はそちらを使用
+        Dim pre10mmRequired As Integer = If(_currentMaterialCondition IsNot Nothing, _currentMaterialCondition.Pre10mm, condition.Pre10mm)
+        Dim post1mmRequired As Integer = If(_currentMaterialCondition IsNot Nothing, _currentMaterialCondition.Post1mm, condition.Post1mm)
+        Dim post5mmRequired As Integer = If(_currentMaterialCondition IsNot Nothing, _currentMaterialCondition.Post5mm, condition.Post5mm)
+        Dim post10mmRequired As Integer = If(_currentMaterialCondition IsNot Nothing, _currentMaterialCondition.Post10mm, condition.Post10mm)
+
         ' 投入前10mmと投入後10mmの判定（同じ秤9001を使用）
         ' 両方の必要枚数の合計が確保枚数と一致していればOK
         If Not String.IsNullOrEmpty(lblPre10mmUsed.Text) AndAlso lblPre10mmUsed.Text <> "不要" Then
             Dim secured As Double = Double.Parse(lblPre10mmUsed.Text.Replace("個", ""))
-            Dim totalRequired As Integer = condition.Pre10mm + condition.Post10mm
+            Dim totalRequired As Integer = pre10mmRequired + post10mmRequired
             Dim isOk As Boolean = Math.Round(secured) = totalRequired
             
             ' 投入前10mmの判定
@@ -288,14 +369,14 @@ Public Class MainForm
         ' 投入後1mmの判定
         If Not String.IsNullOrEmpty(lblPost1mmUsed.Text) AndAlso lblPost1mmUsed.Text <> "不要" Then
             Dim secured As Double = Double.Parse(lblPost1mmUsed.Text.Replace("個", ""))
-            lblPost1mmJudgment.Text = If(Math.Round(secured) = condition.Post1mm, "OK", "NG")
+            lblPost1mmJudgment.Text = If(Math.Round(secured) = post1mmRequired, "OK", "NG")
             lblPost1mmJudgment.ForeColor = If(lblPost1mmJudgment.Text = "OK", Color.Green, Color.Red)
         End If
 
         ' 投入後5mmの判定
         If Not String.IsNullOrEmpty(lblPost5mmUsed.Text) AndAlso lblPost5mmUsed.Text <> "不要" Then
             Dim secured As Double = Double.Parse(lblPost5mmUsed.Text.Replace("個", ""))
-            lblPost5mmJudgment.Text = If(Math.Round(secured) = condition.Post5mm, "OK", "NG")
+            lblPost5mmJudgment.Text = If(Math.Round(secured) = post5mmRequired, "OK", "NG")
             lblPost5mmJudgment.ForeColor = If(lblPost5mmJudgment.Text = "OK", Color.Green, Color.Red)
         End If
 
@@ -352,10 +433,12 @@ Public Class MainForm
                 RemoveHandler txtCardNo.TextChanged, AddressOf TxtCardNo_TextChanged
                 txtEmployeeNo.Text = ""
                 txtCardNo.Text = ""
+                cmbLapThickness.SelectedIndex = -1
                 AddHandler txtEmployeeNo.TextChanged, AddressOf TxtEmployeeNo_TextChanged
                 AddHandler txtCardNo.TextChanged, AddressOf TxtCardNo_TextChanged
                 txtEmployeeNo.Enabled = True
                 txtCardNo.Enabled = True
+                cmbLapThickness.Enabled = False
                 txtEmployeeNo.Focus()
             Else
                 ' NG: 不一致を表示
@@ -471,6 +554,8 @@ Public Class MainForm
         txtEmployeeNo.Enabled = True  ' 従業員No入力欄を活性化
         txtCardNo.Text = ""
         txtCardNo.Enabled = False  ' カードNoを非活性化
+        cmbLapThickness.SelectedIndex = -1  ' LAP厚をクリア
+        cmbLapThickness.Enabled = False  ' LAP厚を非活性化
         lblEmployeeNameValue.Text = ""  ' 従業員名をクリア
         ' 条件テーブルをクリア
         ClearConditionLabels()
@@ -482,6 +567,7 @@ Public Class MainForm
         ShowMessage("従業員Noを入力してください", Color.Black)
         btnVerify.Enabled = False
         _currentCondition = Nothing
+        _currentMaterialCondition = Nothing
         txtEmployeeNo.Focus()  ' 従業員Noにフォーカス
     End Sub
 
@@ -572,6 +658,8 @@ Public Class MainForm
 
                 txtCardNo.Enabled = False
                 txtCardNo.Text = ""
+                cmbLapThickness.Enabled = False
+                cmbLapThickness.SelectedIndex = -1
 
                 ' 入力欄をクリアしてフォーカスを戻す
                 RemoveHandler txtEmployeeNo.TextChanged, AddressOf TxtEmployeeNo_TextChanged
@@ -588,6 +676,8 @@ Public Class MainForm
 
                 txtCardNo.Enabled = False
                 txtCardNo.Text = ""
+                cmbLapThickness.Enabled = False
+                cmbLapThickness.SelectedIndex = -1
 
                 ' 入力欄をクリアしてフォーカスを戻す
                 RemoveHandler txtEmployeeNo.TextChanged, AddressOf TxtEmployeeNo_TextChanged
@@ -603,6 +693,8 @@ Public Class MainForm
             ' 6桁未満：カードNoを非活性化
             txtCardNo.Enabled = False
             txtCardNo.Text = ""
+            cmbLapThickness.Enabled = False
+            cmbLapThickness.SelectedIndex = -1
             ClearConditionLabels()
             btnVerify.Enabled = False
 
@@ -615,15 +707,100 @@ Public Class MainForm
     End Sub
 
     ''' <summary>
-    ''' カードNo入力時の処理（6桁で自動実行）
+    ''' カードNo入力時の処理（6桁で自動実行しない）
     ''' </summary>
     Private Sub TxtCardNo_TextChanged(sender As Object, e As EventArgs)
         Dim cardNo As String = txtCardNo.Text.Trim()
 
-        ' 6桁入力完了時に自動でカードNo入力後の処理を実行
+        ' 6桁入力完了時にLAP厚選択欄を活性化
         If cardNo.Length = 6 Then
-            ProcessCardNoInput()
+            ' カード情報を取得（品名、枚数、所在などの表示用）
+            _currentCondition = _cardLoader.GetCondition(cardNo)
+            
+            If _currentCondition Is Nothing Then
+                ShowMessage("条件なし", Color.Black)
+                ClearConditionLabels()
+                lblCardNoDisplayValue.Text = ""
+                lblProductNameValue.Text = ""
+                lblQuantityValue.Text = ""
+                lblLocationValue.Text = ""
+                cmbLapThickness.Enabled = False
+                cmbLapThickness.SelectedIndex = -1
+                btnVerify.Enabled = False
+                Return
+            End If
+            
+            ' カード情報を表示（品名、枚数、所在など）
+            DisplayCardInfo(_currentCondition)
+            
+            ' LAP厚選択欄を活性化
+            cmbLapThickness.Enabled = True
+            cmbLapThickness.Focus()
+            ShowMessage("LAP厚を選択してください", Color.Black)
+        Else
+            ' 6桁未満の場合はLAP厚選択欄を非活性化
+            cmbLapThickness.Enabled = False
+            cmbLapThickness.SelectedIndex = -1
+            ClearConditionLabels()
+            lblCardNoDisplayValue.Text = ""
+            lblProductNameValue.Text = ""
+            lblQuantityValue.Text = ""
+            lblLocationValue.Text = ""
+            btnVerify.Enabled = False
         End If
+    End Sub
+
+    ''' <summary>
+    ''' LAP厚選択時の処理（データ取得を実施）
+    ''' </summary>
+    Private Sub CmbLapThickness_SelectedIndexChanged(sender As Object, e As EventArgs)
+        If cmbLapThickness.SelectedIndex = -1 OrElse _currentCondition Is Nothing Then
+            Return
+        End If
+
+        Dim selectedLapThickness As String = cmbLapThickness.SelectedItem.ToString()
+
+        ' 使用部材条件を枚数とLAP厚から取得
+        _currentMaterialCondition = _materialLoader.GetCondition(_currentCondition.Quantity, selectedLapThickness)
+
+        If _currentMaterialCondition Is Nothing Then
+            ShowMessage("該当する使用部材条件がありません", Color.Red)
+            ClearConditionLabels()
+            btnVerify.Enabled = False
+            Return
+        End If
+
+        ' 使用部材条件を表示
+        DisplayMaterialCondition(_currentMaterialCondition)
+
+        ' エッジガードと気泡緩衝材はカード情報から表示
+        DisplayEdgeAndBubbleInfo(_currentCondition)
+
+        ' カードNo入力欄を非活性化
+        txtCardNo.Enabled = False
+
+        ' 初回計測を実行
+        Try
+            ' 測定中メッセージを表示
+            ShowMessage("秤の値測定中...", Color.Black)
+            
+            _balanceManager.PerformInitialReading()
+            
+            ' 天秤から取得した値を表示
+            DisplayInitialBalanceReadings(_currentCondition)
+            
+            ' 測定完了後のメッセージ
+            ShowMessage("各部材を必要枚数分準備してください", Color.Green)
+            btnVerify.Enabled = True
+
+        Catch ex As Exception
+            ShowMessage("計測エラー:" & ex.Message.Substring(0, Math.Min(20, ex.Message.Length)), Color.Red)
+            _logManager.WriteErrorLog("初回計測エラー: " & ex.Message)
+            btnVerify.Enabled = False
+            
+            ' エラー時はカードNo入力欄を再度活性化
+            txtCardNo.Enabled = True
+        End Try
     End Sub
 
     ''' <summary>
