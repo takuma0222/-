@@ -80,6 +80,7 @@ Public Class EmployeeLoader
                 Await LoadAsync()
             End If
 
+            ' 検索キーをログに記録（開発/運用ログとして利用）
             _logManager.WriteErrorLog("従業員NO検索: " & employeeNo)
 
             Return Await Task.Run(Function()
