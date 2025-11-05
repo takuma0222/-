@@ -11,10 +11,17 @@ Public Class EmployeeLoader
     Private _csvPath As String
     Private _isLoaded As Boolean = False
     Private _loadLock As New SemaphoreSlim(1, 1)
+    Private _onDuplicateDetected As Action(Of String, String, String)
 
     Public Sub New(csvPath As String)
         _csvPath = csvPath
         _employees = New Dictionary(Of String, String)()
+    End Sub
+    
+    Public Sub New(csvPath As String, onDuplicateDetected As Action(Of String, String, String))
+        _csvPath = csvPath
+        _employees = New Dictionary(Of String, String)()
+        _onDuplicateDetected = onDuplicateDetected
     End Sub
 
     ''' <summary>
@@ -60,6 +67,16 @@ Public Class EmployeeLoader
 
                 ' 従業員NOは6桁の数字であることを確認
                 If employeeNo.Length = 6 AndAlso IsNumeric(employeeNo) Then
+                    ' 重複チェック
+                    If _employees.ContainsKey(employeeNo) Then
+                        Dim existingName As String = _employees(employeeNo)
+                        ' コールバックが設定されている場合は通知
+                        If _onDuplicateDetected IsNot Nothing Then
+                            _onDuplicateDetected(employeeNo, existingName, name)
+                        End If
+                    End If
+                    
+                    ' 後のエントリで上書き（既存の動作を維持）
                     _employees(employeeNo) = name
                 End If
             Next

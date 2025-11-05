@@ -24,6 +24,7 @@ Public Class MainForm
     Private _logManager As LogManager
     Private _currentCondition As CardCondition
     Private _lastEmployeeSearchNo As String = ""
+    Private _isUpdatingEmployeeNo As Boolean = False
 
     Public Sub New()
         InitializeComponent()
@@ -155,9 +156,14 @@ Public Class MainForm
             Dim csvPath As String = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _appConfig.CardConditionCsvPath)
             _cardLoader = New CardConditionLoader(csvPath)
             
-            ' 従業員データ読み込み
+            ' 従業員データ読み込み（重複検出コールバック付き）
             Dim employeeCsvPath As String = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _appConfig.EmployeeCsvPath)
-            _employeeLoader = New EmployeeLoader(employeeCsvPath)
+            _employeeLoader = New EmployeeLoader(employeeCsvPath, Sub(empNo, oldName, newName)
+                ' 重複従業員NOを検出した場合、ログに記録
+                If _logManager IsNot Nothing Then
+                    _logManager.WriteErrorLog($"CSV重複検出: 従業員NO {empNo} - 既存「{oldName}」を「{newName}」で上書き")
+                End If
+            End Sub)
             
             ' バランスマネージャー初期化
             _balanceManager = New BalanceManager(_appConfig)
@@ -378,7 +384,10 @@ Public Class MainForm
     ''' フォームをリセット
     ''' </summary>
     Private Sub ResetForm()
+        _isUpdatingEmployeeNo = True
         txtEmployeeNo.Text = ""
+        _isUpdatingEmployeeNo = False
+        
         lblEmployeeName.Text = ""
         lblEmployeeName.ForeColor = Color.Blue
         txtCardNo.Text = ""
@@ -434,13 +443,18 @@ Public Class MainForm
     ''' 従業員No入力時の処理
     ''' </summary>
     Private Async Sub TxtEmployeeNo_TextChanged(sender As Object, e As EventArgs)
+        ' プログラム的な変更の場合はスキップ（再帰防止）
+        If _isUpdatingEmployeeNo Then
+            Return
+        End If
+        
         Dim employeeNo As String = txtEmployeeNo.Text.Trim()
         
         ' 6桁未満の場合は従業員名をクリア
         If employeeNo.Length < 6 Then
             lblEmployeeName.Text = ""
             lblEmployeeName.ForeColor = Color.Blue
-            _lastEmployeeSearchNo = ""
+            ' 注: _lastEmployeeSearchNo はクリアしない（バックスペース後の再入力対策）
         End If
         
         If employeeNo.Length = 6 Then
@@ -491,7 +505,9 @@ Public Class MainForm
                     ShowMessage("該当するユーザがありません。", Color.Red)
                     
                     ' 入力欄をクリアしてフォーカスを戻す
+                    _isUpdatingEmployeeNo = True
                     txtEmployeeNo.Text = ""
+                    _isUpdatingEmployeeNo = False
                     txtEmployeeNo.Focus()
                     
                     ' カードNoを非活性化
@@ -511,7 +527,9 @@ Public Class MainForm
                 ShowMessage("データ読み取りエラーが発生しました", Color.Red)
                 
                 ' 入力欄をクリアしてフォーカスを戻す
+                _isUpdatingEmployeeNo = True
                 txtEmployeeNo.Text = ""
+                _isUpdatingEmployeeNo = False
                 txtEmployeeNo.Focus()
                 
                 ' カードNoを非活性化
