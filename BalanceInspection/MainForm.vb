@@ -8,15 +8,18 @@ Public Class MainForm
 
     ' UI コンポーネント
     Private txtEmployeeNo As TextBox
+    Private lblEmployeeName As Label
     Private txtCardNo As TextBox
     Private btnVerify As Button
     Private btnCancel As Button
     Private lblMessage As Label
+    Private lblLoading As Label
     Private dgvConditions As DataGridView
 
     ' サービス
     Private _appConfig As AppConfig
     Private _cardLoader As CardConditionLoader
+    Private _employeeLoader As EmployeeLoader
     Private _balanceManager As BalanceManager
     Private _logManager As LogManager
     Private _currentCondition As CardCondition
@@ -49,9 +52,18 @@ Public Class MainForm
         txtEmployeeNo.Location = New Point(130, 20)
         txtEmployeeNo.Size = New Size(150, 20)
         txtEmployeeNo.MaxLength = 6
-        AddHandler txtEmployeeNo.KeyPress, AddressOf TextBox_KeyPress
+        AddHandler txtEmployeeNo.KeyPress, AddressOf EmployeeNo_KeyPress
         AddHandler txtEmployeeNo.TextChanged, AddressOf TxtEmployeeNo_TextChanged
         Me.Controls.Add(txtEmployeeNo)
+
+        ' ラベル: 従業員名
+        lblEmployeeName = New Label()
+        lblEmployeeName.Text = ""
+        lblEmployeeName.Location = New Point(130, 45)
+        lblEmployeeName.Size = New Size(150, 20)
+        lblEmployeeName.Font = New Font(lblEmployeeName.Font.FontFamily, 9, FontStyle.Regular)
+        lblEmployeeName.ForeColor = Color.Blue
+        Me.Controls.Add(lblEmployeeName)
 
         ' ラベル: カードNo
         Dim lblCardNo As New Label()
@@ -91,15 +103,25 @@ Public Class MainForm
         ' ラベル: メッセージ
         lblMessage = New Label()
         lblMessage.Text = "従業員Noを入力してください"
-        lblMessage.Location = New Point(20, 60)
+        lblMessage.Location = New Point(20, 70)
         lblMessage.Size = New Size(760, 40)
         lblMessage.Font = New Font(lblMessage.Font.FontFamily, 10, FontStyle.Regular)
         lblMessage.ForeColor = Color.Black
         Me.Controls.Add(lblMessage)
 
+        ' ラベル: ローディング表示
+        lblLoading = New Label()
+        lblLoading.Text = ""
+        lblLoading.Location = New Point(290, 20)
+        lblLoading.Size = New Size(100, 20)
+        lblLoading.Font = New Font(lblLoading.Font.FontFamily, 8, FontStyle.Italic)
+        lblLoading.ForeColor = Color.Gray
+        lblLoading.Visible = False
+        Me.Controls.Add(lblLoading)
+
         ' DataGridView: 使用部材条件
         dgvConditions = New DataGridView()
-        dgvConditions.Location = New Point(20, 110)
+        dgvConditions.Location = New Point(20, 120)
         dgvConditions.Size = New Size(760, 80)
         dgvConditions.AllowUserToAddRows = False
         dgvConditions.AllowUserToDeleteRows = False
@@ -132,6 +154,10 @@ Public Class MainForm
             Dim csvPath As String = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _appConfig.CardConditionCsvPath)
             _cardLoader = New CardConditionLoader(csvPath)
             
+            ' 従業員データ読み込み
+            Dim employeeCsvPath As String = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _appConfig.EmployeeCsvPath)
+            _employeeLoader = New EmployeeLoader(employeeCsvPath)
+            
             ' バランスマネージャー初期化
             _balanceManager = New BalanceManager(_appConfig)
             
@@ -154,7 +180,17 @@ Public Class MainForm
     End Sub
 
     ''' <summary>
-    ''' 数値のみ入力を許可
+    ''' 従業員No入力時：数値のみ許可
+    ''' </summary>
+    Private Sub EmployeeNo_KeyPress(sender As Object, e As KeyPressEventArgs)
+        ' 数字とバックスペースのみ許可
+        If Not Char.IsDigit(e.KeyChar) AndAlso Not Char.IsControl(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' カードNo入力時：数値とアルファベット(小文字)を許可
     ''' </summary>
     Private Sub TextBox_KeyPress(sender As Object, e As KeyPressEventArgs)
         ' 数字、バックスペース、アルファベット(小文字)のみ許可
@@ -342,6 +378,8 @@ Public Class MainForm
     ''' </summary>
     Private Sub ResetForm()
         txtEmployeeNo.Text = ""
+        lblEmployeeName.Text = ""
+        lblEmployeeName.ForeColor = Color.Blue
         txtCardNo.Text = ""
         txtCardNo.Enabled = False  ' カードNoを非活性化
         dgvConditions.Rows.Clear()
@@ -363,6 +401,19 @@ Public Class MainForm
     End Sub
 
     ''' <summary>
+    ''' ローディング表示を切り替え
+    ''' </summary>
+    Private Sub ShowLoading(show As Boolean)
+        If show Then
+            lblLoading.Text = "読み込み中..."
+            lblLoading.Visible = True
+        Else
+            lblLoading.Text = ""
+            lblLoading.Visible = False
+        End If
+    End Sub
+
+    ''' <summary>
     ''' フォームクローズ時
     ''' </summary>
     Protected Overrides Sub OnFormClosing(e As FormClosingEventArgs)
@@ -380,14 +431,88 @@ Public Class MainForm
     ''' <summary>
     ''' 従業員No入力時の処理
     ''' </summary>
-    Private Sub TxtEmployeeNo_TextChanged(sender As Object, e As EventArgs)
+    Private Async Sub TxtEmployeeNo_TextChanged(sender As Object, e As EventArgs)
         Dim employeeNo As String = txtEmployeeNo.Text.Trim()
         
+        ' 6桁未満の場合は従業員名をクリア
+        If employeeNo.Length < 6 Then
+            lblEmployeeName.Text = ""
+            lblEmployeeName.ForeColor = Color.Blue
+        End If
+        
         If employeeNo.Length = 6 Then
-            ' 6桁入力完了：カードNoを活性化してフォーカス移動
-            txtCardNo.Enabled = True
-            txtCardNo.Focus()
-            ShowMessage("カードNoを入力してください", Color.Black)
+            ' 6桁が数字かチェック
+            If Not IsNumeric(employeeNo) Then
+                lblEmployeeName.Text = ""
+                ShowMessage("従業員Noは数字のみで入力してください", Color.Red)
+                txtCardNo.Enabled = False
+                txtCardNo.Text = ""
+                dgvConditions.Rows.Clear()
+                btnVerify.Enabled = False
+                Return
+            End If
+            
+            ' ローディング表示
+            ShowLoading(True)
+            
+            Try
+                ' 非同期で従業員名を検索
+                Dim employeeName As String = Await _employeeLoader.GetEmployeeNameAsync(employeeNo)
+                
+                ' ローディング非表示
+                ShowLoading(False)
+                
+                If employeeName IsNot Nothing Then
+                    ' 該当あり：氏名を表示
+                    lblEmployeeName.Text = employeeName
+                    lblEmployeeName.ForeColor = Color.Blue
+                    
+                    ' カードNoを活性化してフォーカス移動
+                    txtCardNo.Enabled = True
+                    txtCardNo.Focus()
+                    ShowMessage("カードNoを入力してください", Color.Black)
+                    
+                    ' ログ出力
+                    _logManager.WriteErrorLog($"従業員検索成功: {employeeNo} - {employeeName}")
+                Else
+                    ' 該当なし：エラー表示
+                    lblEmployeeName.Text = "該当するユーザがありません。"
+                    lblEmployeeName.ForeColor = Color.Red
+                    ShowMessage("該当するユーザがありません。", Color.Red)
+                    
+                    ' 入力欄をクリアしてフォーカスを戻す
+                    txtEmployeeNo.Text = ""
+                    txtEmployeeNo.Focus()
+                    
+                    ' カードNoを非活性化
+                    txtCardNo.Enabled = False
+                    txtCardNo.Text = ""
+                    dgvConditions.Rows.Clear()
+                    btnVerify.Enabled = False
+                    
+                    ' ログ出力
+                    _logManager.WriteErrorLog($"従業員検索失敗: 従業員NO {employeeNo} が見つかりません")
+                End If
+                
+            Catch ex As Exception
+                ' エラー時の処理
+                ShowLoading(False)
+                lblEmployeeName.Text = ""
+                ShowMessage("データ読み取りエラーが発生しました", Color.Red)
+                
+                ' 入力欄をクリアしてフォーカスを戻す
+                txtEmployeeNo.Text = ""
+                txtEmployeeNo.Focus()
+                
+                ' カードNoを非活性化
+                txtCardNo.Enabled = False
+                txtCardNo.Text = ""
+                dgvConditions.Rows.Clear()
+                btnVerify.Enabled = False
+                
+                ' 詳細ログ出力
+                _logManager.WriteErrorLog($"従業員検索エラー: {ex.Message}{Environment.NewLine}{ex.StackTrace}")
+            End Try
         Else
             ' 6桁未満：カードNoを非活性化
             txtCardNo.Enabled = False

@@ -13,6 +13,11 @@ Public Class AppConfig
     Public Property CardConditionCsvPath As String = "card_conditions.csv"
 
     ''' <summary>
+    ''' 従業員データCSVファイルパス
+    ''' </summary>
+    Public Property EmployeeCsvPath As String = "data\employees.csv"
+
+    ''' <summary>
     ''' バランス設定リスト
     ''' </summary>
     Public Property Balances As List(Of BalanceConfig) = New List(Of BalanceConfig)()
