@@ -1,4 +1,4 @@
-''' <summary>
+﻿''' <summary>
 ''' アプリケーション設定を保持するクラス
 ''' </summary>
 Public Class AppConfig
@@ -11,6 +11,11 @@ Public Class AppConfig
     ''' カード条件CSVファイルパス
     ''' </summary>
     Public Property CardConditionCsvPath As String = "card_conditions.csv"
+
+    ''' <summary>
+    ''' 従業員CSVファイルパス
+    ''' </summary>
+    Public Property EmployeeCsvPath As String = "data\employees.csv"
 
     ''' <summary>
     ''' バランス設定リスト
@@ -27,3 +32,4 @@ Public Class AppConfig
     ''' </summary>
     Public Property MaxRetries As Integer = 3
 End Class
+

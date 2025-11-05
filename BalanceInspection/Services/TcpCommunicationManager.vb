@@ -1,4 +1,4 @@
-Imports System.Net.Sockets
+﻿Imports System.Net.Sockets
 Imports System.Text
 Imports System.Threading
 
@@ -41,7 +41,7 @@ Public Class TcpCommunicationManager
             _stream = _client.GetStream()
             
         Catch ex As Exception
-            Throw New Exception($"TCP接続 {_config.TcpAddress}:{_config.TcpPort} を開けませんでした: {ex.Message}", ex)
+            Throw New Exception("TCP接続 {_config.TcpAddress}:{_config.TcpPort} を開けませんでした: " & (ex.Message).ToString() & "", ex)
         End Try
     End Sub
     
@@ -50,8 +50,12 @@ Public Class TcpCommunicationManager
     ''' </summary>
     Public Sub Close()
         Try
-            _stream?.Close()
-            _client?.Close()
+            If _stream IsNot Nothing Then
+                _stream.Close()
+            End If
+            If _client IsNot Nothing Then
+                _client.Close()
+            End If
         Catch ex As Exception
             ' 閉じる際のエラーは無視
         End Try
@@ -91,13 +95,13 @@ Public Class TcpCommunicationManager
             Catch ex As Exception
                 retryCount += 1
                 If retryCount >= _maxRetries Then
-                    Throw New Exception($"TCP読み取りエラー: {_config.TcpAddress}:{_config.TcpPort} ({_config.LogicalName}) - {ex.Message}")
+                    Throw New Exception("TCP読み取りエラー: {_config.TcpAddress}:{_config.TcpPort} ({_config.LogicalName}) - " & (ex.Message).ToString() & "")
                 End If
                 Thread.Sleep(500)
             End Try
         End While
         
-        Throw New Exception($"TCP計測値の取得に失敗しました: {_config.TcpAddress}:{_config.TcpPort}")
+        Throw New Exception("TCP計測値の取得に失敗しました: {_config.TcpAddress}:" & (_config.TcpPort).ToString() & "")
     End Function
     
     ''' <summary>
@@ -140,13 +144,13 @@ Public Class TcpCommunicationManager
                 Catch ex As Exception
                     retryCount += 1
                     If retryCount >= _maxRetries Then
-                        Throw New Exception($"TCP初回計測タイムアウト({timeoutMs}ms): {_config.TcpAddress}:{_config.TcpPort} ({_config.LogicalName})")
+                        Throw New Exception("TCP初回計測タイムアウト({timeoutMs}ms): {_config.TcpAddress}:{_config.TcpPort} (" & (_config.LogicalName).ToString() & ")")
                     End If
                     Thread.Sleep(500)
                 End Try
             End While
             
-            Throw New Exception($"TCP初回計測値の取得に失敗しました: {_config.TcpAddress}:{_config.TcpPort}")
+            Throw New Exception("TCP初回計測値の取得に失敗しました: {_config.TcpAddress}:" & (_config.TcpPort).ToString() & "")
             
         Finally
             ' タイムアウトを元に戻す
@@ -157,8 +161,8 @@ Public Class TcpCommunicationManager
     End Function
     
     ''' <summary>
-    ''' 応答文字列から重量を抽出
-    ''' EK-iシリーズの応答形式: "ST,GS,+0000.00g" など
+    ''' 応答文字列から計測値（個数）を抽出
+    ''' 新しい応答形式: "ST,+00123456 PC"
     ''' </summary>
     Private Function ParseWeight(response As String) As Double
         Try
@@ -166,31 +170,35 @@ Public Class TcpCommunicationManager
                 Throw New Exception("空の応答")
             End If
             
-            ' EK-iシリーズの応答形式をパース
-            ' 例: "ST,GS,+0123.45g"
-            Dim parts As String() = response.Split(","c)
+            ' 新しい応答形式をパース
+            ' 例: "ST,+00123456 PC"
+            ' 先頭: "ST,"、符号: "+" or "-"、数値: 8桁（ゼロパディング）、末尾: " PC"（半角スペース + "PC"、固定3文字）
             
-            If parts.Length >= 3 Then
-                Dim weightPart As String = parts(2).Trim()
-                
-                ' "g" を除去
-                If weightPart.EndsWith("g") Then
-                    weightPart = weightPart.Substring(0, weightPart.Length - 1)
-                End If
-                
-                ' 数値に変換
-                Dim weight As Double
-                If Double.TryParse(weightPart, weight) Then
-                    Return weight
-                Else
-                    Throw New Exception($"重量データの変換に失敗: {weightPart}")
-                End If
+            ' "ST," で始まることを確認
+            If Not response.StartsWith("ST,") Then
+                Throw New Exception("応答フォーマットが不正（ST,で始まらない）: " & response)
+            End If
+            
+            ' " PC" で終わることを確認
+            If Not response.EndsWith(" PC") Then
+                Throw New Exception("応答フォーマットが不正（ PCで終わらない）: " & response)
+            End If
+            
+            ' "ST," の後から " PC" の前までを抽出
+            Dim startIndex As Integer = 3 ' "ST," の長さ
+            Dim endIndex As Integer = response.Length - 3 ' " PC" の長さ
+            Dim countPart As String = response.Substring(startIndex, endIndex - startIndex)
+            
+            ' 符号を含む数値文字列（例: "+00123456" または "-00000100"）を整数値に変換
+            Dim count As Double
+            If Double.TryParse(countPart, count) Then
+                Return count
             Else
-                Throw New Exception($"応答フォーマットが不正: {response}")
+                Throw New Exception("計測値データの変換に失敗: " & countPart)
             End If
             
         Catch ex As Exception
-            Throw New Exception($"重量データの解析に失敗: {response} - {ex.Message}")
+            Throw New Exception("計測値データの解析に失敗: " & response & " - " & ex.Message)
         End Try
     End Function
     

@@ -128,7 +128,7 @@ Public Class Form1
         Me.Controls.Add(btnClearLog)
         
         LogMessage("シミュレータを初期化しました")
-        LogMessage($"ポート設定: Balance1={PORT1}, Balance2={PORT2}, Balance3={PORT3}")
+        LogMessage("ポート設定: Balance1=" & PORT1.ToString() & ", Balance2=" & PORT2.ToString() & ", Balance3=" & PORT3.ToString())
     End Sub
     
     ''' <summary>
@@ -136,7 +136,7 @@ Public Class Form1
     ''' </summary>
     Private Sub CreateBalanceControls(balanceNum As Integer, yPos As Integer, ByRef weight As Double)
         Dim lblBalance As New Label()
-        lblBalance.Text = $"天秤{balanceNum} (Port {PORT1 + balanceNum - 1}):"
+        lblBalance.Text = "天秤" & balanceNum.ToString() & " (Port " & (PORT1 + balanceNum - 1).ToString() & "):"
         lblBalance.Location = New Point(20, yPos)
         lblBalance.Size = New Size(150, 20)
         Me.Controls.Add(lblBalance)
@@ -214,7 +214,7 @@ Public Class Form1
                     _weight3 = newWeight
             End Select
             
-            LogMessage($"天秤{balanceNum}の重量を{newWeight:F2}gに設定しました")
+            LogMessage("天秤" & balanceNum.ToString() & "の重量を" & newWeight.ToString("F2") & "gに設定しました")
         Else
             MessageBox.Show("有効な数値を入力してください", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
@@ -246,11 +246,11 @@ Public Class Form1
             lblServerStatus.ForeColor = Color.Green
             
             LogMessage("サーバーを開始しました")
-            LogMessage($"ポート {PORT1}, {PORT2}, {PORT3} で接続待機中...")
+            LogMessage("ポート " & PORT1.ToString() & ", " & PORT2.ToString() & ", " & PORT3.ToString() & " で接続待機中...")
             
         Catch ex As Exception
-            MessageBox.Show($"サーバー開始エラー: {ex.Message}", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            LogMessage($"サーバー開始エラー: {ex.Message}")
+            MessageBox.Show("サーバー開始エラー: " & ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            LogMessage("サーバー開始エラー: " & ex.Message)
         End Try
     End Sub
     
@@ -261,9 +261,15 @@ Public Class Form1
         Try
             _isRunning = False
             
-            _server1?.Stop()
-            _server2?.Stop()
-            _server3?.Stop()
+            If _server1 IsNot Nothing Then
+                _server1.Stop()
+            End If
+            If _server2 IsNot Nothing Then
+                _server2.Stop()
+            End If
+            If _server3 IsNot Nothing Then
+                _server3.Stop()
+            End If
             
             btnStartServer.Enabled = True
             btnStopServer.Enabled = False
@@ -273,8 +279,8 @@ Public Class Form1
             LogMessage("サーバーを停止しました")
             
         Catch ex As Exception
-            MessageBox.Show($"サーバー停止エラー: {ex.Message}", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            LogMessage($"サーバー停止エラー: {ex.Message}")
+            MessageBox.Show("サーバー停止エラー: " & ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            LogMessage("サーバー停止エラー: " & ex.Message)
         End Try
     End Sub
     
@@ -284,18 +290,30 @@ Public Class Form1
     Private Sub AcceptClients(server As TcpListener, balanceNum As Integer)
         While _isRunning
             Try
-                Dim client As TcpClient = server.AcceptTcpClient()
-                
-                Me.Invoke(Sub()
-                             UpdateStatus(balanceNum, "接続中", Color.Green)
-                             LogMessage($"天秤{balanceNum}: クライアント接続")
-                         End Sub)
-                
-                ' クライアント処理を別スレッドで実行
-                Task.Run(Sub() HandleClient(client, balanceNum))
-                
+                ' Pendingで接続があるかチェックしてからAccept
+                If server.Pending() Then
+                    Dim client As TcpClient = server.AcceptTcpClient()
+
+                    Me.Invoke(Sub()
+                                  UpdateStatus(balanceNum, "接続中", Color.Green)
+                                  LogMessage("天秤" & balanceNum.ToString() & ": クライアント接続")
+                              End Sub)
+
+                    ' クライアント処理を別スレッドで実行
+                    Task.Run(Sub() HandleClient(client, balanceNum))
+                Else
+                    ' 接続待ちの間は少し待機
+                    Thread.Sleep(100)
+                End If
+
+            Catch ex As SocketException
+                ' ソケットエラー（停止時など）は無視
+                If _isRunning Then
+                    Me.Invoke(Sub() LogMessage("天秤" & balanceNum.ToString() & ": ソケットエラー - " & ex.Message))
+                End If
+                Exit While
             Catch ex As Exception When _isRunning
-                Me.Invoke(Sub() LogMessage($"天秤{balanceNum}: 接続エラー - {ex.Message}"))
+                Me.Invoke(Sub() LogMessage("天秤" & balanceNum.ToString() & ": 接続エラー - " & ex.Message))
             End Try
         End While
     End Sub
@@ -317,7 +335,7 @@ Public Class Form1
                     If bytesRead > 0 Then
                         Dim command As String = Encoding.ASCII.GetString(buffer, 0, bytesRead).Trim()
                         
-                        Me.Invoke(Sub() LogMessage($"天秤{balanceNum}: 受信 '{command}'"))
+                        Me.Invoke(Sub() LogMessage("天秤" & balanceNum.ToString() & ": 受信 '" & command & "'"))
                         
                         ' コマンド処理
                         Dim response As String = ProcessCommand(command, balanceNum)
@@ -327,7 +345,7 @@ Public Class Form1
                             stream.Write(responseBytes, 0, responseBytes.Length)
                             stream.Flush()
                             
-                            Me.Invoke(Sub() LogMessage($"天秤{balanceNum}: 送信 '{response}'"))
+                            Me.Invoke(Sub() LogMessage("天秤" & balanceNum.ToString() & ": 送信 '" & response & "'"))
                         End If
                     End If
                 End If
@@ -336,13 +354,17 @@ Public Class Form1
             End While
             
         Catch ex As Exception
-            Me.Invoke(Sub() LogMessage($"天秤{balanceNum}: 通信エラー - {ex.Message}"))
+            Me.Invoke(Sub() LogMessage("天秤" & balanceNum.ToString() & ": 通信エラー - " & ex.Message))
         Finally
-            stream?.Close()
-            client?.Close()
+            If stream IsNot Nothing Then
+                stream.Close()
+            End If
+            If client IsNot Nothing Then
+                client.Close()
+            End If
             Me.Invoke(Sub()
                          UpdateStatus(balanceNum, "切断", Color.Red)
-                         LogMessage($"天秤{balanceNum}: クライアント切断")
+                         LogMessage("天秤" & (balanceNum).ToString() & ": クライアント切断")
                      End Sub)
         End Try
     End Sub
@@ -355,7 +377,8 @@ Public Class Form1
             Case "Q"  ' 重量問い合わせコマンド
                 Dim weight As Double = GetWeight(balanceNum)
                 ' EK-iシリーズの応答形式: "ST,GS,+0000.00g"
-                Return $"ST,GS,{weight:+0000.00;-0000.00}g"
+                Dim formattedWeight As String = If(weight >= 0, "+", "") & weight.ToString("0000.00")
+                Return "ST,GS," & formattedWeight & "g"
             
             Case "Z", "ZERO"  ' ゼロ点調整（シミュレーションなので成功を返す）
                 Return "ST,GS,Zero OK"
@@ -409,7 +432,7 @@ Public Class Form1
             txtLog.Invoke(Sub() LogMessage(message))
         Else
             Dim timestamp As String = DateTime.Now.ToString("HH:mm:ss.fff")
-            txtLog.AppendText($"[{timestamp}] {message}" & vbCrLf)
+            txtLog.AppendText("[{timestamp}] " & (message).ToString() & "" & vbCrLf)
             txtLog.ScrollToCaret()
         End If
     End Sub
@@ -427,9 +450,16 @@ Public Class Form1
     ''' </summary>
     Protected Overrides Sub OnFormClosing(e As FormClosingEventArgs)
         _isRunning = False
-        _server1?.Stop()
-        _server2?.Stop()
-        _server3?.Stop()
+        If _server1 IsNot Nothing Then
+            _server1.Stop()
+        End If
+        If _server2 IsNot Nothing Then
+            _server2.Stop()
+        End If
+        If _server3 IsNot Nothing Then
+            _server3.Stop()
+        End If
         MyBase.OnFormClosing(e)
     End Sub
 End Class
+

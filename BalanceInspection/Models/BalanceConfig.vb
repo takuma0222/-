@@ -1,4 +1,4 @@
-''' <summary>
+﻿''' <summary>
 ''' バランス設定を保持するクラス
 ''' </summary>
 Public Class BalanceConfig
@@ -52,3 +52,4 @@ Public Class BalanceConfig
     ''' </summary>
     Public Property TcpPort As Integer = 9001
 End Class
+

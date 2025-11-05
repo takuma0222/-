@@ -1,4 +1,4 @@
-Imports System.IO.Ports
+﻿Imports System.IO.Ports
 Imports System.Threading
 
 ''' <summary>
@@ -35,7 +35,9 @@ Public Class SerialPortSimulator
     
     Public Sub StopSimulation()
         _isRunning = False
-        _serverThread?.Join(1000)
+        If _serverThread IsNot Nothing Then
+            _serverThread.Join(1000)
+        End If
     End Sub
     
     Private Sub SimulationLoop()
@@ -52,7 +54,7 @@ Public Class SerialPortSimulator
             Catch ex As ThreadAbortException
                 Exit While
             Catch ex As Exception
-                RaiseEvent MessageReceived($"シミュレーションエラー: {ex.Message}")
+                RaiseEvent MessageReceived("シミュレーションエラー: " & ex.Message)
             End Try
         End While
     End Sub

@@ -1,4 +1,4 @@
-Imports System.IO
+﻿Imports System.IO
 Imports System.Text
 
 ''' <summary>
@@ -52,6 +52,20 @@ Public Class CardConditionLoader
                 Integer.TryParse(parts(5).Trim(), condition.EdgeGuard)
                 Integer.TryParse(parts(6).Trim(), condition.BubbleInterference)
 
+                ' 品名、枚数、所在、工程(追加のカラム)
+                If parts.Length >= 8 Then
+                    condition.ProductName = parts(7).Trim()
+                End If
+                If parts.Length >= 9 Then
+                    Integer.TryParse(parts(8).Trim(), condition.Quantity)
+                End If
+                If parts.Length >= 10 Then
+                    condition.Location = parts(9).Trim()
+                End If
+                If parts.Length >= 11 Then
+                    condition.Process = parts(10).Trim()
+                End If
+
                 _conditions(condition.CardNo) = condition
             Next
         Catch ex As Exception
@@ -64,10 +78,10 @@ Public Class CardConditionLoader
     ''' </summary>
     Private Sub CreateSampleCsv()
         Dim sb As New StringBuilder()
-        sb.AppendLine("CardNo,投入前10mmクッション材,投入後1mmクッション材,投入後5mmクッション材,投入後10mmクッション材,エッジガード,気泡緩衝材")
-        sb.AppendLine("e00123,1,2,0,0,1,5")
-        sb.AppendLine("e00124,1,1,2,1,1,3")
-        sb.AppendLine("e00125,2,1,1,0,1,10")
+        sb.AppendLine("CardNo,投入前10mmクッション材,投入後1mmクッション材,投入後5mmクッション材,投入後10mmクッション材,エッジガード,気泡緩衝材,品名,枚数,所在,工程")
+        sb.AppendLine("e00123,1,2,0,0,1,5,サンプル製品A,100,倉庫A-1,検品")
+        sb.AppendLine("e00124,1,1,2,1,1,3,サンプル製品B,50,倉庫B-2,梱包")
+        sb.AppendLine("e00125,2,1,1,0,1,10,サンプル製品C,200,倉庫C-3")
         
         File.WriteAllText(_csvPath, sb.ToString(), New UTF8Encoding(True))
     End Sub
@@ -90,3 +104,4 @@ Public Class CardConditionLoader
         LoadConditions()
     End Sub
 End Class
+

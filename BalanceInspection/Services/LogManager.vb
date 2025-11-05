@@ -1,4 +1,4 @@
-Imports System.IO
+﻿Imports System.IO
 Imports System.Text
 
 ''' <summary>
@@ -34,12 +34,12 @@ Public Class LogManager
                 
                 ' データ行を書き込み
                 Dim timestamp As String = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
-                Dim line As String = $"{timestamp},{employeeNo},{cardNo},{condition.Pre10mm},{condition.Post1mm},{condition.Post5mm},{condition.Post10mm},{condition.EdgeGuard},{condition.BubbleInterference},{result}"
-                writer.WriteLine(line)
+                Dim logLine As String = timestamp & "," & employeeNo & "," & cardNo & "," & condition.Pre10mm.ToString() & "," & condition.Post1mm.ToString() & "," & condition.Post5mm.ToString() & "," & condition.Post10mm.ToString() & "," & condition.EdgeGuard.ToString() & "," & condition.BubbleInterference.ToString() & "," & result.ToString()
+                writer.WriteLine(logLine)
             End Using
             
         Catch ex As Exception
-            Throw New Exception($"ログ書き込みエラー: {ex.Message}", ex)
+            Throw New Exception("ログ書き込みエラー: " & (ex.Message).ToString() & "", ex)
         End Try
     End Sub
 
@@ -58,7 +58,7 @@ Public Class LogManager
             
             Using writer As New StreamWriter(errorPath, True, New UTF8Encoding(True))
                 Dim timestamp As String = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")
-                writer.WriteLine($"[{timestamp}] {errorMessage}")
+                writer.WriteLine("[" & timestamp & "] " & errorMessage)
             End Using
             
         Catch ex As Exception
@@ -66,3 +66,4 @@ Public Class LogManager
         End Try
     End Sub
 End Class
+

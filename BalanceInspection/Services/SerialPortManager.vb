@@ -1,4 +1,4 @@
-Imports System.IO.Ports
+﻿Imports System.IO.Ports
 Imports System.Text
 Imports System.Threading
 
@@ -59,7 +59,7 @@ Public Class SerialPortManager
             
             _port.Open()
         Catch ex As Exception
-            Throw New Exception($"ポート {_config.PortName} を開けませんでした: {ex.Message}", ex)
+            Throw New Exception("ポート {_config.PortName} を開けませんでした: " & (ex.Message).ToString() & "", ex)
         End Try
     End Sub
 
@@ -106,19 +106,19 @@ Public Class SerialPortManager
             Catch ex As TimeoutException
                 retryCount += 1
                 If retryCount >= _maxRetries Then
-                    Throw New Exception($"タイムアウト: {_config.PortName} ({_config.LogicalName})")
+                    Throw New Exception("タイムアウト: {_config.PortName} (" & (_config.LogicalName).ToString() & ")")
                 End If
                 Thread.Sleep(500)
             Catch ex As Exception
                 retryCount += 1
                 If retryCount >= _maxRetries Then
-                    Throw New Exception($"読み取りエラー: {_config.PortName} ({_config.LogicalName}) - {ex.Message}")
+                    Throw New Exception("読み取りエラー: {_config.PortName} ({_config.LogicalName}) - " & (ex.Message).ToString() & "")
                 End If
                 Thread.Sleep(500)
             End Try
         End While
         
-        Throw New Exception($"計測値の取得に失敗しました: {_config.PortName}")
+        Throw New Exception("計測値の取得に失敗しました: " & (_config.PortName).ToString() & "")
     End Function
 
     ''' <summary>
@@ -156,19 +156,19 @@ Public Class SerialPortManager
                 Catch ex As TimeoutException
                     retryCount += 1
                     If retryCount >= _maxRetries Then
-                        Throw New Exception($"初回計測タイムアウト({timeoutMs}ms): {_config.PortName} ({_config.LogicalName})")
+                        Throw New Exception("初回計測タイムアウト({timeoutMs}ms): {_config.PortName} (" & (_config.LogicalName).ToString() & ")")
                     End If
                     Thread.Sleep(500)
                 Catch ex As Exception
                     retryCount += 1
                     If retryCount >= _maxRetries Then
-                        Throw New Exception($"初回計測読み取りエラー: {_config.PortName} ({_config.LogicalName}) - {ex.Message}")
+                        Throw New Exception("初回計測読み取りエラー: {_config.PortName} ({_config.LogicalName}) - " & (ex.Message).ToString() & "")
                     End If
                     Thread.Sleep(500)
                 End Try
             End While
             
-            Throw New Exception($"初回計測値の取得に失敗しました: {_config.PortName}")
+            Throw New Exception("初回計測値の取得に失敗しました: " & (_config.PortName).ToString() & "")
             
         Finally
             ' タイムアウトを元に戻す
@@ -179,8 +179,8 @@ Public Class SerialPortManager
     End Function
 
     ''' <summary>
-    ''' 応答文字列から重量を抽出
-    ''' EK-iシリーズの応答形式: "ST,GS,+0000.00g" など
+    ''' 応答文字列から計測値（個数）を抽出
+    ''' 新しい応答形式: "ST,+00123456 PC"
     ''' </summary>
     Private Function ParseWeight(response As String) As Double
         Try
@@ -188,28 +188,35 @@ Public Class SerialPortManager
                 Throw New Exception("空の応答")
             End If
             
-            ' ST,GS,+0000.00g 形式をパース
-            Dim parts As String() = response.Split(","c)
-            If parts.Length < 3 Then
-                Throw New Exception($"不正な応答形式: {response}")
+            ' 新しい応答形式をパース
+            ' 例: "ST,+00123456 PC"
+            ' 先頭: "ST,"、符号: "+" or "-"、数値: 8桁（ゼロパディング）、末尾: " PC"（半角スペース + "PC"、固定3文字）
+            
+            ' "ST," で始まることを確認
+            If Not response.StartsWith("ST,") Then
+                Throw New Exception("応答フォーマットが不正（ST,で始まらない）: " & response)
             End If
             
-            ' 重量部分を抽出（3番目の要素）
-            Dim weightStr As String = parts(2).Trim()
+            ' " PC" で終わることを確認
+            If Not response.EndsWith(" PC") Then
+                Throw New Exception("応答フォーマットが不正（ PCで終わらない）: " & response)
+            End If
             
-            ' 単位（g, kg など）を除去
-            weightStr = System.Text.RegularExpressions.Regex.Replace(weightStr, "[a-zA-Z]", "")
+            ' "ST," の後から " PC" の前までを抽出
+            Dim startIndex As Integer = 3 ' "ST," の長さ
+            Dim endIndex As Integer = response.Length - 3 ' " PC" の長さ
+            Dim countPart As String = response.Substring(startIndex, endIndex - startIndex)
             
-            ' 数値に変換
-            Dim weight As Double
-            If Double.TryParse(weightStr, weight) Then
-                Return weight
+            ' 符号を含む数値文字列（例: "+00123456" または "-00000100"）を整数値に変換
+            Dim count As Double
+            If Double.TryParse(countPart, count) Then
+                Return count
             Else
-                Throw New Exception($"数値変換失敗: {weightStr}")
+                Throw New Exception("計測値データの変換に失敗: " & countPart)
             End If
             
         Catch ex As Exception
-            Throw New Exception($"応答のパースに失敗: {response} - {ex.Message}")
+            Throw New Exception("計測値データの解析に失敗: " & response & " - " & ex.Message)
         End Try
     End Function
 
@@ -231,3 +238,4 @@ Public Class SerialPortManager
         End Get
     End Property
 End Class
+

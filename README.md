@@ -9,6 +9,7 @@
 ## 主な機能
 
 ### 🎯 検品アプリケーション
+- **従業員番号チェック機能**: 6桁の従業員番号を入力すると自動でCSVから氏名を検索・表示（新機能✨）
 - **従業員番号・カード番号の入力**: 6桁の英数字を入力
 - **使用部材条件の表示**: CSVファイルからカード番号に対応する条件を読み込み
 - **3台の天秤から計測値を取得**: TCP通信またはRS-232C通信で順次取得
@@ -37,10 +38,13 @@ BalanceInspection/                 # 🎯 検品アプリケーション
 ├── Services/
 │   ├── ConfigLoader.vb           # 設定ファイル読み込み
 │   ├── CardConditionLoader.vb    # カード条件CSV読み込み
+│   ├── EmployeeLoader.vb         # 従業員情報CSV読み込み ✨ 新機能
 │   ├── SerialPortManager.vb      # シリアルポート通信
-│   ├── TcpCommunicationManager.vb # TCP通信マネージャー ✨ 新機能
+│   ├── TcpCommunicationManager.vb # TCP通信マネージャー
 │   ├── BalanceManager.vb         # 天秤管理（3台、TCP/シリアル統合）
 │   └── LogManager.vb             # ログ出力管理
+├── data/                          # データディレクトリ ✨ 新追加
+│   └── employees.csv              # 従業員マスタCSV
 └── My Project/                    # プロジェクト設定ファイル
 
 BalanceSimulator/                  # 🧪 電子天秤シミュレータ ✨ 新追加
@@ -105,6 +109,46 @@ BalanceSimulator/                  # 🧪 電子天秤シミュレータ ✨ 新
 - 投入後10mmクッション材
 - エッジガード
 - 気泡緩衝材
+- 品名: 製品名
+- 枚数: ロット枚数
+- 所在: 保管場所
+
+## セットアップ（他端末での環境構築）
+
+### 必要な環境
+- Windows 10/11
+- Visual Studio 2017以降（.NET Framework 4.7.1以降対応）
+- または MSBuild 15.0以降
+
+### クローンとビルド
+
+1. **リポジトリをクローン**
+   ```cmd
+   git clone https://github.com/takuma0222/-.git
+   cd -
+   ```
+
+2. **ビルド実行**
+   ```cmd
+   "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe" BalanceInspection.sln /p:Configuration=Release
+   ```
+   
+   または Visual Studio で `BalanceInspection.sln` を開いてビルド
+
+3. **実行ファイルの場所**
+   ```
+   BalanceInspection\bin\Release\BalanceInspection.exe
+   ```
+
+4. **初回起動時の自動生成**
+   - `appsettings.json`: アプリ設定（サンプルから自動生成）
+   - `card_conditions.csv`: カード条件データ（サンプルから自動生成）
+   - `logs/`: ログディレクトリ（自動作成）
+
+### 注意事項
+- NuGet パッケージは自動復元されます
+- 設定ファイルのサンプルは `examples/` フォルダにあります
+- 必要に応じて `appsettings.json` と `card_conditions.csv` を編集してください
 
 ## 使用方法
 
@@ -121,7 +165,9 @@ BalanceSimulator/                  # 🧪 電子天秤シミュレータ ✨ 新
    ```
 
 3. **検品作業の実行**
-   - 従業員番号（6桁）を入力
+   - **従業員番号（6桁）を入力** → 自動で氏名検索・表示 ✨ 新機能
+     - 該当あり: 氏名が表示され、カード番号欄が有効化
+     - 該当なし: 赤文字で「該当するユーザがありません。」と表示、入力欄クリア
    - カード番号（6桁）を入力 → **自動で初回計測開始**
    - 使用部材条件が表示され、5秒タイムアウトで初回計測が完了
    - 「照合」ボタンをクリックして照合時計測を実行
@@ -129,6 +175,17 @@ BalanceSimulator/                  # 🧪 電子天秤シミュレータ ✨ 新
      - 合格: 「検査合格」と表示され、ログに記録
      - 不合格: 不一致項目が赤字で表示
    - 「キャンセル」ボタンで初期画面に戻る
+
+#### 従業員マスタCSVの準備
+`data/employees.csv` を以下の形式で準備してください：
+```csv
+123456,山田太郎
+234567,佐藤花子
+345678,鈴木一郎
+```
+- エンコーディング: UTF-8
+- 区切り文字: カンマ
+- 詳細は [EMPLOYEE_CHECK_GUIDE.md](BalanceInspection/EMPLOYEE_CHECK_GUIDE.md) を参照
 
 ### 🔧 実運用環境での使用
 
