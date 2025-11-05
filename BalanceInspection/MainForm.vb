@@ -80,10 +80,11 @@ Public Class MainForm
             e.Handled = True
         End If
         
-        ' 大文字を小文字に変換
-        If Char.IsUpper(e.KeyChar) Then
-            e.KeyChar = Char.ToLower(e.KeyChar)
-        End If
+        ' 【UI仕様変更】大文字英数字の入力を許可（大文字を小文字に変換しない）
+        ' 旧処理：大文字を小文字に変換
+        ' If Char.IsUpper(e.KeyChar) Then
+        '     e.KeyChar = Char.ToLower(e.KeyChar)
+        ' End If
     End Sub
 
     ''' <summary>
@@ -654,8 +655,8 @@ Public Class MainForm
             lblLocationValue.Text = ""
             btnVerify.Enabled = False
 
-            ' 条件なしの場合もカードNo入力欄をクリア
-            txtCardNo.Text = ""
+            ' 【UI仕様変更】条件なしの場合もカードNo入力欄をクリアしない
+            ' 旧処理：txtCardNo.Text = ""
             Return
         End If
 
@@ -665,25 +666,35 @@ Public Class MainForm
         ' カード情報を表示
         DisplayCardInfo(_currentCondition)
 
+        ' 【UI仕様変更】カードNo入力欄を非活性化
+        txtCardNo.Enabled = False
+
         ' 初回計測を実行
         Try
+            ' 【UI仕様変更】測定中メッセージを表示
+            ShowMessage("秤の値測定中...", Color.Black)
+            
             _balanceManager.PerformInitialReading()
             
             ' 天秤から取得した値を表示
             DisplayInitialBalanceReadings(_currentCondition)
             
-            ShowMessage("使用部材条件を表示しました", Color.Green)
+            ' 【UI仕様変更】測定完了後のメッセージを変更
+            ShowMessage("各部材を必要枚数分準備してください", Color.Green)
             btnVerify.Enabled = True
 
-            ' カードNo入力欄をクリア
-            txtCardNo.Text = ""
+            ' 【UI仕様変更】カードNo入力欄の内容を保持（クリアしない）
+            ' 旧処理：txtCardNo.Text = ""
         Catch ex As Exception
             ShowMessage("計測エラー:" & ex.Message.Substring(0, Math.Min(20, ex.Message.Length)), Color.Red)
             _logManager.WriteErrorLog("初回計測エラー: " & ex.Message)
             btnVerify.Enabled = False
 
-            ' エラー時もカードNo入力欄をクリア
-            txtCardNo.Text = ""
+            ' 【UI仕様変更】エラー時もカードNo入力欄の内容を保持（クリアしない）
+            ' 旧処理：txtCardNo.Text = ""
+            
+            ' 【UI仕様変更】エラー時はカードNo入力欄を再度活性化
+            txtCardNo.Enabled = True
         End Try
     End Sub
 
