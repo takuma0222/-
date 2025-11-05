@@ -344,11 +344,16 @@ Public Class MainForm
             If isValid Then
                 ' OK: ログ出力
                 _logManager.WriteInspectionLog(employeeNo, txtCardNo.Text.Trim(), _currentCondition, "OK")
-                ShowMessage("検査合格", Color.Green)
+                ShowMessage("照合OK", Color.Green)
                 btnVerify.Enabled = False
                 ' 照合OK時は両方の入力欄をクリアして活性化
+                ' TextChangedイベントを一時的に無効化してメッセージ上書きを防ぐ
+                RemoveHandler txtEmployeeNo.TextChanged, AddressOf TxtEmployeeNo_TextChanged
+                RemoveHandler txtCardNo.TextChanged, AddressOf TxtCardNo_TextChanged
                 txtEmployeeNo.Text = ""
                 txtCardNo.Text = ""
+                AddHandler txtEmployeeNo.TextChanged, AddressOf TxtEmployeeNo_TextChanged
+                AddHandler txtCardNo.TextChanged, AddressOf TxtCardNo_TextChanged
                 txtEmployeeNo.Enabled = True
                 txtCardNo.Enabled = True
                 txtEmployeeNo.Focus()
