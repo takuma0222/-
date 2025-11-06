@@ -282,6 +282,7 @@ Public Class MainForm
 
     ''' <summary>
     ''' 照合時計測値を表示（AFTER列）し、過不足枚数を計算して表示
+    ''' 計算式: 必要枚数 - BEFORE - AFTER (正=過剰、負=不足、0=OK)
     ''' </summary>
     Private Sub DisplayVerificationReadings(condition As CardCondition)
         Dim verificationReadings As Dictionary(Of String, Double) = _balanceManager.VerificationReadings
@@ -297,7 +298,6 @@ Public Class MainForm
         If verificationReadings.ContainsKey("Pre_10mm") And initialReadings.ContainsKey("Pre_10mm") Then
             Dim afterValue As Double = verificationReadings("Pre_10mm")
             Dim beforeValue As Double = initialReadings("Pre_10mm")
-            ' 新計算式: 必要枚数 - BEFORE - AFTER (正=過剰、負=不足、0=OK)
             Dim totalRequired As Integer = pre10mmRequired + post10mmRequired
             Dim differenceCount As Double = totalRequired - beforeValue - afterValue
             
@@ -314,7 +314,6 @@ Public Class MainForm
         If verificationReadings.ContainsKey("Post_1mm") And initialReadings.ContainsKey("Post_1mm") Then
             Dim afterValue As Double = verificationReadings("Post_1mm")
             Dim beforeValue As Double = initialReadings("Post_1mm")
-            ' 新計算式: 必要枚数 - BEFORE - AFTER (正=過剰、負=不足、0=OK)
             Dim differenceCount As Double = post1mmRequired - beforeValue - afterValue
             
             lblPost1mmSecured.Text = afterValue.ToString("F0") & "個"
@@ -325,7 +324,6 @@ Public Class MainForm
         If verificationReadings.ContainsKey("Post_5mm") And initialReadings.ContainsKey("Post_5mm") Then
             Dim afterValue As Double = verificationReadings("Post_5mm")
             Dim beforeValue As Double = initialReadings("Post_5mm")
-            ' 新計算式: 必要枚数 - BEFORE - AFTER (正=過剰、負=不足、0=OK)
             Dim differenceCount As Double = post5mmRequired - beforeValue - afterValue
             
             lblPost5mmSecured.Text = afterValue.ToString("F0") & "個"
@@ -335,6 +333,7 @@ Public Class MainForm
 
     ''' <summary>
     ''' 過不足枚数から判定結果と色を取得
+    ''' 判定ロジック: 0→OK(緑)、1以上→過剰(赤)、負の値→不足(赤)
     ''' </summary>
     Private Function GetJudgmentResult(shortageCount As Double) As (text As String, color As Color)
         Dim roundedShortage As Integer = CInt(Math.Round(shortageCount))
@@ -343,7 +342,7 @@ Public Class MainForm
             Return ("OK", Color.Green)
         ElseIf roundedShortage >= 1 Then
             Return ("過剰", Color.Red)
-        Else ' -1以下
+        Else ' 負の値（不足）
             Return ("不足", Color.Red)
         End If
     End Function
