@@ -281,86 +281,135 @@ Public Class MainForm
     End Sub
 
     ''' <summary>
-    ''' 照合時計測値を表示（AFTER列）し、確保枚数（差分）を計算して表示
+    ''' 照合時計測値を表示（AFTER列）し、過不足枚数を計算して表示
     ''' </summary>
     Private Sub DisplayVerificationReadings(condition As CardCondition)
         Dim verificationReadings As Dictionary(Of String, Double) = _balanceManager.VerificationReadings
         Dim initialReadings As Dictionary(Of String, Double) = _balanceManager.InitialReadings
 
-        ' 秤(9001)の値を投入前10mmと投入後10mmのAFTER列に表示し、確保枚数を計算
-        If verificationReadings.ContainsKey("Pre_10mm") And initialReadings.ContainsKey("Pre_10mm") Then
-            Dim afterValue As Double = verificationReadings("Pre_10mm")
-            Dim beforeValue As Double = initialReadings("Pre_10mm")
-            Dim secured As Double = beforeValue - afterValue
-            
-            ' 投入前10mm
-            lblPre10mmSecured.Text = afterValue.ToString("F0") & "個"
-            lblPre10mmUsed.Text = secured.ToString("F0") & "個"
-            
-            ' 投入後10mm
-            lblPost10mmSecured.Text = afterValue.ToString("F0") & "個"
-            lblPost10mmUsed.Text = secured.ToString("F0") & "個"
-        End If
-
-        ' 秤(9002)の値を投入後1mmのAFTER列に表示し、確保枚数を計算
-        If verificationReadings.ContainsKey("Post_1mm") And initialReadings.ContainsKey("Post_1mm") Then
-            Dim afterValue As Double = verificationReadings("Post_1mm")
-            Dim beforeValue As Double = initialReadings("Post_1mm")
-            Dim secured As Double = beforeValue - afterValue
-            
-            lblPost1mmSecured.Text = afterValue.ToString("F0") & "個"
-            lblPost1mmUsed.Text = secured.ToString("F0") & "個"
-        End If
-
-        ' 秤(9003)の値を投入後5mmのAFTER列に表示し、確保枚数を計算
-        If verificationReadings.ContainsKey("Post_5mm") And initialReadings.ContainsKey("Post_5mm") Then
-            Dim afterValue As Double = verificationReadings("Post_5mm")
-            Dim beforeValue As Double = initialReadings("Post_5mm")
-            Dim secured As Double = beforeValue - afterValue
-            
-            lblPost5mmSecured.Text = afterValue.ToString("F0") & "個"
-            lblPost5mmUsed.Text = secured.ToString("F0") & "個"
-        End If
-    End Sub
-
-    ''' <summary>
-    ''' 判定を表示（必要枚数＝確保枚数でOK、それ以外はNG）
-    ''' </summary>
-    Private Sub DisplayJudgment(condition As CardCondition)
         ' 使用部材条件が取得できている場合はそちらを使用
         Dim pre10mmRequired As Integer = If(_currentMaterialCondition IsNot Nothing, _currentMaterialCondition.Pre10mm, condition.Pre10mm)
         Dim post1mmRequired As Integer = If(_currentMaterialCondition IsNot Nothing, _currentMaterialCondition.Post1mm, condition.Post1mm)
         Dim post5mmRequired As Integer = If(_currentMaterialCondition IsNot Nothing, _currentMaterialCondition.Post5mm, condition.Post5mm)
         Dim post10mmRequired As Integer = If(_currentMaterialCondition IsNot Nothing, _currentMaterialCondition.Post10mm, condition.Post10mm)
 
-        ' 投入前10mmと投入後10mmの判定（同じ秤9001を使用）
-        ' 両方の必要枚数の合計が確保枚数と一致していればOK
-        If Not String.IsNullOrEmpty(lblPre10mmUsed.Text) AndAlso lblPre10mmUsed.Text <> "不要" Then
-            Dim secured As Double = Double.Parse(lblPre10mmUsed.Text.Replace("個", ""))
+        ' 秤(9001)の値を投入前10mmと投入後10mmのAFTER列に表示し、過不足枚数を計算
+        If verificationReadings.ContainsKey("Pre_10mm") And initialReadings.ContainsKey("Pre_10mm") Then
+            Dim afterValue As Double = verificationReadings("Pre_10mm")
+            Dim beforeValue As Double = initialReadings("Pre_10mm")
+            ' 新計算式: 必要枚数 - BEFORE - AFTER
             Dim totalRequired As Integer = pre10mmRequired + post10mmRequired
-            Dim isOk As Boolean = Math.Round(secured) = totalRequired
+            Dim shortage As Double = totalRequired - beforeValue - afterValue
+            
+            ' 投入前10mm
+            lblPre10mmSecured.Text = afterValue.ToString("F0") & "個"
+            lblPre10mmUsed.Text = shortage.ToString("F0") & "個"
+            
+            ' 投入後10mm
+            lblPost10mmSecured.Text = afterValue.ToString("F0") & "個"
+            lblPost10mmUsed.Text = shortage.ToString("F0") & "個"
+        End If
+
+        ' 秤(9002)の値を投入後1mmのAFTER列に表示し、過不足枚数を計算
+        If verificationReadings.ContainsKey("Post_1mm") And initialReadings.ContainsKey("Post_1mm") Then
+            Dim afterValue As Double = verificationReadings("Post_1mm")
+            Dim beforeValue As Double = initialReadings("Post_1mm")
+            ' 新計算式: 必要枚数 - BEFORE - AFTER
+            Dim shortage As Double = post1mmRequired - beforeValue - afterValue
+            
+            lblPost1mmSecured.Text = afterValue.ToString("F0") & "個"
+            lblPost1mmUsed.Text = shortage.ToString("F0") & "個"
+        End If
+
+        ' 秤(9003)の値を投入後5mmのAFTER列に表示し、過不足枚数を計算
+        If verificationReadings.ContainsKey("Post_5mm") And initialReadings.ContainsKey("Post_5mm") Then
+            Dim afterValue As Double = verificationReadings("Post_5mm")
+            Dim beforeValue As Double = initialReadings("Post_5mm")
+            ' 新計算式: 必要枚数 - BEFORE - AFTER
+            Dim shortage As Double = post5mmRequired - beforeValue - afterValue
+            
+            lblPost5mmSecured.Text = afterValue.ToString("F0") & "個"
+            lblPost5mmUsed.Text = shortage.ToString("F0") & "個"
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 判定を表示（過不足枚数に応じて判定を表示）
+    ''' </summary>
+    Private Sub DisplayJudgment(condition As CardCondition)
+        ' 投入前10mmと投入後10mmの判定（同じ秤9001を使用、同じ過不足枚数）
+        If Not String.IsNullOrEmpty(lblPre10mmUsed.Text) AndAlso lblPre10mmUsed.Text <> "不要" Then
+            Dim shortage As Double = Double.Parse(lblPre10mmUsed.Text.Replace("個", ""))
+            Dim roundedShortage As Integer = CInt(Math.Round(shortage))
+            
+            ' 判定ロジック: 0→OK、1以上→過剰、-1以下→不足
+            Dim judgmentText As String
+            Dim judgmentColor As Color
+            
+            If roundedShortage = 0 Then
+                judgmentText = "OK"
+                judgmentColor = Color.Green
+            ElseIf roundedShortage >= 1 Then
+                judgmentText = "過剰"
+                judgmentColor = Color.Red
+            Else ' -1以下
+                judgmentText = "不足"
+                judgmentColor = Color.Red
+            End If
             
             ' 投入前10mmの判定
-            lblPre10mmJudgment.Text = If(isOk, "OK", "NG")
-            lblPre10mmJudgment.ForeColor = If(isOk, Color.Green, Color.Red)
+            lblPre10mmJudgment.Text = judgmentText
+            lblPre10mmJudgment.ForeColor = judgmentColor
             
             ' 投入後10mmの判定（同じ結果）
-            lblPost10mmJudgment.Text = If(isOk, "OK", "NG")
-            lblPost10mmJudgment.ForeColor = If(isOk, Color.Green, Color.Red)
+            lblPost10mmJudgment.Text = judgmentText
+            lblPost10mmJudgment.ForeColor = judgmentColor
         End If
 
         ' 投入後1mmの判定
         If Not String.IsNullOrEmpty(lblPost1mmUsed.Text) AndAlso lblPost1mmUsed.Text <> "不要" Then
-            Dim secured As Double = Double.Parse(lblPost1mmUsed.Text.Replace("個", ""))
-            lblPost1mmJudgment.Text = If(Math.Round(secured) = post1mmRequired, "OK", "NG")
-            lblPost1mmJudgment.ForeColor = If(lblPost1mmJudgment.Text = "OK", Color.Green, Color.Red)
+            Dim shortage As Double = Double.Parse(lblPost1mmUsed.Text.Replace("個", ""))
+            Dim roundedShortage As Integer = CInt(Math.Round(shortage))
+            
+            Dim judgmentText As String
+            Dim judgmentColor As Color
+            
+            If roundedShortage = 0 Then
+                judgmentText = "OK"
+                judgmentColor = Color.Green
+            ElseIf roundedShortage >= 1 Then
+                judgmentText = "過剰"
+                judgmentColor = Color.Red
+            Else ' -1以下
+                judgmentText = "不足"
+                judgmentColor = Color.Red
+            End If
+            
+            lblPost1mmJudgment.Text = judgmentText
+            lblPost1mmJudgment.ForeColor = judgmentColor
         End If
 
         ' 投入後5mmの判定
         If Not String.IsNullOrEmpty(lblPost5mmUsed.Text) AndAlso lblPost5mmUsed.Text <> "不要" Then
-            Dim secured As Double = Double.Parse(lblPost5mmUsed.Text.Replace("個", ""))
-            lblPost5mmJudgment.Text = If(Math.Round(secured) = post5mmRequired, "OK", "NG")
-            lblPost5mmJudgment.ForeColor = If(lblPost5mmJudgment.Text = "OK", Color.Green, Color.Red)
+            Dim shortage As Double = Double.Parse(lblPost5mmUsed.Text.Replace("個", ""))
+            Dim roundedShortage As Integer = CInt(Math.Round(shortage))
+            
+            Dim judgmentText As String
+            Dim judgmentColor As Color
+            
+            If roundedShortage = 0 Then
+                judgmentText = "OK"
+                judgmentColor = Color.Green
+            ElseIf roundedShortage >= 1 Then
+                judgmentText = "過剰"
+                judgmentColor = Color.Red
+            Else ' -1以下
+                judgmentText = "不足"
+                judgmentColor = Color.Red
+            End If
+            
+            lblPost5mmJudgment.Text = judgmentText
+            lblPost5mmJudgment.ForeColor = judgmentColor
         End If
 
         ' エッジガードの判定（必要枚数が0でない場合）
