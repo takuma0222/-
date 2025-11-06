@@ -101,7 +101,7 @@ Partial Class MainForm
         'lblEmployeeNameValue
         '
         Me.lblEmployeeNameValue.AutoSize = True
-        Me.lblEmployeeNameValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblEmployeeNameValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Bold)
         Me.lblEmployeeNameValue.Location = New System.Drawing.Point(420, 120)
         Me.lblEmployeeNameValue.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblEmployeeNameValue.Name = "lblEmployeeNameValue"
@@ -254,7 +254,7 @@ Partial Class MainForm
         Me.lblHeaderRemaining.Name = "lblHeaderRemaining"
         Me.lblHeaderRemaining.Size = New System.Drawing.Size(130, 39)
         Me.lblHeaderRemaining.TabIndex = 3
-        Me.lblHeaderRemaining.Text = "BEFORE"
+        Me.lblHeaderRemaining.Text = "照合前 枚数"
         Me.lblHeaderRemaining.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'lblHeaderSecured
@@ -267,7 +267,7 @@ Partial Class MainForm
         Me.lblHeaderSecured.Name = "lblHeaderSecured"
         Me.lblHeaderSecured.Size = New System.Drawing.Size(130, 39)
         Me.lblHeaderSecured.TabIndex = 4
-        Me.lblHeaderSecured.Text = "AFTER"
+        Me.lblHeaderSecured.Text = "照合後 枚数"
         Me.lblHeaderSecured.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'lblHeaderUsed
@@ -280,7 +280,7 @@ Partial Class MainForm
         Me.lblHeaderUsed.Name = "lblHeaderUsed"
         Me.lblHeaderUsed.Size = New System.Drawing.Size(130, 39)
         Me.lblHeaderUsed.TabIndex = 5
-        Me.lblHeaderUsed.Text = "確保枚数"
+        Me.lblHeaderUsed.Text = "過不足枚数"
         Me.lblHeaderUsed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'lblHeaderJudgment
@@ -300,7 +300,7 @@ Partial Class MainForm
         '
         Me.lblPre10mmName.BackColor = System.Drawing.Color.White
         Me.lblPre10mmName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblPre10mmName.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblPre10mmName.Font = New System.Drawing.Font("MS UI Gothic", 10.0!, System.Drawing.FontStyle.Bold)
         Me.lblPre10mmName.Location = New System.Drawing.Point(0, 78)
         Me.lblPre10mmName.Margin = New System.Windows.Forms.Padding(0)
         Me.lblPre10mmName.Name = "lblPre10mmName"
@@ -374,7 +374,7 @@ Partial Class MainForm
         '
         Me.lblPost1mmName.BackColor = System.Drawing.Color.White
         Me.lblPost1mmName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblPost1mmName.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblPost1mmName.Font = New System.Drawing.Font("MS UI Gothic", 10.0!, System.Drawing.FontStyle.Bold)
         Me.lblPost1mmName.Location = New System.Drawing.Point(0, 117)
         Me.lblPost1mmName.Margin = New System.Windows.Forms.Padding(0)
         Me.lblPost1mmName.Name = "lblPost1mmName"
@@ -448,7 +448,7 @@ Partial Class MainForm
         '
         Me.lblPost5mmName.BackColor = System.Drawing.Color.White
         Me.lblPost5mmName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblPost5mmName.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblPost5mmName.Font = New System.Drawing.Font("MS UI Gothic", 10.0!, System.Drawing.FontStyle.Bold)
         Me.lblPost5mmName.Location = New System.Drawing.Point(0, 156)
         Me.lblPost5mmName.Margin = New System.Windows.Forms.Padding(0)
         Me.lblPost5mmName.Name = "lblPost5mmName"
@@ -522,7 +522,7 @@ Partial Class MainForm
         '
         Me.lblPost10mmName.BackColor = System.Drawing.Color.White
         Me.lblPost10mmName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblPost10mmName.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblPost10mmName.Font = New System.Drawing.Font("MS UI Gothic", 10.0!, System.Drawing.FontStyle.Bold)
         Me.lblPost10mmName.Location = New System.Drawing.Point(0, 195)
         Me.lblPost10mmName.Margin = New System.Windows.Forms.Padding(0)
         Me.lblPost10mmName.Name = "lblPost10mmName"
@@ -596,7 +596,7 @@ Partial Class MainForm
         '
         Me.lblEdgeName.BackColor = System.Drawing.Color.White
         Me.lblEdgeName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblEdgeName.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblEdgeName.Font = New System.Drawing.Font("MS UI Gothic", 10.0!, System.Drawing.FontStyle.Bold)
         Me.lblEdgeName.Location = New System.Drawing.Point(0, 234)
         Me.lblEdgeName.Margin = New System.Windows.Forms.Padding(0)
         Me.lblEdgeName.Name = "lblEdgeName"
@@ -670,7 +670,7 @@ Partial Class MainForm
         '
         Me.lblBubbleName.BackColor = System.Drawing.Color.White
         Me.lblBubbleName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblBubbleName.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblBubbleName.Font = New System.Drawing.Font("MS UI Gothic", 10.0!, System.Drawing.FontStyle.Bold)
         Me.lblBubbleName.Location = New System.Drawing.Point(0, 273)
         Me.lblBubbleName.Margin = New System.Windows.Forms.Padding(0)
         Me.lblBubbleName.Name = "lblBubbleName"
@@ -763,7 +763,7 @@ Partial Class MainForm
         '
         Me.lblLocationValue.BackColor = System.Drawing.Color.White
         Me.lblLocationValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblLocationValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblLocationValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Bold)
         Me.lblLocationValue.Location = New System.Drawing.Point(149, 156)
         Me.lblLocationValue.Margin = New System.Windows.Forms.Padding(0)
         Me.lblLocationValue.Name = "lblLocationValue"
@@ -776,7 +776,7 @@ Partial Class MainForm
         '
         Me.lblLocationLabel.BackColor = System.Drawing.Color.LightGray
         Me.lblLocationLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblLocationLabel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblLocationLabel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Bold)
         Me.lblLocationLabel.Location = New System.Drawing.Point(0, 156)
         Me.lblLocationLabel.Margin = New System.Windows.Forms.Padding(0)
         Me.lblLocationLabel.Name = "lblLocationLabel"
@@ -789,7 +789,7 @@ Partial Class MainForm
         '
         Me.lblQuantityValue.BackColor = System.Drawing.Color.White
         Me.lblQuantityValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblQuantityValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblQuantityValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Bold)
         Me.lblQuantityValue.Location = New System.Drawing.Point(149, 117)
         Me.lblQuantityValue.Margin = New System.Windows.Forms.Padding(0)
         Me.lblQuantityValue.Name = "lblQuantityValue"
@@ -802,7 +802,7 @@ Partial Class MainForm
         '
         Me.lblQuantityLabel.BackColor = System.Drawing.Color.LightGray
         Me.lblQuantityLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblQuantityLabel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblQuantityLabel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Bold)
         Me.lblQuantityLabel.Location = New System.Drawing.Point(0, 117)
         Me.lblQuantityLabel.Margin = New System.Windows.Forms.Padding(0)
         Me.lblQuantityLabel.Name = "lblQuantityLabel"
@@ -815,7 +815,7 @@ Partial Class MainForm
         '
         Me.lblProductNameValue.BackColor = System.Drawing.Color.White
         Me.lblProductNameValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblProductNameValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblProductNameValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Bold)
         Me.lblProductNameValue.Location = New System.Drawing.Point(149, 78)
         Me.lblProductNameValue.Margin = New System.Windows.Forms.Padding(0)
         Me.lblProductNameValue.Name = "lblProductNameValue"
@@ -828,7 +828,7 @@ Partial Class MainForm
         '
         Me.lblProductNameLabel.BackColor = System.Drawing.Color.LightGray
         Me.lblProductNameLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblProductNameLabel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblProductNameLabel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Bold)
         Me.lblProductNameLabel.Location = New System.Drawing.Point(0, 78)
         Me.lblProductNameLabel.Margin = New System.Windows.Forms.Padding(0)
         Me.lblProductNameLabel.Name = "lblProductNameLabel"
@@ -841,7 +841,7 @@ Partial Class MainForm
         '
         Me.lblCardNoDisplayValue.BackColor = System.Drawing.Color.White
         Me.lblCardNoDisplayValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblCardNoDisplayValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblCardNoDisplayValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Bold)
         Me.lblCardNoDisplayValue.Location = New System.Drawing.Point(149, 39)
         Me.lblCardNoDisplayValue.Margin = New System.Windows.Forms.Padding(0)
         Me.lblCardNoDisplayValue.Name = "lblCardNoDisplayValue"
@@ -854,7 +854,7 @@ Partial Class MainForm
         '
         Me.lblCardNoDisplayLabel.BackColor = System.Drawing.Color.LightGray
         Me.lblCardNoDisplayLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblCardNoDisplayLabel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblCardNoDisplayLabel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Bold)
         Me.lblCardNoDisplayLabel.Location = New System.Drawing.Point(0, 39)
         Me.lblCardNoDisplayLabel.Margin = New System.Windows.Forms.Padding(0)
         Me.lblCardNoDisplayLabel.Name = "lblCardNoDisplayLabel"
@@ -880,7 +880,7 @@ Partial Class MainForm
         'lblEmployeeNo
         '
         Me.lblEmployeeNo.AutoSize = True
-        Me.lblEmployeeNo.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblEmployeeNo.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Bold)
         Me.lblEmployeeNo.Location = New System.Drawing.Point(30, 120)
         Me.lblEmployeeNo.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblEmployeeNo.Name = "lblEmployeeNo"
@@ -891,7 +891,7 @@ Partial Class MainForm
         'lblCardNo
         '
         Me.lblCardNo.AutoSize = True
-        Me.lblCardNo.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblCardNo.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Bold)
         Me.lblCardNo.Location = New System.Drawing.Point(30, 161)
         Me.lblCardNo.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblCardNo.Name = "lblCardNo"
@@ -914,9 +914,9 @@ Partial Class MainForm
         Me.Controls.Add(Me.lblEmployeeNameValue)
         Me.Controls.Add(Me.txtEmployeeNo)
         Me.Controls.Add(Me.lblEmployeeNo)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable
         Me.Margin = New System.Windows.Forms.Padding(4)
-        Me.MaximizeBox = False
+        Me.MaximizeBox = True
         Me.Name = "MainForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "検品デスクトップアプリ"
