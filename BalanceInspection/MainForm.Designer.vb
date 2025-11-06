@@ -25,6 +25,8 @@ Partial Class MainForm
         Me.txtEmployeeNo = New System.Windows.Forms.TextBox()
         Me.lblEmployeeNameValue = New System.Windows.Forms.Label()
         Me.txtCardNo = New System.Windows.Forms.TextBox()
+        Me.cmbLapThickness = New System.Windows.Forms.ComboBox()
+        Me.lblLapThickness = New System.Windows.Forms.Label()
         Me.btnVerify = New System.Windows.Forms.Button()
         Me.btnCancel = New System.Windows.Forms.Button()
         Me.lblMessage = New System.Windows.Forms.Label()
@@ -119,6 +121,29 @@ Partial Class MainForm
         Me.txtCardNo.Size = New System.Drawing.Size(213, 31)
         Me.txtCardNo.TabIndex = 3
         '
+        'cmbLapThickness
+        '
+        Me.cmbLapThickness.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmbLapThickness.Enabled = False
+        Me.cmbLapThickness.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.cmbLapThickness.FormattingEnabled = True
+        Me.cmbLapThickness.Location = New System.Drawing.Point(186, 205)
+        Me.cmbLapThickness.Margin = New System.Windows.Forms.Padding(4)
+        Me.cmbLapThickness.Name = "cmbLapThickness"
+        Me.cmbLapThickness.Size = New System.Drawing.Size(213, 32)
+        Me.cmbLapThickness.TabIndex = 4
+        '
+        'lblLapThickness
+        '
+        Me.lblLapThickness.AutoSize = True
+        Me.lblLapThickness.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblLapThickness.Location = New System.Drawing.Point(30, 208)
+        Me.lblLapThickness.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblLapThickness.Name = "lblLapThickness"
+        Me.lblLapThickness.Size = New System.Drawing.Size(81, 24)
+        Me.lblLapThickness.TabIndex = 9
+        Me.lblLapThickness.Text = "LAP厚:"
+        '
         'btnVerify
         '
         Me.btnVerify.Enabled = False
@@ -126,7 +151,7 @@ Partial Class MainForm
         Me.btnVerify.Margin = New System.Windows.Forms.Padding(4)
         Me.btnVerify.Name = "btnVerify"
         Me.btnVerify.Size = New System.Drawing.Size(114, 36)
-        Me.btnVerify.TabIndex = 4
+        Me.btnVerify.TabIndex = 5
         Me.btnVerify.Text = "照合"
         Me.btnVerify.UseVisualStyleBackColor = True
         '
@@ -136,7 +161,7 @@ Partial Class MainForm
         Me.btnCancel.Margin = New System.Windows.Forms.Padding(4)
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.Size = New System.Drawing.Size(143, 36)
-        Me.btnCancel.TabIndex = 5
+        Me.btnCancel.TabIndex = 6
         Me.btnCancel.Text = "キャンセル"
         Me.btnCancel.UseVisualStyleBackColor = True
         '
@@ -198,7 +223,7 @@ Partial Class MainForm
         Me.pnlConditions.Controls.Add(Me.lblBubbleSecured)
         Me.pnlConditions.Controls.Add(Me.lblBubbleUsed)
         Me.pnlConditions.Controls.Add(Me.lblBubbleJudgment)
-        Me.pnlConditions.Location = New System.Drawing.Point(30, 430)
+        Me.pnlConditions.Location = New System.Drawing.Point(30, 480)
         Me.pnlConditions.Margin = New System.Windows.Forms.Padding(4)
         Me.pnlConditions.Name = "pnlConditions"
         Me.pnlConditions.Size = New System.Drawing.Size(850, 317)
@@ -753,7 +778,7 @@ Partial Class MainForm
         Me.pnlCardInfo.Controls.Add(Me.lblCardNoDisplayValue)
         Me.pnlCardInfo.Controls.Add(Me.lblCardNoDisplayLabel)
         Me.pnlCardInfo.Controls.Add(Me.lblCardInfoTitle)
-        Me.pnlCardInfo.Location = New System.Drawing.Point(30, 210)
+        Me.pnlCardInfo.Location = New System.Drawing.Point(30, 260)
         Me.pnlCardInfo.Margin = New System.Windows.Forms.Padding(4)
         Me.pnlCardInfo.Name = "pnlCardInfo"
         Me.pnlCardInfo.Size = New System.Drawing.Size(500, 199)
@@ -909,6 +934,8 @@ Partial Class MainForm
         Me.Controls.Add(Me.lblMessage)
         Me.Controls.Add(Me.btnCancel)
         Me.Controls.Add(Me.btnVerify)
+        Me.Controls.Add(Me.lblLapThickness)
+        Me.Controls.Add(Me.cmbLapThickness)
         Me.Controls.Add(Me.txtCardNo)
         Me.Controls.Add(Me.lblCardNo)
         Me.Controls.Add(Me.lblEmployeeNameValue)
@@ -930,6 +957,8 @@ Partial Class MainForm
     Friend WithEvents txtEmployeeNo As TextBox
     Friend WithEvents lblEmployeeNameValue As Label
     Friend WithEvents txtCardNo As TextBox
+    Friend WithEvents cmbLapThickness As ComboBox
+    Friend WithEvents lblLapThickness As Label
     Friend WithEvents btnVerify As Button
     Friend WithEvents btnCancel As Button
     Friend WithEvents lblMessage As Label

@@ -18,6 +18,16 @@ Public Class AppConfig
     Public Property EmployeeCsvPath As String = "data\employees.csv"
 
     ''' <summary>
+    ''' 使用部材条件CSVファイルパス
+    ''' </summary>
+    Public Property MaterialConditionCsvPath As String = "material_conditions.csv"
+
+    ''' <summary>
+    ''' LAP厚のプルダウンリスト
+    ''' </summary>
+    Public Property LapThicknessList As List(Of String) = New List(Of String)(New String() {"200μm", "250μm", "290μm", "300μm", "350μm"})
+
+    ''' <summary>
     ''' バランス設定リスト
     ''' </summary>
     Public Property Balances As List(Of BalanceConfig) = New List(Of BalanceConfig)()
