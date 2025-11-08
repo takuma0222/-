@@ -1,5 +1,7 @@
 ﻿Imports System.Windows.Forms
 
+Imports System.IO
+
 ''' <summary>
 ''' メインフォーム
 ''' </summary>
