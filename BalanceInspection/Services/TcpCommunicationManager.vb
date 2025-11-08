@@ -175,7 +175,7 @@ Public Class TcpCommunicationManager
             ' 先頭: "ST,"、符号: "+" or "-"、数値: 8桁（ゼロパディング）、末尾: " PC"（半角スペース + "PC"、固定3文字）
             
             ' "ST," で始まることを確認
-            If Not response.StartsWith("ST,") Then
+            If Not response.StartsWith("QT,") Then
                 Throw New Exception("応答フォーマットが不正（ST,で始まらない）: " & response)
             End If
             
