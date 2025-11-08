@@ -1,5 +1,7 @@
 ﻿Imports System.Windows.Forms
 
+Imports System.IO
+
 ''' <summary>
 ''' メインフォーム
 ''' </summary>
@@ -912,6 +914,10 @@ Public Class MainForm
     End Sub
 
     Private Sub lblHeaderSecured_Click(sender As Object, e As EventArgs) Handles lblHeaderSecured.Click
+
+    End Sub
+
+    Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
     End Sub
 End Class
