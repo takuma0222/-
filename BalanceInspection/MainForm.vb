@@ -1,6 +1,6 @@
 ﻿Imports System.Windows.Forms
-
 Imports System.IO
+Imports System.Diagnostics
 
 ''' <summary>
 ''' メインフォーム
@@ -456,8 +456,15 @@ Public Class MainForm
     ''' 【第1段階】投入前10mmの照合処理
     ''' </summary>
     Private Sub PerformFirstStageVerification(employeeNo As String)
+        ' 時間計測開始
+        Dim sw As New Stopwatch()
+        sw.Start()
+        
         ' 天秤1から再度取得
         Dim pre10mmAfter As Integer = _balanceManager.ReadBalance(0)
+        
+        sw.Stop()
+        _logManager.WriteErrorLog($"[第1段階照合] 天秤1取得時間: {sw.ElapsedMilliseconds}ms")
         
         ' 照合前の値を取得（Remainingが照合前の列）
         Dim pre10mmBefore As Integer = Integer.Parse(lblPre10mmRemaining.Text.Replace("個", ""))
@@ -957,8 +964,15 @@ Public Class MainForm
             ' 測定中メッセージを表示
             ShowMessage("秤の値測定中...", Color.Black)
             
+            ' 時間計測開始
+            Dim sw As New Stopwatch()
+            sw.Start()
+            
             ' 天秤1のみから投入前10mmを取得
             Dim pre10mmCount As Integer = _balanceManager.ReadBalance(0) ' 天秤1
+            
+            sw.Stop()
+            _logManager.WriteErrorLog($"[LAP厚選択] 天秤1取得時間: {sw.ElapsedMilliseconds}ms")
             
             ' 投入前10mmの照合前 数を表示（Remainingが照合前の列）
             lblPre10mmRemaining.Text = pre10mmCount.ToString() & "個"
