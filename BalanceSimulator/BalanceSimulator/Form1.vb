@@ -6,6 +6,7 @@ Imports System.Threading
 ''' <summary>
 ''' 電子天秤シミュレータのメインフォーム
 ''' 3台の電子天秤をシミュレートし、TCP接続でコマンドを受信
+''' 個数応答モード（QTコマンド）で動作
 ''' </summary>
 Public Class Form1
     ' UI コンポーネント
@@ -37,7 +38,7 @@ Public Class Form1
     Private _server3 As TcpListener
     Private _isRunning As Boolean = False
     
-    ' 重量値
+    ' 個数値（重量ではなく個数を保持）
     Private _weight1 As Double = 0.0
     Private _weight2 As Double = 0.0
     Private _weight3 As Double = 0.0
@@ -142,14 +143,14 @@ Public Class Form1
         Me.Controls.Add(lblBalance)
         
         Dim txtWeight As New TextBox()
-        txtWeight.Text = weight.ToString("F2")
+        txtWeight.Text = weight.ToString("F0")
         txtWeight.Location = New Point(180, yPos)
         txtWeight.Size = New Size(80, 20)
         txtWeight.Tag = balanceNum
         Me.Controls.Add(txtWeight)
         
         Dim lblUnit As New Label()
-        lblUnit.Text = "g"
+        lblUnit.Text = "個"
         lblUnit.Location = New Point(270, yPos)
         lblUnit.Size = New Size(20, 20)
         Me.Controls.Add(lblUnit)
@@ -214,7 +215,7 @@ Public Class Form1
                     _weight3 = newWeight
             End Select
             
-            LogMessage("天秤" & balanceNum.ToString() & "の重量を" & newWeight.ToString("F2") & "gに設定しました")
+            LogMessage("天秤" & balanceNum.ToString() & "の個数を" & newWeight.ToString("F0") & "個に設定しました")
         Else
             MessageBox.Show("有効な数値を入力してください", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
@@ -374,11 +375,14 @@ Public Class Form1
     ''' </summary>
     Private Function ProcessCommand(command As String, balanceNum As Integer) As String
         Select Case command.ToUpper()
-            Case "Q"  ' 重量問い合わせコマンド
-                Dim weight As Double = GetWeight(balanceNum)
-                ' EK-iシリーズの応答形式: "ST,GS,+0000.00g"
-                Dim formattedWeight As String = If(weight >= 0, "+", "") & weight.ToString("0000.00")
-                Return "ST,GS," & formattedWeight & "g"
+            Case "Q"  ' 個数問い合わせコマンド
+                Dim count As Double = GetWeight(balanceNum)
+                ' EK-iシリーズの個数応答形式: "QT,+0012345 PC"
+                ' 符号付き7桁の整数、スペース2つ、単位PC
+                Dim sign As String = If(count >= 0, "+", "-")
+                Dim absCount As Integer = CInt(Math.Abs(count))
+                Dim formattedCount As String = sign & absCount.ToString("00000000")
+                Return "QT," & formattedCount & " PC"
             
             Case "Z", "ZERO"  ' ゼロ点調整（シミュレーションなので成功を返す）
                 Return "ST,GS,Zero OK"
@@ -392,7 +396,7 @@ Public Class Form1
     End Function
     
     ''' <summary>
-    ''' 指定された天秤の重量を取得
+    ''' 指定された天秤の個数を取得
     ''' </summary>
     Private Function GetWeight(balanceNum As Integer) As Double
         Select Case balanceNum
