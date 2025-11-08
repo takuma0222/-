@@ -18,6 +18,9 @@ Public Class MainForm
     Private _currentCondition As CardCondition
     Private _currentMaterialCondition As MaterialCondition
     Private _isSearchingEmployee As Boolean = False
+    
+    ' 照合状態管理（2段階照合用）
+    Private _verificationStage As Integer = 0  ' 0:未開始, 1:投入前完了, 2:完了
 
     Public Sub New()
         InitializeComponent()
@@ -193,6 +196,43 @@ Public Class MainForm
         lblPost10mmSecured.Text = ""
         lblPost10mmUsed.Text = ""
         lblPost10mmJudgment.Text = ""
+    End Sub
+
+    ''' <summary>
+    ''' 【第1段階】投入前10mmのみ表示
+    ''' </summary>
+    Private Sub DisplayPre10mmOnly(condition As MaterialCondition)
+        ' 投入前10mmの必要枚数のみ表示
+        lblPre10mmRequired.Text = condition.Pre10mm.ToString() & "個"
+        
+        ' 投入前10mmのその他の列はクリア（照合前 数は後で設定）
+        lblPre10mmRemaining.Text = ""
+        lblPre10mmSecured.Text = ""
+        lblPre10mmUsed.Text = ""
+        lblPre10mmJudgment.Text = ""
+        
+        ' 投入後の部材は全てクリア
+        lblPost1mmRequired.Text = ""
+        lblPost1mmRemaining.Text = ""
+        lblPost1mmSecured.Text = ""
+        lblPost1mmUsed.Text = ""
+        lblPost1mmJudgment.Text = ""
+        
+        lblPost5mmRequired.Text = ""
+        lblPost5mmRemaining.Text = ""
+        lblPost5mmSecured.Text = ""
+        lblPost5mmUsed.Text = ""
+        lblPost5mmJudgment.Text = ""
+        
+        lblPost10mmRequired.Text = ""
+        lblPost10mmRemaining.Text = ""
+        lblPost10mmSecured.Text = ""
+        lblPost10mmUsed.Text = ""
+        lblPost10mmJudgment.Text = ""
+        
+        ' エッジガードと気泡緩衝材もクリア
+        lblEdgeRequired.Text = ""
+        lblBubbleRequired.Text = ""
     End Sub
 
     ''' <summary>
@@ -381,8 +421,11 @@ Public Class MainForm
     ''' <summary>
     ''' 照合ボタンクリック
     ''' </summary>
+    ''' <summary>
+    ''' 照合ボタンクリック処理（2段階照合対応）
+    ''' </summary>
     Private Sub BtnVerify_Click(sender As Object, e As EventArgs)
-        If _currentCondition Is Nothing Then
+        If _currentCondition Is Nothing OrElse _currentMaterialCondition Is Nothing Then
             Return
         End If
 
@@ -395,46 +438,181 @@ Public Class MainForm
         End If
 
         Try
-            ' 照合時計測
-            _balanceManager.PerformVerificationReading()
-
-            ' 照合時の値をAFTER列に表示し、確保枚数(差分)を計算して表示
-            DisplayVerificationReadings(_currentCondition)
-
-            ' 判定を表示
-            DisplayJudgment(_currentCondition)
-
-            ' 照合判定（画面上の4項目の判定が全てOKかチェック）
-            Dim isValid As Boolean = ValidateAllJudgments()
-
-            If isValid Then
-                ' OK: ログ出力
-                _logManager.WriteInspectionLog(employeeNo, txtCardNo.Text.Trim(), _currentCondition, "OK")
-                ShowMessage("照合OK", Color.Green)
-                btnVerify.Enabled = False
-                ' 照合OK時は両方の入力欄をクリアして活性化
-                ' TextChangedイベントを一時的に無効化してメッセージ上書きを防ぐ
-                RemoveHandler txtEmployeeNo.TextChanged, AddressOf TxtEmployeeNo_TextChanged
-                RemoveHandler txtCardNo.TextChanged, AddressOf TxtCardNo_TextChanged
-                txtEmployeeNo.Text = ""
-                txtCardNo.Text = ""
-                cmbLapThickness.SelectedIndex = -1
-                AddHandler txtEmployeeNo.TextChanged, AddressOf TxtEmployeeNo_TextChanged
-                AddHandler txtCardNo.TextChanged, AddressOf TxtCardNo_TextChanged
-                txtEmployeeNo.Enabled = True
-                txtCardNo.Enabled = True
-                cmbLapThickness.Enabled = False
-                txtEmployeeNo.Focus()
-            Else
-                ' NG: 不一致を表示
-                ShowMessage("NG:10mm:-1≠1,1mm:-2≠2", Color.Red)
-                _logManager.WriteInspectionLog(employeeNo, txtCardNo.Text.Trim(), _currentCondition, "NG")
+            If _verificationStage = 0 Then
+                ' 【第1段階】投入前10mmの照合
+                PerformFirstStageVerification(employeeNo)
+            ElseIf _verificationStage = 1 Then
+                ' 【第2段階】投入後1mm, 5mm, 10mmの照合
+                PerformSecondStageVerification(employeeNo)
             End If
 
         Catch ex As Exception
             ShowMessage("照合エラー:" & ex.Message.Substring(0, Math.Min(20, ex.Message.Length)), Color.Red)
             _logManager.WriteErrorLog("照合時エラー: " & ex.Message)
         End Try
+    End Sub
+
+    ''' <summary>
+    ''' 【第1段階】投入前10mmの照合処理
+    ''' </summary>
+    Private Sub PerformFirstStageVerification(employeeNo As String)
+        ' 天秤1から再度取得
+        Dim pre10mmAfter As Integer = _balanceManager.ReadBalance(0)
+        
+        ' 照合前の値を取得（Remainingが照合前の列）
+        Dim pre10mmBefore As Integer = Integer.Parse(lblPre10mmRemaining.Text.Replace("個", ""))
+        
+        ' 使用枚数（差分）を計算
+        Dim pre10mmUsed As Integer = pre10mmBefore - pre10mmAfter
+        
+        ' 照合後 数と使用枚数を表示（Securedが照合後の列）
+        lblPre10mmSecured.Text = pre10mmAfter.ToString() & "個"
+        lblPre10mmUsed.Text = pre10mmUsed.ToString() & "個"
+        
+        ' 判定
+        Dim isOk As Boolean = (pre10mmUsed = _currentMaterialCondition.Pre10mm)
+        lblPre10mmJudgment.Text = If(isOk, "OK", "NG")
+        lblPre10mmJudgment.ForeColor = If(isOk, Color.Green, Color.Red)
+        
+        If isOk Then
+            ' 第1段階OK: 投入後部材の取得と表示
+            ShowMessage("照合OK。プロトスに入れた後に移載してください", Color.Green)
+            _verificationStage = 1
+            
+            ' 投入後部材の情報を取得・表示
+            DisplayPostMaterialsForSecondStage()
+            
+            ' ログ出力（第1段階）
+            _logManager.WriteErrorLog($"[第1段階OK] 従業員No:{employeeNo}, カードNo:{txtCardNo.Text.Trim()}, 投入前10mm使用:{pre10mmUsed}")
+            
+        Else
+            ' 第1段階NG
+            ShowMessage($"NG: 投入前10mm 必要{_currentMaterialCondition.Pre10mm}個 ≠ 使用{pre10mmUsed}個", Color.Red)
+            _logManager.WriteInspectionLog(employeeNo, txtCardNo.Text.Trim(), _currentCondition, "NG:第1段階")
+        End If
+    End Sub
+    
+    ''' <summary>
+    ''' 【第2段階】投入後部材の表示と取得
+    ''' </summary>
+    Private Sub DisplayPostMaterialsForSecondStage()
+        ' 投入後部材の必要枚数を表示
+        lblPost1mmRequired.Text = _currentMaterialCondition.Post1mm.ToString() & "個"
+        lblPost5mmRequired.Text = _currentMaterialCondition.Post5mm.ToString() & "個"
+        lblPost10mmRequired.Text = _currentMaterialCondition.Post10mm.ToString() & "個"
+        
+        ' エッジガードと気泡緩衝材の必要枚数を表示
+        If _currentCondition.EdgeGuard = 0 Then
+            lblEdgeRequired.Text = "不要"
+        Else
+            lblEdgeRequired.Text = _currentCondition.EdgeGuard.ToString() & "個"
+        End If
+        
+        If _currentCondition.BubbleInterference = 0 Then
+            lblBubbleRequired.Text = "不要"
+        Else
+            lblBubbleRequired.Text = _currentCondition.BubbleInterference.ToString() & "個"
+        End If
+        
+        ' 天秤から照合前の値を取得
+        Dim post1mmCount As Integer = _balanceManager.ReadBalance(1)  ' 天秤2
+        Dim post5mmCount As Integer = _balanceManager.ReadBalance(2)  ' 天秤3
+        Dim post10mmCount As Integer = _balanceManager.ReadBalance(0) ' 天秤1
+        
+        ' 照合前 数を表示（Remainingが照合前の列）
+        lblPost1mmRemaining.Text = post1mmCount.ToString() & "個"
+        lblPost5mmRemaining.Text = post5mmCount.ToString() & "個"
+        lblPost10mmRemaining.Text = post10mmCount.ToString() & "個"
+        
+        ' その他の列はクリア
+        lblPost1mmSecured.Text = ""
+        lblPost1mmUsed.Text = ""
+        lblPost1mmJudgment.Text = ""
+        lblPost5mmSecured.Text = ""
+        lblPost5mmUsed.Text = ""
+        lblPost5mmJudgment.Text = ""
+        lblPost10mmSecured.Text = ""
+        lblPost10mmUsed.Text = ""
+        lblPost10mmJudgment.Text = ""
+        
+        ' 照合ボタンは有効のまま（第2段階用）
+        btnVerify.Enabled = True
+    End Sub
+
+    ''' <summary>
+    ''' 【第2段階】投入後1mm, 5mm, 10mmの照合処理
+    ''' </summary>
+    Private Sub PerformSecondStageVerification(employeeNo As String)
+        ' 天秤から再度取得
+        Dim post1mmAfter As Integer = _balanceManager.ReadBalance(1)  ' 天秤2
+        Dim post5mmAfter As Integer = _balanceManager.ReadBalance(2)  ' 天秤3
+        Dim post10mmAfter As Integer = _balanceManager.ReadBalance(0) ' 天秤1
+        
+        ' 照合前の値を取得（Remainingが照合前の列）
+        Dim post1mmBefore As Integer = Integer.Parse(lblPost1mmRemaining.Text.Replace("個", ""))
+        Dim post5mmBefore As Integer = Integer.Parse(lblPost5mmRemaining.Text.Replace("個", ""))
+        Dim post10mmBefore As Integer = Integer.Parse(lblPost10mmRemaining.Text.Replace("個", ""))
+        
+        ' 使用枚数（差分）を計算
+        Dim post1mmUsed As Integer = post1mmBefore - post1mmAfter
+        Dim post5mmUsed As Integer = post5mmBefore - post5mmAfter
+        Dim post10mmUsed As Integer = post10mmBefore - post10mmAfter
+
+        ' 照合後 数と使用枚数を表示（Securedが照合後の列）
+        lblPost1mmSecured.Text = post1mmAfter.ToString() & "個"
+        lblPost1mmUsed.Text = post1mmUsed.ToString() & "個"
+        lblPost5mmSecured.Text = post5mmAfter.ToString() & "個"
+        lblPost5mmUsed.Text = post5mmUsed.ToString() & "個"
+        lblPost10mmSecured.Text = post10mmAfter.ToString() & "個"
+        lblPost10mmUsed.Text = post10mmUsed.ToString() & "個"
+        
+        ' 判定
+        Dim post1mmOk As Boolean = (post1mmUsed = _currentMaterialCondition.Post1mm)
+        Dim post5mmOk As Boolean = (post5mmUsed = _currentMaterialCondition.Post5mm)
+        Dim post10mmOk As Boolean = (post10mmUsed = _currentMaterialCondition.Post10mm)
+        
+        lblPost1mmJudgment.Text = If(post1mmOk, "OK", "NG")
+        lblPost1mmJudgment.ForeColor = If(post1mmOk, Color.Green, Color.Red)
+        lblPost5mmJudgment.Text = If(post5mmOk, "OK", "NG")
+        lblPost5mmJudgment.ForeColor = If(post5mmOk, Color.Green, Color.Red)
+        lblPost10mmJudgment.Text = If(post10mmOk, "OK", "NG")
+        lblPost10mmJudgment.ForeColor = If(post10mmOk, Color.Green, Color.Red)
+        
+        Dim allOk As Boolean = post1mmOk AndAlso post5mmOk AndAlso post10mmOk
+        
+        If allOk Then
+            ' 第2段階OK: 完了
+            ShowMessage("照合OK 次工程に払出してください。", Color.Green)
+            _verificationStage = 2
+            btnVerify.Enabled = False
+            
+            ' ログ出力（第2段階）
+            _logManager.WriteInspectionLog(employeeNo, txtCardNo.Text.Trim(), _currentCondition, "OK")
+            
+            ' 入力欄をクリアしてリセット
+            RemoveHandler txtEmployeeNo.TextChanged, AddressOf TxtEmployeeNo_TextChanged
+            RemoveHandler txtCardNo.TextChanged, AddressOf TxtCardNo_TextChanged
+            txtEmployeeNo.Text = ""
+            txtCardNo.Text = ""
+            cmbLapThickness.SelectedIndex = -1
+            AddHandler txtEmployeeNo.TextChanged, AddressOf TxtEmployeeNo_TextChanged
+            AddHandler txtCardNo.TextChanged, AddressOf TxtCardNo_TextChanged
+            txtEmployeeNo.Enabled = True
+            txtCardNo.Enabled = True
+            cmbLapThickness.Enabled = False
+            txtEmployeeNo.Focus()
+            _verificationStage = 0
+            
+        Else
+            ' 第2段階NG
+            Dim ngMessage As String = "NG: "
+            If Not post1mmOk Then ngMessage &= $"1mm(必要{_currentMaterialCondition.Post1mm}≠使用{post1mmUsed}) "
+            If Not post5mmOk Then ngMessage &= $"5mm(必要{_currentMaterialCondition.Post5mm}≠使用{post5mmUsed}) "
+            If Not post10mmOk Then ngMessage &= $"10mm(必要{_currentMaterialCondition.Post10mm}≠使用{post10mmUsed}) "
+            
+            ShowMessage(ngMessage, Color.Red)
+            _logManager.WriteInspectionLog(employeeNo, txtCardNo.Text.Trim(), _currentCondition, "NG:第2段階")
+        End If
     End Sub
 
     ''' <summary>
@@ -765,27 +943,28 @@ Public Class MainForm
             Return
         End If
 
-        ' 使用部材条件を表示
-        DisplayMaterialCondition(_currentMaterialCondition)
+        ' 照合状態をリセット
+        _verificationStage = 0
 
-        ' エッジガードと気泡緩衝材はカード情報から表示
-        DisplayEdgeAndBubbleInfo(_currentCondition)
+        ' 【第1段階】投入前10mmのみ表示
+        DisplayPre10mmOnly(_currentMaterialCondition)
 
         ' カードNo入力欄を非活性化
         txtCardNo.Enabled = False
 
-        ' 初回計測を実行
+        ' 【第1段階】天秤1のみから計測
         Try
             ' 測定中メッセージを表示
             ShowMessage("秤の値測定中...", Color.Black)
             
-            _balanceManager.PerformInitialReading()
+            ' 天秤1のみから投入前10mmを取得
+            Dim pre10mmCount As Integer = _balanceManager.ReadBalance(0) ' 天秤1
             
-            ' 天秤から取得した値を表示
-            DisplayInitialBalanceReadings(_currentCondition)
+            ' 投入前10mmの照合前 数を表示（Remainingが照合前の列）
+            lblPre10mmRemaining.Text = pre10mmCount.ToString() & "個"
             
             ' 測定完了後のメッセージ
-            ShowMessage("各部材を必要枚数分準備してください", Color.Green)
+            ShowMessage("投入前10mmを確認して照合ボタンを押してください", Color.Green)
             btnVerify.Enabled = True
 
         Catch ex As Exception

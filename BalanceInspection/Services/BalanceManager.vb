@@ -175,5 +175,27 @@ Public Class BalanceManager
             Return New Dictionary(Of String, Double)(_verificationReadings)
         End Get
     End Property
+
+    ''' <summary>
+    ''' 指定インデックスの天秤から個数を読み取る（2段階照合用）
+    ''' </summary>
+    ''' <param name="balanceIndex">天秤のインデックス（0-2）</param>
+    ''' <returns>個数</returns>
+    Public Function ReadBalance(balanceIndex As Integer) As Integer
+        ' TCP接続の場合
+        If balanceIndex < _tcpManagers.Count Then
+            Dim value As Double = _tcpManagers(balanceIndex).ReadValue()
+            Return CInt(Math.Round(value))
+        End If
+        
+        ' シリアル接続の場合
+        Dim serialIndex As Integer = balanceIndex - _tcpManagers.Count
+        If serialIndex >= 0 AndAlso serialIndex < _serialManagers.Count Then
+            Dim value As Double = _serialManagers(serialIndex).ReadValue()
+            Return CInt(Math.Round(value))
+        End If
+        
+        Throw New ArgumentOutOfRangeException("balanceIndex", "無効な天秤インデックスです")
+    End Function
 End Class
 
