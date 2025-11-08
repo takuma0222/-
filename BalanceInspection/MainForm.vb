@@ -595,6 +595,7 @@ Public Class MainForm
         If employeeNo.Length = 6 Then
             ' 検索中フラグをチェック（二重実行防止）
             If _isSearchingEmployee Then
+                _logManager.WriteErrorLog("従業員No検索: 検索中のため処理をスキップ")
                 Return
             End If
 
@@ -605,8 +606,13 @@ Public Class MainForm
                 ShowMessage("読み込み中…", Color.Black)
                 lblEmployeeNameValue.Text = "検索中..."
 
+                _logManager.WriteErrorLog("従業員No検索開始: " & employeeNo)
+
                 ' 非同期で従業員を検索
                 Dim employeeName As String = Await _employeeLoader.SearchAsync(employeeNo)
+                
+                _logManager.WriteErrorLog("従業員No検索結果: " & If(employeeName, "該当なし"))
+                _logManager.WriteErrorLog("従業員No検索結果: " & If(employeeName, "該当なし"))
 
                 If employeeName IsNot Nothing Then
                     ' 該当あり：氏名を表示
@@ -692,7 +698,7 @@ Public Class MainForm
     End Sub
 
     ''' <summary>
-    ''' カードNo入力時の処理（6桁で自動実行しない）
+    ''' カードNo入力時の処理
     ''' </summary>
     Private Sub TxtCardNo_TextChanged(sender As Object, e As EventArgs)
         Dim cardNo As String = txtCardNo.Text.Trim()
@@ -703,7 +709,7 @@ Public Class MainForm
             _currentCondition = _cardLoader.GetCondition(cardNo)
             
             If _currentCondition Is Nothing Then
-                ShowMessage("条件なし", Color.Black)
+                ShowMessage("該当するカード情報がありません", Color.Red)
                 ClearConditionLabels()
                 lblCardNoDisplayValue.Text = ""
                 lblProductNameValue.Text = ""
@@ -712,6 +718,10 @@ Public Class MainForm
                 cmbLapThickness.Enabled = False
                 cmbLapThickness.SelectedIndex = -1
                 btnVerify.Enabled = False
+                
+                ' カードNo入力欄をクリア
+                txtCardNo.Text = ""
+                txtCardNo.Focus()
                 Return
             End If
             
@@ -914,6 +924,10 @@ Public Class MainForm
     End Sub
 
     Private Sub lblHeaderSecured_Click(sender As Object, e As EventArgs) Handles lblHeaderSecured.Click
+
+    End Sub
+
+    Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
     End Sub
 End Class
