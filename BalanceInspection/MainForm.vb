@@ -615,28 +615,58 @@ Public Class MainForm
         Dim post1mmUsed As Integer = post1mmBefore - post1mmAfter
         Dim post5mmUsed As Integer = post5mmBefore - post5mmAfter
         Dim post10mmUsed As Integer = post10mmBefore - post10mmAfter
+        
+        ' 不足枚数を計算：不足枚数 = 必要枚数 - 使用枚数
+        Dim post1mmShortage As Integer = _currentMaterialCondition.Post1mm - post1mmUsed
+        Dim post5mmShortage As Integer = _currentMaterialCondition.Post5mm - post5mmUsed
+        Dim post10mmShortage As Integer = _currentMaterialCondition.Post10mm - post10mmUsed
 
-        ' 照合後 数と使用枚数を表示（Securedが照合後の列）
+        ' 照合後 数と不足枚数を表示（Securedが照合後の列、Usedが不足枚数の列）
         lblPost1mmSecured.Text = post1mmAfter.ToString() & "個"
-        lblPost1mmUsed.Text = post1mmUsed.ToString() & "個"
+        lblPost1mmUsed.Text = post1mmShortage.ToString() & "個"
         lblPost5mmSecured.Text = post5mmAfter.ToString() & "個"
-        lblPost5mmUsed.Text = post5mmUsed.ToString() & "個"
+        lblPost5mmUsed.Text = post5mmShortage.ToString() & "個"
         lblPost10mmSecured.Text = post10mmAfter.ToString() & "個"
-        lblPost10mmUsed.Text = post10mmUsed.ToString() & "個"
+        lblPost10mmUsed.Text = post10mmShortage.ToString() & "個"
         
-        ' 判定
-        Dim post1mmOk As Boolean = (post1mmUsed = _currentMaterialCondition.Post1mm)
-        Dim post5mmOk As Boolean = (post5mmUsed = _currentMaterialCondition.Post5mm)
-        Dim post10mmOk As Boolean = (post10mmUsed = _currentMaterialCondition.Post10mm)
+        ' 判定：不足枚数が0ならOK、>=1なら「不足」、<=-1なら「過剰」
+        ' 投入後1mm
+        If post1mmShortage = 0 Then
+            lblPost1mmJudgment.Text = "OK"
+            lblPost1mmJudgment.ForeColor = Color.Green
+        ElseIf post1mmShortage >= 1 Then
+            lblPost1mmJudgment.Text = "不足"
+            lblPost1mmJudgment.ForeColor = Color.Red
+        Else
+            lblPost1mmJudgment.Text = "過剰"
+            lblPost1mmJudgment.ForeColor = Color.Red
+        End If
         
-        lblPost1mmJudgment.Text = If(post1mmOk, "OK", "NG")
-        lblPost1mmJudgment.ForeColor = If(post1mmOk, Color.Green, Color.Red)
-        lblPost5mmJudgment.Text = If(post5mmOk, "OK", "NG")
-        lblPost5mmJudgment.ForeColor = If(post5mmOk, Color.Green, Color.Red)
-        lblPost10mmJudgment.Text = If(post10mmOk, "OK", "NG")
-        lblPost10mmJudgment.ForeColor = If(post10mmOk, Color.Green, Color.Red)
+        ' 投入後5mm
+        If post5mmShortage = 0 Then
+            lblPost5mmJudgment.Text = "OK"
+            lblPost5mmJudgment.ForeColor = Color.Green
+        ElseIf post5mmShortage >= 1 Then
+            lblPost5mmJudgment.Text = "不足"
+            lblPost5mmJudgment.ForeColor = Color.Red
+        Else
+            lblPost5mmJudgment.Text = "過剰"
+            lblPost5mmJudgment.ForeColor = Color.Red
+        End If
         
-        Dim allOk As Boolean = post1mmOk AndAlso post5mmOk AndAlso post10mmOk
+        ' 投入後10mm
+        If post10mmShortage = 0 Then
+            lblPost10mmJudgment.Text = "OK"
+            lblPost10mmJudgment.ForeColor = Color.Green
+        ElseIf post10mmShortage >= 1 Then
+            lblPost10mmJudgment.Text = "不足"
+            lblPost10mmJudgment.ForeColor = Color.Red
+        Else
+            lblPost10mmJudgment.Text = "過剰"
+            lblPost10mmJudgment.ForeColor = Color.Red
+        End If
+        
+        Dim allOk As Boolean = (post1mmShortage = 0) AndAlso (post5mmShortage = 0) AndAlso (post10mmShortage = 0)
         
         If allOk Then
             ' 第2段階OK: 完了
@@ -663,11 +693,21 @@ Public Class MainForm
             
         Else
             ' 第2段階NG
-            Dim ngMessage As String = "NG: "
-            If Not post1mmOk Then ngMessage &= $"1mm(必要{_currentMaterialCondition.Post1mm}≠使用{post1mmUsed}) "
-            If Not post5mmOk Then ngMessage &= $"5mm(必要{_currentMaterialCondition.Post5mm}≠使用{post5mmUsed}) "
-            If Not post10mmOk Then ngMessage &= $"10mm(必要{_currentMaterialCondition.Post10mm}≠使用{post10mmUsed}) "
+            Dim ngParts As New List(Of String)()
+            If post1mmShortage <> 0 Then
+                Dim ngType As String = If(post1mmShortage >= 1, "不足", "過剰")
+                ngParts.Add($"1mm({ngType}:必要{_currentMaterialCondition.Post1mm} 使用{post1mmUsed} 不足{post1mmShortage})")
+            End If
+            If post5mmShortage <> 0 Then
+                Dim ngType As String = If(post5mmShortage >= 1, "不足", "過剰")
+                ngParts.Add($"5mm({ngType}:必要{_currentMaterialCondition.Post5mm} 使用{post5mmUsed} 不足{post5mmShortage})")
+            End If
+            If post10mmShortage <> 0 Then
+                Dim ngType As String = If(post10mmShortage >= 1, "不足", "過剰")
+                ngParts.Add($"10mm({ngType}:必要{_currentMaterialCondition.Post10mm} 使用{post10mmUsed} 不足{post10mmShortage})")
+            End If
             
+            Dim ngMessage As String = String.Join(" ", ngParts)
             ShowMessage(ngMessage, Color.Red)
             _logManager.WriteInspectionLog(employeeNo, txtCardNo.Text.Trim(), _currentCondition, "NG:第2段階")
         End If
