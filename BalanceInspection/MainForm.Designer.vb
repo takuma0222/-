@@ -305,7 +305,7 @@ Partial Class MainForm
         Me.lblHeaderUsed.Name = "lblHeaderUsed"
         Me.lblHeaderUsed.Size = New System.Drawing.Size(168, 51)
         Me.lblHeaderUsed.TabIndex = 5
-        Me.lblHeaderUsed.Text = "確保枚数"
+        Me.lblHeaderUsed.Text = "不足枚数"
         Me.lblHeaderUsed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'lblHeaderJudgment
