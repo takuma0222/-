@@ -608,7 +608,7 @@ Public Class MainForm
             AddHandler txtEmployeeNo.TextChanged, AddressOf TxtEmployeeNo_TextChanged
             AddHandler txtCardNo.TextChanged, AddressOf TxtCardNo_TextChanged
             txtEmployeeNo.Enabled = True
-            txtCardNo.Enabled = True
+            txtCardNo.Enabled = False
             cmbLapThickness.Enabled = False
             txtEmployeeNo.Focus()
             _verificationStage = 0

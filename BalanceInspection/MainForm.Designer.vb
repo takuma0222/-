@@ -718,7 +718,7 @@ Partial Class MainForm
         Me.lblEdgeName.BackColor = System.Drawing.Color.White
         Me.lblEdgeName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblEdgeName.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
-        Me.lblEdgeName.Location = New System.Drawing.Point(39, 983)
+        Me.lblEdgeName.Location = New System.Drawing.Point(39, 1019)
         Me.lblEdgeName.Margin = New System.Windows.Forms.Padding(0)
         Me.lblEdgeName.Name = "lblEdgeName"
         Me.lblEdgeName.Padding = New System.Windows.Forms.Padding(6, 0, 0, 0)
@@ -732,7 +732,7 @@ Partial Class MainForm
         Me.lblEdgeRequired.BackColor = System.Drawing.Color.White
         Me.lblEdgeRequired.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblEdgeRequired.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
-        Me.lblEdgeRequired.Location = New System.Drawing.Point(298, 983)
+        Me.lblEdgeRequired.Location = New System.Drawing.Point(298, 1019)
         Me.lblEdgeRequired.Margin = New System.Windows.Forms.Padding(0)
         Me.lblEdgeRequired.Name = "lblEdgeRequired"
         Me.lblEdgeRequired.Size = New System.Drawing.Size(168, 51)
@@ -744,7 +744,7 @@ Partial Class MainForm
         Me.lblBubbleName.BackColor = System.Drawing.Color.White
         Me.lblBubbleName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblBubbleName.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
-        Me.lblBubbleName.Location = New System.Drawing.Point(39, 1035)
+        Me.lblBubbleName.Location = New System.Drawing.Point(39, 1071)
         Me.lblBubbleName.Margin = New System.Windows.Forms.Padding(0)
         Me.lblBubbleName.Name = "lblBubbleName"
         Me.lblBubbleName.Padding = New System.Windows.Forms.Padding(6, 0, 0, 0)
@@ -758,7 +758,7 @@ Partial Class MainForm
         Me.lblBubbleRequired.BackColor = System.Drawing.Color.White
         Me.lblBubbleRequired.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblBubbleRequired.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
-        Me.lblBubbleRequired.Location = New System.Drawing.Point(298, 1035)
+        Me.lblBubbleRequired.Location = New System.Drawing.Point(298, 1071)
         Me.lblBubbleRequired.Margin = New System.Windows.Forms.Padding(0)
         Me.lblBubbleRequired.Name = "lblBubbleRequired"
         Me.lblBubbleRequired.Size = New System.Drawing.Size(168, 51)
@@ -956,7 +956,7 @@ Partial Class MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(13.0!, 24.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1187, 1229)
+        Me.ClientSize = New System.Drawing.Size(1187, 1145)
         Me.Controls.Add(Me.pnlConditions)
         Me.Controls.Add(Me.pnlCardInfo)
         Me.Controls.Add(Me.lblMessage)
