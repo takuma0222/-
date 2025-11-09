@@ -116,12 +116,6 @@ Public Class MainForm
     ''' 条件をラベルに表示（旧メソッド - 互換性のため残す）
     ''' </summary>
     Private Sub DisplayCondition(condition As CardCondition)
-        ' 必要枚数を表示
-        lblPre10mmRequired.Text = condition.Pre10mm.ToString() & "個"
-        lblPost1mmRequired.Text = condition.Post1mm.ToString() & "個"
-        lblPost5mmRequired.Text = condition.Post5mm.ToString() & "個"
-        lblPost10mmRequired.Text = condition.Post10mm.ToString() & "個"
-        
         ' エッジガードと気泡緩衝材は0の場合"不要"を表示（他の列はDisplayInitialBalanceReadingsで設定）
         If condition.EdgeGuard = 0 Then
             lblEdgeRequired.Text = "不要"
@@ -373,10 +367,14 @@ Public Class MainForm
     ''' </summary>
     Private Sub DisplayJudgment(condition As CardCondition)
         ' 使用部材条件が取得できている場合はそちらを使用
-        Dim pre10mmRequired As Integer = If(_currentMaterialCondition IsNot Nothing, _currentMaterialCondition.Pre10mm, condition.Pre10mm)
-        Dim post1mmRequired As Integer = If(_currentMaterialCondition IsNot Nothing, _currentMaterialCondition.Post1mm, condition.Post1mm)
-        Dim post5mmRequired As Integer = If(_currentMaterialCondition IsNot Nothing, _currentMaterialCondition.Post5mm, condition.Post5mm)
-        Dim post10mmRequired As Integer = If(_currentMaterialCondition IsNot Nothing, _currentMaterialCondition.Post10mm, condition.Post10mm)
+        If _currentMaterialCondition Is Nothing Then
+            Return
+        End If
+        
+        Dim pre10mmRequired As Integer = _currentMaterialCondition.Pre10mm
+        Dim post1mmRequired As Integer = _currentMaterialCondition.Post1mm
+        Dim post5mmRequired As Integer = _currentMaterialCondition.Post5mm
+        Dim post10mmRequired As Integer = _currentMaterialCondition.Post10mm
 
         ' 投入前10mmと投入後10mmの判定（同じ秤9001を使用）
         ' 両方の必要枚数の合計が確保枚数と一致していればOK
@@ -640,12 +638,16 @@ Public Class MainForm
     ''' 差分と予定数を照合（旧ロジック - 現在は使用していない）
     ''' </summary>
     Private Function ValidateDifferences(differences As Dictionary(Of String, Double), condition As CardCondition) As Boolean
+        If _currentMaterialCondition Is Nothing Then
+            Return False
+        End If
+        
         Dim isValid As Boolean = True
 
         ' Pre_10mm
         If differences.ContainsKey("Pre_10mm") Then
             Dim diff As Integer = CInt(Math.Round(differences("Pre_10mm")))
-            If diff <> condition.Pre10mm Then
+            If diff <> _currentMaterialCondition.Pre10mm Then
                 isValid = False
             End If
         Else
@@ -655,7 +657,7 @@ Public Class MainForm
         ' Post_1mm
         If differences.ContainsKey("Post_1mm") Then
             Dim diff As Integer = CInt(Math.Round(differences("Post_1mm")))
-            If diff <> condition.Post1mm Then
+            If diff <> _currentMaterialCondition.Post1mm Then
                 isValid = False
             End If
         Else
@@ -665,7 +667,7 @@ Public Class MainForm
         ' Post_5mm
         If differences.ContainsKey("Post_5mm") Then
             Dim diff As Integer = CInt(Math.Round(differences("Post_5mm")))
-            If diff <> condition.Post5mm Then
+            If diff <> _currentMaterialCondition.Post5mm Then
                 isValid = False
             End If
         Else
@@ -679,26 +681,30 @@ Public Class MainForm
     ''' NG時のメッセージを構築
     ''' </summary>
     Private Function BuildNgMessage(differences As Dictionary(Of String, Double), condition As CardCondition) As String
+        If _currentMaterialCondition Is Nothing Then
+            Return "NG: MaterialCondition not found"
+        End If
+        
         Dim errors As New List(Of String)()
 
         If differences.ContainsKey("Pre_10mm") Then
             Dim diff As Integer = CInt(Math.Round(differences("Pre_10mm")))
-            If diff <> condition.Pre10mm Then
-                errors.Add("10mm:" & diff.ToString() & "≠" & condition.Pre10mm.ToString())
+            If diff <> _currentMaterialCondition.Pre10mm Then
+                errors.Add("10mm:" & diff.ToString() & "≠" & _currentMaterialCondition.Pre10mm.ToString())
             End If
         End If
 
         If differences.ContainsKey("Post_1mm") Then
             Dim diff As Integer = CInt(Math.Round(differences("Post_1mm")))
-            If diff <> condition.Post1mm Then
-                errors.Add("1mm:" & diff.ToString() & "≠" & condition.Post1mm.ToString())
+            If diff <> _currentMaterialCondition.Post1mm Then
+                errors.Add("1mm:" & diff.ToString() & "≠" & _currentMaterialCondition.Post1mm.ToString())
             End If
         End If
 
         If differences.ContainsKey("Post_5mm") Then
             Dim diff As Integer = CInt(Math.Round(differences("Post_5mm")))
-            If diff <> condition.Post5mm Then
-                errors.Add("5mm:" & diff.ToString() & "≠" & condition.Post5mm.ToString())
+            If diff <> _currentMaterialCondition.Post5mm Then
+                errors.Add("5mm:" & diff.ToString() & "≠" & _currentMaterialCondition.Post5mm.ToString())
             End If
         End If
 

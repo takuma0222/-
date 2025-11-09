@@ -29,12 +29,12 @@ Public Class LogManager
             Using writer As New StreamWriter(logPath, True, New UTF8Encoding(True))
                 ' ヘッダー行を書き込み（新規ファイルの場合）
                 If isNewFile Then
-                    writer.WriteLine("Timestamp,EmployeeNo,CardNo,Pre10mm,Post1mm,Post5mm,Post10mm,EdgeGuard,BubbleInterference,Result")
+                    writer.WriteLine("Timestamp,EmployeeNo,CardNo,EdgeGuard,BubbleInterference,Result")
                 End If
                 
                 ' データ行を書き込み
                 Dim timestamp As String = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
-                Dim logLine As String = timestamp & "," & employeeNo & "," & cardNo & "," & condition.Pre10mm.ToString() & "," & condition.Post1mm.ToString() & "," & condition.Post5mm.ToString() & "," & condition.Post10mm.ToString() & "," & condition.EdgeGuard.ToString() & "," & condition.BubbleInterference.ToString() & "," & result.ToString()
+                Dim logLine As String = timestamp & "," & employeeNo & "," & cardNo & "," & condition.EdgeGuard.ToString() & "," & condition.BubbleInterference.ToString() & "," & result.ToString()
                 writer.WriteLine(logLine)
             End Using
             

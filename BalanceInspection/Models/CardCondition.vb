@@ -13,26 +13,6 @@ Public Class CardCondition
     Public Property LotNo As String
 
     ''' <summary>
-    ''' 投入前10mmクッション材
-    ''' </summary>
-    Public Property Pre10mm As Integer
-
-    ''' <summary>
-    ''' 投入後1mmクッション材
-    ''' </summary>
-    Public Property Post1mm As Integer
-
-    ''' <summary>
-    ''' 投入後5mmクッション材
-    ''' </summary>
-    Public Property Post5mm As Integer
-
-    ''' <summary>
-    ''' 投入後10mmクッション材
-    ''' </summary>
-    Public Property Post10mm As Integer
-
-    ''' <summary>
     ''' エッジガード
     ''' </summary>
     Public Property EdgeGuard As Integer
