@@ -38,7 +38,7 @@ Public Class CardConditionLoader
                 End If
 
                 Dim parts As String() = line.Split(","c)
-                If parts.Length < 4 Then
+                If parts.Length < 7 Then
                     Continue For
                 End If
 
@@ -48,20 +48,13 @@ Public Class CardConditionLoader
                 
                 Integer.TryParse(parts(2).Trim(), condition.EdgeGuard)
                 Integer.TryParse(parts(3).Trim(), condition.BubbleInterference)
-
-                ' 品名、枚数、所在、工程(追加のカラム)
-                If parts.Length >= 5 Then
-                    condition.ProductName = parts(4).Trim()
-                End If
-                If parts.Length >= 6 Then
-                    Integer.TryParse(parts(5).Trim(), condition.Quantity)
-                End If
-                If parts.Length >= 7 Then
-                    condition.Location = parts(6).Trim()
-                End If
-                If parts.Length >= 8 Then
-                    condition.Process = parts(7).Trim()
-                End If
+                
+                condition.ProductName = parts(4).Trim()
+                Integer.TryParse(parts(5).Trim(), condition.Quantity)
+                condition.Location = parts(6).Trim()
+                
+                ' 工程は空文字列に設定（CSVに存在しない）
+                condition.Process = ""
 
                 _conditions(condition.CardNo) = condition
             Next
