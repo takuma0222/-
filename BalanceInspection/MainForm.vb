@@ -1258,9 +1258,8 @@ Public Class MainForm
             Dim result As DialogResult = retrievalForm.ShowDialog(Me)
             
             If result = DialogResult.OK AndAlso retrievalForm.IsExecuted Then
-                ' 出庫成功：メッセージ表示して従業員No入力に戻る
-                ShowMessage("プロトス内のクッションを使ってください", Color.Blue)
-                ResetToEmployeeNoInput()
+                ' 出庫成功：従業員No入力に戻してメッセージ表示
+                ResetToEmployeeNoInput("プロトス内のクッションを使ってください", Color.Blue)
             Else
                 ' キャンセル：カードNo入力前に戻る
                 ResetToCardNoInput()
@@ -1292,7 +1291,11 @@ Public Class MainForm
     ''' <summary>
     ''' 従業員No入力の状態に戻す（棚出庫後）
     ''' </summary>
-    Private Sub ResetToEmployeeNoInput()
+    Private Sub ResetToEmployeeNoInput(Optional message As String = "従業員Noを入力してください", Optional messageColor As Color = Nothing)
+        If messageColor = Nothing Then
+            messageColor = Color.Black
+        End If
+        
         ' 従業員No入力欄をクリアして活性化
         txtEmployeeNo.Text = ""
         txtEmployeeNo.Enabled = True
@@ -1324,6 +1327,9 @@ Public Class MainForm
         _currentCondition = Nothing
         _currentMaterialCondition = Nothing
         _verificationStage = 0
+        
+        ' メッセージ表示
+        ShowMessage(message, messageColor)
     End Sub
 
     Private Sub lblHeaderRemaining_Click(sender As Object, e As EventArgs) Handles lblHeaderRemaining.Click
