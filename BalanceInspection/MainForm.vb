@@ -1258,9 +1258,9 @@ Public Class MainForm
             Dim result As DialogResult = retrievalForm.ShowDialog(Me)
             
             If result = DialogResult.OK AndAlso retrievalForm.IsExecuted Then
-                ' 出庫成功：メッセージ表示してカードNo入力前に戻る
+                ' 出庫成功：メッセージ表示して従業員No入力に戻る
                 ShowMessage("プロトス内のクッションを使ってください", Color.Blue)
-                ResetToCardNoInput()
+                ResetToEmployeeNoInput()
             Else
                 ' キャンセル：カードNo入力前に戻る
                 ResetToCardNoInput()
@@ -1284,6 +1284,43 @@ Public Class MainForm
         lblProductNameValue.Text = ""
         lblQuantityValue.Text = ""
         lblLocationValue.Text = ""
+        _currentCondition = Nothing
+        _currentMaterialCondition = Nothing
+        _verificationStage = 0
+    End Sub
+
+    ''' <summary>
+    ''' 従業員No入力の状態に戻す（棚出庫後）
+    ''' </summary>
+    Private Sub ResetToEmployeeNoInput()
+        ' 従業員No入力欄をクリアして活性化
+        txtEmployeeNo.Text = ""
+        txtEmployeeNo.Enabled = True
+        txtEmployeeNo.Focus()
+        
+        ' カードNo入力欄を非活性化してクリア
+        txtCardNo.Text = ""
+        txtCardNo.Enabled = False
+        
+        ' LAP厚選択を非活性化
+        cmbLapThickness.Enabled = False
+        cmbLapThickness.SelectedIndex = -1
+        
+        ' ボタンを非活性化
+        btnVerify.Enabled = False
+        
+        ' ラベルをクリア
+        ClearConditionLabels()
+        lblCardNoDisplayValue.Text = ""
+        lblLotNoValue.Text = ""
+        lblProductNameValue.Text = ""
+        lblQuantityValue.Text = ""
+        lblLocationValue.Text = ""
+        
+        ' 従業員名表示をクリア
+        lblEmployeeNameValue.Text = ""
+        
+        ' 状態をリセット
         _currentCondition = Nothing
         _currentMaterialCondition = Nothing
         _verificationStage = 0
