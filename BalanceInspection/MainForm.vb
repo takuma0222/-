@@ -15,6 +15,7 @@ Public Class MainForm
     Private _balanceManager As BalanceManager
     Private _logManager As LogManager
     Private _employeeLoader As EmployeeLoader
+    Private _shelfManager As ShelfStorageManager
     Private _currentCondition As CardCondition
     Private _currentMaterialCondition As MaterialCondition
     Private _isSearchingEmployee As Boolean = False
@@ -71,6 +72,10 @@ Public Class MainForm
             ' 従業員ローダー初期化
             Dim employeeCsvPath As String = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _appConfig.EmployeeCsvPath)
             _employeeLoader = New EmployeeLoader(employeeCsvPath, _logManager)
+            
+            ' 棚管理初期化
+            Dim shelfCsvPath As String = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "shelf_storage.csv")
+            _shelfManager = New ShelfStorageManager(shelfCsvPath)
             
             ' バランスマネージャー初期化
             _balanceManager = New BalanceManager(_appConfig)
@@ -1011,6 +1016,19 @@ Public Class MainForm
                 Return
             End If
             
+            ' 工程が"XXX"の場合、棚入庫処理
+            If _currentCondition.Location = "XXX" Then
+                HandleShelfStorage(cardNo)
+                Return
+            End If
+            
+            ' 棚ファイルを参照してカードNoが入庫されているかチェック
+            Dim shelfStorage As ShelfStorage = _shelfManager.FindShelfByCardNo(cardNo)
+            If shelfStorage IsNot Nothing Then
+                HandleShelfRetrieval(shelfStorage)
+                Return
+            End If
+            
             ' カード情報を表示（品名、枚数、所在など）
             DisplayCardInfo(_currentCondition)
             
@@ -1210,6 +1228,65 @@ Public Class MainForm
         lblBubbleSecured.Text = ""
         lblBubbleUsed.Text = ""
         lblBubbleJudgment.Text = ""
+    End Sub
+
+    ''' <summary>
+    ''' 棚入庫処理
+    ''' </summary>
+    Private Sub HandleShelfStorage(cardNo As String)
+        Using storageForm As New ShelfStorageForm(cardNo, _shelfManager)
+            Dim result As DialogResult = storageForm.ShowDialog(Me)
+            
+            If result = DialogResult.OK AndAlso storageForm.IsExecuted Then
+                ' 入庫成功：LAP厚選択へ進む
+                DisplayCardInfo(_currentCondition)
+                cmbLapThickness.Enabled = True
+                cmbLapThickness.Focus()
+                ShowMessage("LAP厚を選択してください", Color.Black)
+            Else
+                ' キャンセル：カードNo入力前に戻る
+                ResetToCardNoInput()
+            End If
+        End Using
+    End Sub
+
+    ''' <summary>
+    ''' 棚出庫処理
+    ''' </summary>
+    Private Sub HandleShelfRetrieval(shelfStorage As ShelfStorage)
+        Using retrievalForm As New ShelfRetrievalForm(shelfStorage, _shelfManager)
+            Dim result As DialogResult = retrievalForm.ShowDialog(Me)
+            
+            If result = DialogResult.OK AndAlso retrievalForm.IsExecuted Then
+                ' 出庫成功：メッセージ表示してカードNo入力前に戻る
+                ShowMessage("プロトス内のクッションを使ってください", Color.Blue)
+                ResetToCardNoInput()
+            Else
+                ' キャンセル：カードNo入力前に戻る
+                ResetToCardNoInput()
+            End If
+        End Using
+    End Sub
+
+    ''' <summary>
+    ''' カードNo入力前の状態に戻す
+    ''' </summary>
+    Private Sub ResetToCardNoInput()
+        txtCardNo.Text = ""
+        txtCardNo.Enabled = True
+        txtCardNo.Focus()
+        cmbLapThickness.Enabled = False
+        cmbLapThickness.SelectedIndex = -1
+        btnVerify.Enabled = False
+        ClearConditionLabels()
+        lblCardNoDisplayValue.Text = ""
+        lblLotNoValue.Text = ""
+        lblProductNameValue.Text = ""
+        lblQuantityValue.Text = ""
+        lblLocationValue.Text = ""
+        _currentCondition = Nothing
+        _currentMaterialCondition = Nothing
+        _verificationStage = 0
     End Sub
 
     Private Sub lblHeaderRemaining_Click(sender As Object, e As EventArgs) Handles lblHeaderRemaining.Click

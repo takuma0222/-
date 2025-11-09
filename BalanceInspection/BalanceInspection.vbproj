@@ -83,6 +83,7 @@
     <Compile Include="Models\CardCondition.vb" />
     <Compile Include="Models\MaterialCondition.vb" />
     <Compile Include="Models\BalanceConfig.vb" />
+    <Compile Include="Models\ShelfStorage.vb" />
     <Compile Include="Services\ConfigLoader.vb" />
     <Compile Include="Services\ICardDataProvider.vb" />
     <Compile Include="Services\IEmployeeDataProvider.vb" />
@@ -96,6 +97,13 @@
     <Compile Include="Services\TcpCommunicationManager.vb" />
     <Compile Include="Services\BalanceManager.vb" />
     <Compile Include="Services\LogManager.vb" />
+    <Compile Include="Services\ShelfStorageManager.vb" />
+    <Compile Include="ShelfStorageForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShelfRetrievalForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
