@@ -275,6 +275,9 @@ Public Class MainForm
         ' カードNoを表示
         lblCardNoDisplayValue.Text = condition.CardNo
 
+        ' ロットNoを表示
+        lblLotNoValue.Text = If(String.IsNullOrEmpty(condition.LotNo), "", condition.LotNo)
+
         ' 品名、枚数、所在を表示
         lblProductNameValue.Text = If(String.IsNullOrEmpty(condition.ProductName), "", condition.ProductName)
         lblQuantityValue.Text = If(condition.Quantity > 0, condition.Quantity.ToString(), "")
@@ -731,6 +734,7 @@ Public Class MainForm
         ClearConditionLabels()
         ' カード情報をクリア
         lblCardNoDisplayValue.Text = ""
+        lblLotNoValue.Text = ""
         lblProductNameValue.Text = ""
         lblQuantityValue.Text = ""
         lblLocationValue.Text = ""
@@ -897,6 +901,7 @@ Public Class MainForm
                 ShowMessage("該当するカード情報がありません", Color.Red)
                 ClearConditionLabels()
                 lblCardNoDisplayValue.Text = ""
+                lblLotNoValue.Text = ""
                 lblProductNameValue.Text = ""
                 lblQuantityValue.Text = ""
                 lblLocationValue.Text = ""
@@ -923,6 +928,7 @@ Public Class MainForm
             cmbLapThickness.SelectedIndex = -1
             ClearConditionLabels()
             lblCardNoDisplayValue.Text = ""
+            lblLotNoValue.Text = ""
             lblProductNameValue.Text = ""
             lblQuantityValue.Text = ""
             lblLocationValue.Text = ""
@@ -1006,6 +1012,7 @@ Public Class MainForm
             ShowMessage("カードNoは6桁で入力してください", Color.Red)
             ClearConditionLabels()
             lblCardNoDisplayValue.Text = ""
+            lblLotNoValue.Text = ""
             lblProductNameValue.Text = ""
             lblQuantityValue.Text = ""
             lblLocationValue.Text = ""
@@ -1020,6 +1027,7 @@ Public Class MainForm
             ShowMessage("条件なし", Color.Black)
             ClearConditionLabels()
             lblCardNoDisplayValue.Text = ""
+            lblLotNoValue.Text = ""
             lblProductNameValue.Text = ""
             lblQuantityValue.Text = ""
             lblLocationValue.Text = ""

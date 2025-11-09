@@ -79,6 +79,8 @@ Partial Class MainForm
         Me.lblLocationLabel = New System.Windows.Forms.Label()
         Me.lblQuantityValue = New System.Windows.Forms.Label()
         Me.lblQuantityLabel = New System.Windows.Forms.Label()
+        Me.lblLotNoValue = New System.Windows.Forms.Label()
+        Me.lblLotNoLabel = New System.Windows.Forms.Label()
         Me.lblProductNameValue = New System.Windows.Forms.Label()
         Me.lblProductNameLabel = New System.Windows.Forms.Label()
         Me.lblCardNoDisplayValue = New System.Windows.Forms.Label()
@@ -221,7 +223,7 @@ Partial Class MainForm
         Me.pnlConditions.Controls.Add(Me.lblBubbleSecured)
         Me.pnlConditions.Controls.Add(Me.lblBubbleUsed)
         Me.pnlConditions.Controls.Add(Me.lblBubbleJudgment)
-        Me.pnlConditions.Location = New System.Drawing.Point(39, 640)
+        Me.pnlConditions.Location = New System.Drawing.Point(39, 692)
         Me.pnlConditions.Margin = New System.Windows.Forms.Padding(5)
         Me.pnlConditions.Name = "pnlConditions"
         Me.pnlConditions.Size = New System.Drawing.Size(1104, 312)
@@ -771,6 +773,8 @@ Partial Class MainForm
         Me.pnlCardInfo.Controls.Add(Me.lblLocationLabel)
         Me.pnlCardInfo.Controls.Add(Me.lblQuantityValue)
         Me.pnlCardInfo.Controls.Add(Me.lblQuantityLabel)
+        Me.pnlCardInfo.Controls.Add(Me.lblLotNoValue)
+        Me.pnlCardInfo.Controls.Add(Me.lblLotNoLabel)
         Me.pnlCardInfo.Controls.Add(Me.lblProductNameValue)
         Me.pnlCardInfo.Controls.Add(Me.lblProductNameLabel)
         Me.pnlCardInfo.Controls.Add(Me.lblCardNoDisplayValue)
@@ -779,7 +783,7 @@ Partial Class MainForm
         Me.pnlCardInfo.Location = New System.Drawing.Point(39, 347)
         Me.pnlCardInfo.Margin = New System.Windows.Forms.Padding(5)
         Me.pnlCardInfo.Name = "pnlCardInfo"
-        Me.pnlCardInfo.Size = New System.Drawing.Size(649, 265)
+        Me.pnlCardInfo.Size = New System.Drawing.Size(649, 317)
         Me.pnlCardInfo.TabIndex = 8
         '
         'lblLocationValue
@@ -787,7 +791,7 @@ Partial Class MainForm
         Me.lblLocationValue.BackColor = System.Drawing.Color.White
         Me.lblLocationValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblLocationValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
-        Me.lblLocationValue.Location = New System.Drawing.Point(194, 208)
+        Me.lblLocationValue.Location = New System.Drawing.Point(194, 260)
         Me.lblLocationValue.Margin = New System.Windows.Forms.Padding(0)
         Me.lblLocationValue.Name = "lblLocationValue"
         Me.lblLocationValue.Padding = New System.Windows.Forms.Padding(13, 0, 0, 0)
@@ -800,7 +804,7 @@ Partial Class MainForm
         Me.lblLocationLabel.BackColor = System.Drawing.Color.LightGray
         Me.lblLocationLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblLocationLabel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
-        Me.lblLocationLabel.Location = New System.Drawing.Point(0, 208)
+        Me.lblLocationLabel.Location = New System.Drawing.Point(0, 260)
         Me.lblLocationLabel.Margin = New System.Windows.Forms.Padding(0)
         Me.lblLocationLabel.Name = "lblLocationLabel"
         Me.lblLocationLabel.Size = New System.Drawing.Size(194, 51)
@@ -813,7 +817,7 @@ Partial Class MainForm
         Me.lblQuantityValue.BackColor = System.Drawing.Color.White
         Me.lblQuantityValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblQuantityValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
-        Me.lblQuantityValue.Location = New System.Drawing.Point(194, 156)
+        Me.lblQuantityValue.Location = New System.Drawing.Point(194, 208)
         Me.lblQuantityValue.Margin = New System.Windows.Forms.Padding(0)
         Me.lblQuantityValue.Name = "lblQuantityValue"
         Me.lblQuantityValue.Padding = New System.Windows.Forms.Padding(13, 0, 0, 0)
@@ -826,13 +830,39 @@ Partial Class MainForm
         Me.lblQuantityLabel.BackColor = System.Drawing.Color.LightGray
         Me.lblQuantityLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblQuantityLabel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
-        Me.lblQuantityLabel.Location = New System.Drawing.Point(0, 156)
+        Me.lblQuantityLabel.Location = New System.Drawing.Point(0, 208)
         Me.lblQuantityLabel.Margin = New System.Windows.Forms.Padding(0)
         Me.lblQuantityLabel.Name = "lblQuantityLabel"
         Me.lblQuantityLabel.Size = New System.Drawing.Size(194, 51)
         Me.lblQuantityLabel.TabIndex = 2
         Me.lblQuantityLabel.Text = "枚数"
         Me.lblQuantityLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblLotNoValue
+        '
+        Me.lblLotNoValue.BackColor = System.Drawing.Color.White
+        Me.lblLotNoValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblLotNoValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblLotNoValue.Location = New System.Drawing.Point(194, 156)
+        Me.lblLotNoValue.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblLotNoValue.Name = "lblLotNoValue"
+        Me.lblLotNoValue.Padding = New System.Windows.Forms.Padding(13, 0, 0, 0)
+        Me.lblLotNoValue.Size = New System.Drawing.Size(454, 51)
+        Me.lblLotNoValue.TabIndex = 7
+        Me.lblLotNoValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'lblLotNoLabel
+        '
+        Me.lblLotNoLabel.BackColor = System.Drawing.Color.LightGray
+        Me.lblLotNoLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblLotNoLabel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.lblLotNoLabel.Location = New System.Drawing.Point(0, 156)
+        Me.lblLotNoLabel.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblLotNoLabel.Name = "lblLotNoLabel"
+        Me.lblLotNoLabel.Size = New System.Drawing.Size(194, 51)
+        Me.lblLotNoLabel.TabIndex = 6
+        Me.lblLotNoLabel.Text = "ロットNo"
+        Me.lblLotNoLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'lblProductNameValue
         '
@@ -1010,6 +1040,8 @@ Partial Class MainForm
     Friend WithEvents lblCardInfoTitle As Label
     Friend WithEvents lblCardNoDisplayLabel As Label
     Friend WithEvents lblCardNoDisplayValue As Label
+    Friend WithEvents lblLotNoLabel As Label
+    Friend WithEvents lblLotNoValue As Label
     Friend WithEvents lblProductNameLabel As Label
     Friend WithEvents lblProductNameValue As Label
     Friend WithEvents lblQuantityLabel As Label

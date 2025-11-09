@@ -8,6 +8,11 @@ Public Class CardCondition
     Public Property CardNo As String
 
     ''' <summary>
+    ''' ロット番号
+    ''' </summary>
+    Public Property LotNo As String
+
+    ''' <summary>
     ''' 投入前10mmクッション材
     ''' </summary>
     Public Property Pre10mm As Integer

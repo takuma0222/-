@@ -38,32 +38,33 @@ Public Class CardConditionLoader
                 End If
 
                 Dim parts As String() = line.Split(","c)
-                If parts.Length < 7 Then
+                If parts.Length < 8 Then
                     Continue For
                 End If
 
                 Dim condition As New CardCondition()
                 condition.CardNo = parts(0).Trim()
+                condition.LotNo = parts(1).Trim()
                 
-                Integer.TryParse(parts(1).Trim(), condition.Pre10mm)
-                Integer.TryParse(parts(2).Trim(), condition.Post1mm)
-                Integer.TryParse(parts(3).Trim(), condition.Post5mm)
-                Integer.TryParse(parts(4).Trim(), condition.Post10mm)
-                Integer.TryParse(parts(5).Trim(), condition.EdgeGuard)
-                Integer.TryParse(parts(6).Trim(), condition.BubbleInterference)
+                Integer.TryParse(parts(2).Trim(), condition.Pre10mm)
+                Integer.TryParse(parts(3).Trim(), condition.Post1mm)
+                Integer.TryParse(parts(4).Trim(), condition.Post5mm)
+                Integer.TryParse(parts(5).Trim(), condition.Post10mm)
+                Integer.TryParse(parts(6).Trim(), condition.EdgeGuard)
+                Integer.TryParse(parts(7).Trim(), condition.BubbleInterference)
 
                 ' 品名、枚数、所在、工程(追加のカラム)
-                If parts.Length >= 8 Then
-                    condition.ProductName = parts(7).Trim()
-                End If
                 If parts.Length >= 9 Then
-                    Integer.TryParse(parts(8).Trim(), condition.Quantity)
+                    condition.ProductName = parts(8).Trim()
                 End If
                 If parts.Length >= 10 Then
-                    condition.Location = parts(9).Trim()
+                    Integer.TryParse(parts(9).Trim(), condition.Quantity)
                 End If
                 If parts.Length >= 11 Then
-                    condition.Process = parts(10).Trim()
+                    condition.Location = parts(10).Trim()
+                End If
+                If parts.Length >= 12 Then
+                    condition.Process = parts(11).Trim()
                 End If
 
                 _conditions(condition.CardNo) = condition
@@ -78,10 +79,10 @@ Public Class CardConditionLoader
     ''' </summary>
     Private Sub CreateSampleCsv()
         Dim sb As New StringBuilder()
-        sb.AppendLine("CardNo,投入前10mmクッション材,投入後1mmクッション材,投入後5mmクッション材,投入後10mmクッション材,エッジガード,気泡緩衝材,品名,枚数,所在,工程")
-        sb.AppendLine("e00123,1,2,0,0,1,5,サンプル製品A,100,倉庫A-1,検品")
-        sb.AppendLine("e00124,1,1,2,1,1,3,サンプル製品B,50,倉庫B-2,梱包")
-        sb.AppendLine("e00125,2,1,1,0,1,10,サンプル製品C,200,倉庫C-3")
+        sb.AppendLine("CardNo,ロットNo,投入前10mmクッション材,投入後1mmクッション材,投入後5mmクッション材,投入後10mmクッション材,エッジガード,気泡緩衝材,品名,枚数,所在,工程")
+        sb.AppendLine("e00123,LOT001,1,2,0,0,1,5,サンプル製品A,100,倉庫A-1,検品")
+        sb.AppendLine("e00124,LOT002,1,1,2,1,1,3,サンプル製品B,50,倉庫B-2,梱包")
+        sb.AppendLine("e00125,LOT003,2,1,1,0,1,10,サンプル製品C,200,倉庫C-3")
         
         File.WriteAllText(_csvPath, sb.ToString(), New UTF8Encoding(True))
     End Sub
