@@ -79,10 +79,12 @@ Public Class CardConditionLoader
     ''' </summary>
     Private Sub CreateSampleCsv()
         Dim sb As New StringBuilder()
-        sb.AppendLine("CardNo,ロットNo,投入前10mmクッション材,投入後1mmクッション材,投入後5mmクッション材,投入後10mmクッション材,エッジガード,気泡緩衝材,品名,枚数,所在,工程")
-        sb.AppendLine("e00123,LOT001,1,2,0,0,1,5,サンプル製品A,100,倉庫A-1,検品")
-        sb.AppendLine("e00124,LOT002,1,1,2,1,1,3,サンプル製品B,50,倉庫B-2,梱包")
-        sb.AppendLine("e00125,LOT003,2,1,1,0,1,10,サンプル製品C,200,倉庫C-3")
+        sb.AppendLine("CardNo,ロットNo,投入前10mmクッション材,投入後1mmクッション材,投入後5mmクッション材,投入後10mmクッション材,エッジガード,気泡緩衝材,品名,枚数,所在")
+        sb.AppendLine("E00123,000001###,1,2,0,0,0,0,AAA,25,AAA")
+        sb.AppendLine("E00124,000002###,1,1,2,1,1,3,BBB,25,BBB")
+        sb.AppendLine("E00125,000003###,2,1,1,0,1,10,BBB,25,AAA")
+        sb.AppendLine("E00126,000004###,2,1,1,0,1,10,CCC,25,AAA")
+        sb.AppendLine("E00127,000005###,2,1,1,0,1,10,DDD,25,AAA")
         
         File.WriteAllText(_csvPath, sb.ToString(), New UTF8Encoding(True))
     End Sub
