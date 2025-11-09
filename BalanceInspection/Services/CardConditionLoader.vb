@@ -2,9 +2,11 @@
 Imports System.Text
 
 ''' <summary>
-''' カード条件CSVを読み込むクラス
+''' カード条件CSVを読み込むクラス（CSV実装）
 ''' </summary>
 Public Class CardConditionLoader
+    Implements ICardDataProvider
+    
     Private _conditions As Dictionary(Of String, CardCondition)
     Private _csvPath As String
 
@@ -13,6 +15,23 @@ Public Class CardConditionLoader
         _conditions = New Dictionary(Of String, CardCondition)()
         LoadConditions()
     End Sub
+    
+    ''' <summary>
+    ''' データプロバイダーを初期化
+    ''' </summary>
+    Public Sub Initialize() Implements ICardDataProvider.Initialize
+        LoadConditions()
+    End Sub
+    
+    ''' <summary>
+    ''' カード番号からカード情報を取得
+    ''' </summary>
+    Public Function GetCardCondition(cardNo As String) As CardCondition Implements ICardDataProvider.GetCardCondition
+        If _conditions.ContainsKey(cardNo) Then
+            Return _conditions(cardNo)
+        End If
+        Return Nothing
+    End Function
 
     ''' <summary>
     ''' CSVファイルを読み込む

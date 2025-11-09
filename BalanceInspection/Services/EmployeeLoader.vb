@@ -3,9 +3,11 @@ Imports System.Text
 Imports System.Threading.Tasks
 
 ''' <summary>
-''' 従業員情報CSVを読み込むクラス
+''' 従業員情報CSVを読み込むクラス（CSV実装）
 ''' </summary>
 Public Class EmployeeLoader
+    Implements IEmployeeDataProvider
+    
     Private _employees As Dictionary(Of String, String)
     Private _csvPath As String
     Private _logManager As LogManager
@@ -15,6 +17,36 @@ Public Class EmployeeLoader
         _logManager = logManager
         _employees = New Dictionary(Of String, String)()
     End Sub
+    
+    ''' <summary>
+    ''' データプロバイダーを初期化
+    ''' </summary>
+    Public Sub Initialize() Implements IEmployeeDataProvider.Initialize
+        Try
+            If Not File.Exists(_csvPath) Then
+                _logManager.WriteErrorLog("CSV file not found: " & _csvPath)
+                Throw New FileNotFoundException("従業員CSVファイルが見つかりません: " & _csvPath)
+            End If
+            
+            LoadEmployeesFromFile()
+            
+        Catch ex As FileNotFoundException
+            Throw
+        Catch ex As Exception
+            _logManager.WriteErrorLog("従業員CSV読み込みエラー: " & ex.Message & vbCrLf & ex.StackTrace)
+            Throw New Exception("データ読み取りエラーが発生しました", ex)
+        End Try
+    End Sub
+    
+    ''' <summary>
+    ''' 従業員番号から従業員情報を取得
+    ''' </summary>
+    Public Function GetEmployeeName(employeeNo As String) As String Implements IEmployeeDataProvider.GetEmployeeName
+        If _employees.ContainsKey(employeeNo) Then
+            Return _employees(employeeNo)
+        End If
+        Return Nothing
+    End Function
 
     ''' <summary>
     ''' CSVファイルを非同期で読み込む

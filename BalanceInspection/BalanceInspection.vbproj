@@ -84,9 +84,14 @@
     <Compile Include="Models\MaterialCondition.vb" />
     <Compile Include="Models\BalanceConfig.vb" />
     <Compile Include="Services\ConfigLoader.vb" />
+    <Compile Include="Services\ICardDataProvider.vb" />
+    <Compile Include="Services\IEmployeeDataProvider.vb" />
     <Compile Include="Services\CardConditionLoader.vb" />
     <Compile Include="Services\MaterialConditionLoader.vb" />
     <Compile Include="Services\EmployeeLoader.vb" />
+    <Compile Include="Services\SocketCardDataProvider.vb" />
+    <Compile Include="Services\SocketEmployeeDataProvider.vb" />
+    <Compile Include="Services\DataProviderFactory.vb" />
     <Compile Include="Services\SerialPortManager.vb" />
     <Compile Include="Services\TcpCommunicationManager.vb" />
     <Compile Include="Services\BalanceManager.vb" />
