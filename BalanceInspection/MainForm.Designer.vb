@@ -62,18 +62,18 @@ Partial Class MainForm
         Me.lblPost10mmSecured = New System.Windows.Forms.Label()
         Me.lblPost10mmUsed = New System.Windows.Forms.Label()
         Me.lblPost10mmJudgment = New System.Windows.Forms.Label()
-        Me.lblEdgeName = New System.Windows.Forms.Label()
-        Me.lblEdgeRequired = New System.Windows.Forms.Label()
         Me.lblEdgeRemaining = New System.Windows.Forms.Label()
         Me.lblEdgeSecured = New System.Windows.Forms.Label()
         Me.lblEdgeUsed = New System.Windows.Forms.Label()
         Me.lblEdgeJudgment = New System.Windows.Forms.Label()
-        Me.lblBubbleName = New System.Windows.Forms.Label()
-        Me.lblBubbleRequired = New System.Windows.Forms.Label()
         Me.lblBubbleRemaining = New System.Windows.Forms.Label()
         Me.lblBubbleSecured = New System.Windows.Forms.Label()
         Me.lblBubbleUsed = New System.Windows.Forms.Label()
         Me.lblBubbleJudgment = New System.Windows.Forms.Label()
+        Me.lblEdgeName = New System.Windows.Forms.Label()
+        Me.lblEdgeRequired = New System.Windows.Forms.Label()
+        Me.lblBubbleName = New System.Windows.Forms.Label()
+        Me.lblBubbleRequired = New System.Windows.Forms.Label()
         Me.pnlCardInfo = New System.Windows.Forms.Panel()
         Me.lblLocationValue = New System.Windows.Forms.Label()
         Me.lblLocationLabel = New System.Windows.Forms.Label()
@@ -94,7 +94,7 @@ Partial Class MainForm
         '
         Me.txtEmployeeNo.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
         Me.txtEmployeeNo.Location = New System.Drawing.Point(242, 156)
-        Me.txtEmployeeNo.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
+        Me.txtEmployeeNo.Margin = New System.Windows.Forms.Padding(5)
         Me.txtEmployeeNo.MaxLength = 6
         Me.txtEmployeeNo.Name = "txtEmployeeNo"
         Me.txtEmployeeNo.Size = New System.Drawing.Size(276, 39)
@@ -115,7 +115,7 @@ Partial Class MainForm
         Me.txtCardNo.Enabled = False
         Me.txtCardNo.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
         Me.txtCardNo.Location = New System.Drawing.Point(242, 215)
-        Me.txtCardNo.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
+        Me.txtCardNo.Margin = New System.Windows.Forms.Padding(5)
         Me.txtCardNo.MaxLength = 6
         Me.txtCardNo.Name = "txtCardNo"
         Me.txtCardNo.Size = New System.Drawing.Size(276, 39)
@@ -128,7 +128,7 @@ Partial Class MainForm
         Me.cmbLapThickness.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
         Me.cmbLapThickness.FormattingEnabled = True
         Me.cmbLapThickness.Location = New System.Drawing.Point(242, 273)
-        Me.cmbLapThickness.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
+        Me.cmbLapThickness.Margin = New System.Windows.Forms.Padding(5)
         Me.cmbLapThickness.Name = "cmbLapThickness"
         Me.cmbLapThickness.Size = New System.Drawing.Size(276, 41)
         Me.cmbLapThickness.TabIndex = 4
@@ -149,7 +149,7 @@ Partial Class MainForm
         Me.btnVerify.Enabled = False
         Me.btnVerify.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
         Me.btnVerify.Location = New System.Drawing.Point(851, 452)
-        Me.btnVerify.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
+        Me.btnVerify.Margin = New System.Windows.Forms.Padding(5)
         Me.btnVerify.Name = "btnVerify"
         Me.btnVerify.Size = New System.Drawing.Size(292, 138)
         Me.btnVerify.TabIndex = 5
@@ -160,7 +160,7 @@ Partial Class MainForm
         '
         Me.btnCancel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
         Me.btnCancel.Location = New System.Drawing.Point(851, 156)
-        Me.btnCancel.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
+        Me.btnCancel.Margin = New System.Windows.Forms.Padding(5)
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.Size = New System.Drawing.Size(292, 92)
         Me.btnCancel.TabIndex = 6
@@ -222,7 +222,7 @@ Partial Class MainForm
         Me.pnlConditions.Controls.Add(Me.lblBubbleUsed)
         Me.pnlConditions.Controls.Add(Me.lblBubbleJudgment)
         Me.pnlConditions.Location = New System.Drawing.Point(39, 640)
-        Me.pnlConditions.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
+        Me.pnlConditions.Margin = New System.Windows.Forms.Padding(5)
         Me.pnlConditions.Name = "pnlConditions"
         Me.pnlConditions.Size = New System.Drawing.Size(1104, 312)
         Me.pnlConditions.TabIndex = 7
@@ -615,32 +615,6 @@ Partial Class MainForm
         Me.lblPost10mmJudgment.TabIndex = 27
         Me.lblPost10mmJudgment.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'lblEdgeName
-        '
-        Me.lblEdgeName.BackColor = System.Drawing.Color.White
-        Me.lblEdgeName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblEdgeName.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
-        Me.lblEdgeName.Location = New System.Drawing.Point(39, 983)
-        Me.lblEdgeName.Margin = New System.Windows.Forms.Padding(0)
-        Me.lblEdgeName.Name = "lblEdgeName"
-        Me.lblEdgeName.Padding = New System.Windows.Forms.Padding(6, 0, 0, 0)
-        Me.lblEdgeName.Size = New System.Drawing.Size(259, 51)
-        Me.lblEdgeName.TabIndex = 28
-        Me.lblEdgeName.Text = "エッジガード"
-        Me.lblEdgeName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'lblEdgeRequired
-        '
-        Me.lblEdgeRequired.BackColor = System.Drawing.Color.White
-        Me.lblEdgeRequired.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblEdgeRequired.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
-        Me.lblEdgeRequired.Location = New System.Drawing.Point(298, 983)
-        Me.lblEdgeRequired.Margin = New System.Windows.Forms.Padding(0)
-        Me.lblEdgeRequired.Name = "lblEdgeRequired"
-        Me.lblEdgeRequired.Size = New System.Drawing.Size(168, 51)
-        Me.lblEdgeRequired.TabIndex = 29
-        Me.lblEdgeRequired.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
         'lblEdgeRemaining
         '
         Me.lblEdgeRemaining.BackColor = System.Drawing.Color.White
@@ -688,32 +662,6 @@ Partial Class MainForm
         Me.lblEdgeJudgment.Size = New System.Drawing.Size(174, 51)
         Me.lblEdgeJudgment.TabIndex = 33
         Me.lblEdgeJudgment.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'lblBubbleName
-        '
-        Me.lblBubbleName.BackColor = System.Drawing.Color.White
-        Me.lblBubbleName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblBubbleName.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
-        Me.lblBubbleName.Location = New System.Drawing.Point(39, 1035)
-        Me.lblBubbleName.Margin = New System.Windows.Forms.Padding(0)
-        Me.lblBubbleName.Name = "lblBubbleName"
-        Me.lblBubbleName.Padding = New System.Windows.Forms.Padding(6, 0, 0, 0)
-        Me.lblBubbleName.Size = New System.Drawing.Size(259, 51)
-        Me.lblBubbleName.TabIndex = 34
-        Me.lblBubbleName.Text = "気泡緩衝材"
-        Me.lblBubbleName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'lblBubbleRequired
-        '
-        Me.lblBubbleRequired.BackColor = System.Drawing.Color.White
-        Me.lblBubbleRequired.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblBubbleRequired.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
-        Me.lblBubbleRequired.Location = New System.Drawing.Point(298, 1035)
-        Me.lblBubbleRequired.Margin = New System.Windows.Forms.Padding(0)
-        Me.lblBubbleRequired.Name = "lblBubbleRequired"
-        Me.lblBubbleRequired.Size = New System.Drawing.Size(168, 51)
-        Me.lblBubbleRequired.TabIndex = 35
-        Me.lblBubbleRequired.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'lblBubbleRemaining
         '
@@ -763,6 +711,58 @@ Partial Class MainForm
         Me.lblBubbleJudgment.TabIndex = 39
         Me.lblBubbleJudgment.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'lblEdgeName
+        '
+        Me.lblEdgeName.BackColor = System.Drawing.Color.White
+        Me.lblEdgeName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblEdgeName.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblEdgeName.Location = New System.Drawing.Point(39, 983)
+        Me.lblEdgeName.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblEdgeName.Name = "lblEdgeName"
+        Me.lblEdgeName.Padding = New System.Windows.Forms.Padding(6, 0, 0, 0)
+        Me.lblEdgeName.Size = New System.Drawing.Size(259, 51)
+        Me.lblEdgeName.TabIndex = 28
+        Me.lblEdgeName.Text = "エッジガード"
+        Me.lblEdgeName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'lblEdgeRequired
+        '
+        Me.lblEdgeRequired.BackColor = System.Drawing.Color.White
+        Me.lblEdgeRequired.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblEdgeRequired.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblEdgeRequired.Location = New System.Drawing.Point(298, 983)
+        Me.lblEdgeRequired.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblEdgeRequired.Name = "lblEdgeRequired"
+        Me.lblEdgeRequired.Size = New System.Drawing.Size(168, 51)
+        Me.lblEdgeRequired.TabIndex = 29
+        Me.lblEdgeRequired.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblBubbleName
+        '
+        Me.lblBubbleName.BackColor = System.Drawing.Color.White
+        Me.lblBubbleName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblBubbleName.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblBubbleName.Location = New System.Drawing.Point(39, 1035)
+        Me.lblBubbleName.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblBubbleName.Name = "lblBubbleName"
+        Me.lblBubbleName.Padding = New System.Windows.Forms.Padding(6, 0, 0, 0)
+        Me.lblBubbleName.Size = New System.Drawing.Size(259, 51)
+        Me.lblBubbleName.TabIndex = 34
+        Me.lblBubbleName.Text = "気泡緩衝材"
+        Me.lblBubbleName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'lblBubbleRequired
+        '
+        Me.lblBubbleRequired.BackColor = System.Drawing.Color.White
+        Me.lblBubbleRequired.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblBubbleRequired.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
+        Me.lblBubbleRequired.Location = New System.Drawing.Point(298, 1035)
+        Me.lblBubbleRequired.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblBubbleRequired.Name = "lblBubbleRequired"
+        Me.lblBubbleRequired.Size = New System.Drawing.Size(168, 51)
+        Me.lblBubbleRequired.TabIndex = 35
+        Me.lblBubbleRequired.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
         'pnlCardInfo
         '
         Me.pnlCardInfo.BackColor = System.Drawing.Color.White
@@ -777,7 +777,7 @@ Partial Class MainForm
         Me.pnlCardInfo.Controls.Add(Me.lblCardNoDisplayLabel)
         Me.pnlCardInfo.Controls.Add(Me.lblCardInfoTitle)
         Me.pnlCardInfo.Location = New System.Drawing.Point(39, 347)
-        Me.pnlCardInfo.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
+        Me.pnlCardInfo.Margin = New System.Windows.Forms.Padding(5)
         Me.pnlCardInfo.Name = "pnlCardInfo"
         Me.pnlCardInfo.Size = New System.Drawing.Size(649, 265)
         Me.pnlCardInfo.TabIndex = 8
@@ -926,7 +926,7 @@ Partial Class MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(13.0!, 24.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1247, 1229)
+        Me.ClientSize = New System.Drawing.Size(1187, 1229)
         Me.Controls.Add(Me.pnlConditions)
         Me.Controls.Add(Me.pnlCardInfo)
         Me.Controls.Add(Me.lblMessage)
@@ -943,9 +943,7 @@ Partial Class MainForm
         Me.Controls.Add(Me.lblBubbleName)
         Me.Controls.Add(Me.lblEdgeRequired)
         Me.Controls.Add(Me.lblEdgeName)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable
-        Me.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
-        Me.MaximizeBox = True
+        Me.Margin = New System.Windows.Forms.Padding(5)
         Me.Name = "MainForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "検品デスクトップアプリ"
