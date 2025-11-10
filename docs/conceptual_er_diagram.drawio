@@ -1,0 +1,357 @@
+<mxfile host="app.diagrams.net" modified="2025-11-10T13:00:00.000Z" agent="drawio" version="22.0.0">
+  <diagram name="概念ER図" id="conceptual-er">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- 従業員エンティティ -->
+        <mxCell id="employee" value="従業員" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="80" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="employee-attr1" value="従業員No (PK)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="20" y="120" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="employee-attr2" value="従業員名" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="140" y="120" width="100" height="50" as="geometry" />
+        </mxCell>
+        
+        <!-- カード条件エンティティ -->
+        <mxCell id="card" value="カード条件" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="340" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="card-attr1" value="カードNo (PK)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="260" y="110" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="card-attr2" value="品名" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="380" y="110" width="80" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="card-attr3" value="ロットNo" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="480" y="110" width="80" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="card-attr4" value="枚数" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="280" y="290" width="70" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="card-attr5" value="工程" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="370" y="290" width="70" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="card-attr6" value="エッジガード" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="460" y="290" width="90" height="50" as="geometry" />
+        </mxCell>
+        
+        <!-- 使用部材条件エンティティ -->
+        <mxCell id="material" value="使用部材条件" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="640" y="200" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="material-attr1" value="カードNo (FK)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="580" y="110" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="material-attr2" value="LAP厚 (PK)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="700" y="110" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="material-attr3" value="投入前10mm" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="560" y="290" width="90" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="material-attr4" value="投入後1mm" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="660" y="290" width="90" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="material-attr5" value="投入後5mm" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="760" y="290" width="90" height="50" as="geometry" />
+        </mxCell>
+        
+        <!-- 照合ログエンティティ -->
+        <mxCell id="log" value="照合ログ" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="340" y="450" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="log-attr1" value="タイムスタンプ (PK)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="240" y="540" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="log-attr2" value="従業員No (FK)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="380" y="540" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="log-attr3" value="カードNo (FK)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="510" y="540" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="log-attr4" value="照合結果" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="280" y="610" width="80" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="log-attr5" value="品名" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="380" y="610" width="70" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="log-attr6" value="ロットNo" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="470" y="610" width="80" height="50" as="geometry" />
+        </mxCell>
+        
+        <!-- 棚入庫エンティティ -->
+        <mxCell id="storage" value="棚入庫" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="900" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="storage-attr1" value="入庫ID (PK)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="860" y="110" width="90" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="storage-attr2" value="カードNo (FK)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="970" y="110" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="storage-attr3" value="棚番号" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="840" y="290" width="80" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="storage-attr4" value="入庫日時" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="930" y="290" width="80" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="storage-attr5" value="出庫済みフラグ" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="290" width="100" height="50" as="geometry" />
+        </mxCell>
+        
+        <!-- セッション状態エンティティ -->
+        <mxCell id="session" value="セッション状態" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="80" y="450" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="session-attr1" value="タイムスタンプ" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="20" y="540" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="session-attr2" value="ステージ" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="130" y="540" width="80" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="session-attr3" value="従業員No (FK)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="30" y="610" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="session-attr4" value="カードNo (FK)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="150" y="610" width="100" height="50" as="geometry" />
+        </mxCell>
+        
+        <!-- リレーションシップ -->
+        <!-- 従業員 → 照合ログ -->
+        <mxCell id="rel1" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="employee" target="log">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel1-label" value="実施する" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontStyle=2" vertex="1" connectable="0" parent="rel1">
+          <mxGeometry x="-0.2" y="-1" relative="1" as="geometry">
+            <mxPoint x="-20" y="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel1-card1" value="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="140" y="265" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="rel1-card2" value="*" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="320" y="430" width="20" height="20" as="geometry" />
+        </mxCell>
+        
+        <!-- カード条件 → 照合ログ -->
+        <mxCell id="rel2" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="card" target="log">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel2-label" value="記録される" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontStyle=2" vertex="1" connectable="0" parent="rel2">
+          <mxGeometry x="-0.1" y="2" relative="1" as="geometry">
+            <mxPoint x="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel2-card1" value="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="400" y="265" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="rel2-card2" value="*" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="400" y="425" width="20" height="20" as="geometry" />
+        </mxCell>
+        
+        <!-- カード条件 → 使用部材条件 -->
+        <mxCell id="rel3" value="" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="card" target="material">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel3-label" value="持つ" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontStyle=2" vertex="1" connectable="0" parent="rel3">
+          <mxGeometry x="-0.1" y="-1" relative="1" as="geometry">
+            <mxPoint y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel3-card1" value="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="465" y="210" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="rel3-card2" value="*" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="615" y="210" width="20" height="20" as="geometry" />
+        </mxCell>
+        
+        <!-- カード条件 → 棚入庫 -->
+        <mxCell id="rel4" value="" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="card" target="storage">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="540" y="230" />
+              <mxPoint x="540" y="100" />
+              <mxPoint x="820" y="100" />
+              <mxPoint x="820" y="230" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel4-label" value="入庫される" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontStyle=2" vertex="1" connectable="0" parent="rel4">
+          <mxGeometry x="-0.1" y="-1" relative="1" as="geometry">
+            <mxPoint y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel4-card1" value="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="465" y="210" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="rel4-card2" value="*" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="875" y="210" width="20" height="20" as="geometry" />
+        </mxCell>
+        
+        <!-- 従業員 → セッション状態 -->
+        <mxCell id="rel5" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="employee" target="session">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel5-label" value="保存される" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontStyle=2" vertex="1" connectable="0" parent="rel5">
+          <mxGeometry x="-0.1" y="-1" relative="1" as="geometry">
+            <mxPoint x="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel5-card1" value="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="140" y="265" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="rel5-card2" value="0..1" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="150" y="425" width="30" height="20" as="geometry" />
+        </mxCell>
+        
+        <!-- カード条件 → セッション状態 -->
+        <mxCell id="rel6" value="" style="endArrow=none;html=1;rounded=0;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="card" target="session">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="400" as="sourcePoint" />
+            <mxPoint x="450" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel6-label" value="保存される" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;fontStyle=2" vertex="1" connectable="0" parent="rel6">
+          <mxGeometry x="-0.1" y="-1" relative="1" as="geometry">
+            <mxPoint x="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rel6-card1" value="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="370" y="265" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="rel6-card2" value="0..1" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="220" y="425" width="30" height="20" as="geometry" />
+        </mxCell>
+        
+        <!-- 凡例 -->
+        <mxCell id="legend-box" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="900" y="400" width="220" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-title" value="凡例" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="950" y="410" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-pk" value="黄色: 主キー (PK)" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="920" y="450" width="180" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-fk" value="黄色: 外部キー (FK)" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="920" y="480" width="180" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-entity" value="青色: 永続エンティティ" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="920" y="510" width="180" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-temp" value="赤色: 一時エンティティ" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="920" y="540" width="180" height="25" as="geometry" />
+        </mxCell>
+        
+        <!-- タイトル -->
+        <mxCell id="title" value="部材照合システム - 概念ER図" style="text;html=1;align=center;verticalAlign=middle;fontSize=20;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="300" y="30" width="400" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- 属性の接続線 -->
+        <mxCell id="" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="employee-attr1" target="employee">
+          <mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="400" y="400" as="sourcePoint" /><mxPoint x="450" y="350" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="employee-attr2" target="employee">
+          <mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="400" y="400" as="sourcePoint" /><mxPoint x="450" y="350" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="card-attr1" target="card">
+          <mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="400" y="400" as="sourcePoint" /><mxPoint x="450" y="350" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="card-attr2" target="card">
+          <mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="400" y="400" as="sourcePoint" /><mxPoint x="450" y="350" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="card-attr3" target="card">
+          <mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="400" y="400" as="sourcePoint" /><mxPoint x="450" y="350" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="card-attr4" target="card">
+          <mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="400" y="400" as="sourcePoint" /><mxPoint x="450" y="350" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="card-attr5" target="card">
+          <mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="400" y="400" as="sourcePoint" /><mxPoint x="450" y="350" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="card-attr6" target="card">
+          <mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="400" y="400" as="sourcePoint" /><mxPoint x="450" y="350" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="material-attr1" target="material">
+          <mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="400" y="400" as="sourcePoint" /><mxPoint x="450" y="350" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="material-attr2" target="material">
+          <mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="400" y="400" as="sourcePoint" /><mxPoint x="450" y="350" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="material-attr3" target="material">
+          <mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="400" y="400" as="sourcePoint" /><mxPoint x="450" y="350" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="material-attr4" target="material">
+          <mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="400" y="400" as="sourcePoint" /><mxPoint x="450" y="350" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="material-attr5" target="material">
+          <mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="400" y="400" as="sourcePoint" /><mxPoint x="450" y="350" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="log-attr1" target="log">
+          <mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="400" y="400" as="sourcePoint" /><mxPoint x="450" y="350" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="log-attr2" target="log">
+          <mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="400" y="400" as="sourcePoint" /><mxPoint x="450" y="350" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="log-attr3" target="log">
+          <mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="400" y="400" as="sourcePoint" /><mxPoint x="450" y="350" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="log-attr4" target="log">
+          <mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="400" y="400" as="sourcePoint" /><mxPoint x="450" y="350" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="log-attr5" target="log">
+          <mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="400" y="400" as="sourcePoint" /><mxPoint x="450" y="350" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="log-attr6" target="log">
+          <mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="400" y="400" as="sourcePoint" /><mxPoint x="450" y="350" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="storage-attr1" target="storage">
+          <mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="400" y="400" as="sourcePoint" /><mxPoint x="450" y="350" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="storage-attr2" target="storage">
+          <mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="400" y="400" as="sourcePoint" /><mxPoint x="450" y="350" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="storage-attr3" target="storage">
+          <mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="400" y="400" as="sourcePoint" /><mxPoint x="450" y="350" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="storage-attr4" target="storage">
+          <mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="400" y="400" as="sourcePoint" /><mxPoint x="450" y="350" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="storage-attr5" target="storage">
+          <mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="400" y="400" as="sourcePoint" /><mxPoint x="450" y="350" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="session-attr1" target="session">
+          <mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="400" y="400" as="sourcePoint" /><mxPoint x="450" y="350" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="session-attr2" target="session">
+          <mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="400" y="400" as="sourcePoint" /><mxPoint x="450" y="350" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="session-attr3" target="session">
+          <mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="400" y="400" as="sourcePoint" /><mxPoint x="450" y="350" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        <mxCell id="" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="session-attr4" target="session">
+          <mxGeometry width="50" height="50" relative="1" as="geometry"><mxPoint x="400" y="400" as="sourcePoint" /><mxPoint x="450" y="350" as="targetPoint" /></mxGeometry>
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
