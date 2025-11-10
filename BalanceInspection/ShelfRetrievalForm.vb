@@ -28,70 +28,91 @@ Public Class ShelfRetrievalForm
     End Sub
     
     Private Sub InitializeComponent()
-        Me.Text = "棚出庫"
-        Me.Size = New Drawing.Size(500, 300)
-        Me.FormBorderStyle = FormBorderStyle.FixedDialog
+        Me.lblShelfInfo = New System.Windows.Forms.Label()
+        Me.lblCardNo = New System.Windows.Forms.Label()
+        Me.txtCardNo = New System.Windows.Forms.TextBox()
+        Me.btnExecute = New System.Windows.Forms.Button()
+        Me.btnCancel = New System.Windows.Forms.Button()
+        Me.SuspendLayout()
+        '
+        'lblShelfInfo
+        '
+        Me.lblShelfInfo.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(248, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.lblShelfInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblShelfInfo.Font = New System.Drawing.Font("MS UI Gothic", 14.0!, System.Drawing.FontStyle.Bold)
+        Me.lblShelfInfo.Location = New System.Drawing.Point(20, 30)
+        Me.lblShelfInfo.Name = "lblShelfInfo"
+        Me.lblShelfInfo.Size = New System.Drawing.Size(460, 70)
+        Me.lblShelfInfo.TabIndex = 0
+        Me.lblShelfInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblCardNo
+        '
+        Me.lblCardNo.Font = New System.Drawing.Font("MS UI Gothic", 13.0!)
+        Me.lblCardNo.Location = New System.Drawing.Point(50, 130)
+        Me.lblCardNo.Name = "lblCardNo"
+        Me.lblCardNo.Size = New System.Drawing.Size(110, 35)
+        Me.lblCardNo.TabIndex = 1
+        Me.lblCardNo.Text = "カードNo:"
+        Me.lblCardNo.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'txtCardNo
+        '
+        Me.txtCardNo.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer))
+        Me.txtCardNo.Font = New System.Drawing.Font("MS UI Gothic", 14.0!)
+        Me.txtCardNo.Location = New System.Drawing.Point(170, 130)
+        Me.txtCardNo.Name = "txtCardNo"
+        Me.txtCardNo.ReadOnly = True
+        Me.txtCardNo.Size = New System.Drawing.Size(250, 45)
+        Me.txtCardNo.TabIndex = 2
+        '
+        'btnExecute
+        '
+        Me.btnExecute.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
+        Me.btnExecute.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnExecute.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnExecute.Font = New System.Drawing.Font("MS UI Gothic", 13.0!, System.Drawing.FontStyle.Bold)
+        Me.btnExecute.ForeColor = System.Drawing.Color.White
+        Me.btnExecute.Location = New System.Drawing.Point(100, 190)
+        Me.btnExecute.Name = "btnExecute"
+        Me.btnExecute.Size = New System.Drawing.Size(130, 50)
+        Me.btnExecute.TabIndex = 3
+        Me.btnExecute.Text = "実行"
+        Me.btnExecute.UseVisualStyleBackColor = False
+        '
+        'btnCancel
+        '
+        Me.btnCancel.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer))
+        Me.btnCancel.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnCancel.Font = New System.Drawing.Font("MS UI Gothic", 13.0!)
+        Me.btnCancel.Location = New System.Drawing.Point(270, 190)
+        Me.btnCancel.Name = "btnCancel"
+        Me.btnCancel.Size = New System.Drawing.Size(130, 50)
+        Me.btnCancel.TabIndex = 4
+        Me.btnCancel.Text = "キャンセル"
+        Me.btnCancel.UseVisualStyleBackColor = False
+        '
+        'ShelfRetrievalForm
+        '
+        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(245, Byte), Integer), CType(CType(245, Byte), Integer), CType(CType(245, Byte), Integer))
+        Me.ClientSize = New System.Drawing.Size(792, 379)
+        Me.Controls.Add(Me.lblShelfInfo)
+        Me.Controls.Add(Me.lblCardNo)
+        Me.Controls.Add(Me.txtCardNo)
+        Me.Controls.Add(Me.btnExecute)
+        Me.Controls.Add(Me.btnCancel)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.StartPosition = FormStartPosition.CenterParent
-        Me.BackColor = Drawing.Color.FromArgb(245, 245, 245)
-        
-        ' 棚情報ラベル
-        lblShelfInfo = New Label()
-        lblShelfInfo.Text = ""
-        lblShelfInfo.Font = New Drawing.Font("MS UI Gothic", 14.0F, Drawing.FontStyle.Bold)
-        lblShelfInfo.Location = New Drawing.Point(20, 30)
-        lblShelfInfo.Size = New Drawing.Size(460, 70)
-        lblShelfInfo.TextAlign = Drawing.ContentAlignment.MiddleCenter
-        lblShelfInfo.BackColor = Drawing.Color.FromArgb(240, 248, 255)
-        lblShelfInfo.BorderStyle = BorderStyle.FixedSingle
-        Me.Controls.Add(lblShelfInfo)
-        
-        ' カードNoラベル
-        lblCardNo = New Label()
-        lblCardNo.Text = "カードNo:"
-        lblCardNo.Font = New Drawing.Font("MS UI Gothic", 13.0F, Drawing.FontStyle.Regular)
-        lblCardNo.Location = New Drawing.Point(50, 130)
-        lblCardNo.Size = New Drawing.Size(110, 35)
-        lblCardNo.TextAlign = Drawing.ContentAlignment.MiddleRight
-        Me.Controls.Add(lblCardNo)
-        
-        ' カードNo入力欄
-        txtCardNo = New TextBox()
-        txtCardNo.Font = New Drawing.Font("MS UI Gothic", 14.0F)
-        txtCardNo.Location = New Drawing.Point(170, 130)
-        txtCardNo.Size = New Drawing.Size(250, 35)
-        txtCardNo.Text = ""
-        txtCardNo.ReadOnly = True
-        txtCardNo.BackColor = Drawing.Color.FromArgb(240, 240, 240)
-        Me.Controls.Add(txtCardNo)
-        
-        ' 実行ボタン
-        btnExecute = New Button()
-        btnExecute.Text = "実行"
-        btnExecute.Font = New Drawing.Font("MS UI Gothic", 13.0F, Drawing.FontStyle.Bold)
-        btnExecute.Location = New Drawing.Point(100, 190)
-        btnExecute.Size = New Drawing.Size(130, 50)
-        btnExecute.BackColor = Drawing.Color.FromArgb(0, 120, 215)
-        btnExecute.ForeColor = Drawing.Color.White
-        btnExecute.FlatStyle = FlatStyle.Flat
-        btnExecute.Cursor = Cursors.Hand
-        AddHandler btnExecute.Click, AddressOf BtnExecute_Click
-        Me.Controls.Add(btnExecute)
-        
-        ' キャンセルボタン
-        btnCancel = New Button()
-        btnCancel.Text = "キャンセル"
-        btnCancel.Font = New Drawing.Font("MS UI Gothic", 13.0F, Drawing.FontStyle.Regular)
-        btnCancel.Location = New Drawing.Point(270, 190)
-        btnCancel.Size = New Drawing.Size(130, 50)
-        btnCancel.BackColor = Drawing.Color.FromArgb(240, 240, 240)
-        btnCancel.FlatStyle = FlatStyle.Flat
-        btnCancel.Cursor = Cursors.Hand
-        AddHandler btnCancel.Click, AddressOf BtnCancel_Click
-        Me.Controls.Add(btnCancel)
+        Me.Name = "ShelfRetrievalForm"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
+        Me.Text = "棚出庫"
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
+
     End Sub
-    
+
     ''' <summary>
     ''' 棚情報を更新（動的な値を設定）
     ''' </summary>
@@ -99,21 +120,21 @@ Public Class ShelfRetrievalForm
         lblShelfInfo.Text = $"棚番号: {_shelfStorage.ShelfNo}" & vbCrLf & $"カードNo: {_shelfStorage.CardNo}"
         txtCardNo.Text = _shelfStorage.CardNo
     End Sub
-    
+
     Private Sub BtnExecute_Click(sender As Object, e As EventArgs)
         Try
             ' 棚からカードを出庫
             _shelfManager.RemoveCard(_shelfStorage.ShelfNo)
-            
+
             IsExecuted = True
             Me.DialogResult = DialogResult.OK
             Me.Close()
-            
+
         Catch ex As Exception
             MessageBox.Show(ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
-    
+
     Private Sub BtnCancel_Click(sender As Object, e As EventArgs)
         IsExecuted = False
         Me.DialogResult = DialogResult.Cancel
