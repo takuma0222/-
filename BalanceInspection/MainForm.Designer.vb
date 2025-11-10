@@ -153,10 +153,10 @@ Partial Class MainForm
         Me.btnVerify.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnVerify.Font = New System.Drawing.Font("MS UI Gothic", 16.0!, System.Drawing.FontStyle.Bold)
         Me.btnVerify.ForeColor = System.Drawing.Color.White
-        Me.btnVerify.Location = New System.Drawing.Point(475, 1048)
+        Me.btnVerify.Location = New System.Drawing.Point(819, 338)
         Me.btnVerify.Margin = New System.Windows.Forms.Padding(5)
         Me.btnVerify.Name = "btnVerify"
-        Me.btnVerify.Size = New System.Drawing.Size(250, 70)
+        Me.btnVerify.Size = New System.Drawing.Size(266, 117)
         Me.btnVerify.TabIndex = 5
         Me.btnVerify.Text = "照合"
         Me.btnVerify.UseVisualStyleBackColor = False
@@ -166,10 +166,10 @@ Partial Class MainForm
         Me.btnCancel.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer))
         Me.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnCancel.Font = New System.Drawing.Font("MS UI Gothic", 14.0!)
-        Me.btnCancel.Location = New System.Drawing.Point(775, 1048)
+        Me.btnCancel.Location = New System.Drawing.Point(1150, 148)
         Me.btnCancel.Margin = New System.Windows.Forms.Padding(5)
         Me.btnCancel.Name = "btnCancel"
-        Me.btnCancel.Size = New System.Drawing.Size(200, 70)
+        Me.btnCancel.Size = New System.Drawing.Size(230, 70)
         Me.btnCancel.TabIndex = 6
         Me.btnCancel.Text = "キャンセル"
         Me.btnCancel.UseVisualStyleBackColor = False
@@ -183,7 +183,7 @@ Partial Class MainForm
         Me.lblMessage.Location = New System.Drawing.Point(20, 20)
         Me.lblMessage.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.lblMessage.Name = "lblMessage"
-        Me.lblMessage.Size = New System.Drawing.Size(1360, 140)
+        Me.lblMessage.Size = New System.Drawing.Size(1360, 110)
         Me.lblMessage.TabIndex = 6
         Me.lblMessage.Text = "従業員Noを入力してください"
         Me.lblMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -246,7 +246,7 @@ Partial Class MainForm
         Me.lblConditionsTitle.Location = New System.Drawing.Point(0, 0)
         Me.lblConditionsTitle.Margin = New System.Windows.Forms.Padding(0)
         Me.lblConditionsTitle.Name = "lblConditionsTitle"
-        Me.lblConditionsTitle.Size = New System.Drawing.Size(1339, 55)
+        Me.lblConditionsTitle.Size = New System.Drawing.Size(1103, 55)
         Me.lblConditionsTitle.TabIndex = 0
         Me.lblConditionsTitle.Text = "使用部材条件"
         Me.lblConditionsTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -726,7 +726,7 @@ Partial Class MainForm
         Me.lblEdgeName.BackColor = System.Drawing.Color.White
         Me.lblEdgeName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblEdgeName.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
-        Me.lblEdgeName.Location = New System.Drawing.Point(31, 1027)
+        Me.lblEdgeName.Location = New System.Drawing.Point(31, 1011)
         Me.lblEdgeName.Margin = New System.Windows.Forms.Padding(0)
         Me.lblEdgeName.Name = "lblEdgeName"
         Me.lblEdgeName.Padding = New System.Windows.Forms.Padding(6, 0, 0, 0)
@@ -740,7 +740,7 @@ Partial Class MainForm
         Me.lblEdgeRequired.BackColor = System.Drawing.Color.White
         Me.lblEdgeRequired.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblEdgeRequired.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
-        Me.lblEdgeRequired.Location = New System.Drawing.Point(290, 1027)
+        Me.lblEdgeRequired.Location = New System.Drawing.Point(290, 1011)
         Me.lblEdgeRequired.Margin = New System.Windows.Forms.Padding(0)
         Me.lblEdgeRequired.Name = "lblEdgeRequired"
         Me.lblEdgeRequired.Size = New System.Drawing.Size(168, 51)
@@ -752,7 +752,7 @@ Partial Class MainForm
         Me.lblBubbleName.BackColor = System.Drawing.Color.White
         Me.lblBubbleName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblBubbleName.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
-        Me.lblBubbleName.Location = New System.Drawing.Point(31, 1079)
+        Me.lblBubbleName.Location = New System.Drawing.Point(31, 1063)
         Me.lblBubbleName.Margin = New System.Windows.Forms.Padding(0)
         Me.lblBubbleName.Name = "lblBubbleName"
         Me.lblBubbleName.Padding = New System.Windows.Forms.Padding(6, 0, 0, 0)
@@ -766,7 +766,7 @@ Partial Class MainForm
         Me.lblBubbleRequired.BackColor = System.Drawing.Color.White
         Me.lblBubbleRequired.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.lblBubbleRequired.Font = New System.Drawing.Font("MS UI Gothic", 10.0!)
-        Me.lblBubbleRequired.Location = New System.Drawing.Point(290, 1079)
+        Me.lblBubbleRequired.Location = New System.Drawing.Point(290, 1063)
         Me.lblBubbleRequired.Margin = New System.Windows.Forms.Padding(0)
         Me.lblBubbleRequired.Name = "lblBubbleRequired"
         Me.lblBubbleRequired.Size = New System.Drawing.Size(168, 51)

@@ -41,6 +41,7 @@ Public Class MainForm
         AddHandler cmbLapThickness.SelectedIndexChanged, AddressOf CmbLapThickness_SelectedIndexChanged
         AddHandler btnVerify.Click, AddressOf BtnVerify_Click
         AddHandler btnCancel.Click, AddressOf BtnCancel_Click
+        AddHandler Me.FormClosing, AddressOf MainForm_FormClosing
     End Sub
 
     ''' <summary>
@@ -500,15 +501,8 @@ Public Class MainForm
     ''' 【第1段階】投入前10mmの照合処理
     ''' </summary>
     Private Sub PerformFirstStageVerification(employeeNo As String)
-        ' 時間計測開始
-        Dim sw As New Stopwatch()
-        sw.Start()
-        
         ' 天秤1から再度取得
         Dim pre10mmAfter As Integer = _balanceManager.ReadBalance(0)
-        
-        sw.Stop()
-        _logManager.WriteErrorLog($"[第1段階照合] 天秤1取得時間: {sw.ElapsedMilliseconds}ms")
         
         ' 照合前の値を取得（Remainingが照合前の列）
         Dim pre10mmBefore As Integer = Integer.Parse(lblPre10mmRemaining.Text.Replace("個", ""))
@@ -543,9 +537,6 @@ Public Class MainForm
             
             ' 投入後部材の情報を取得・表示
             DisplayPostMaterialsForSecondStage()
-            
-            ' ログ出力（第1段階）
-            _logManager.WriteErrorLog($"[第1段階OK] 従業員No:{employeeNo}, カードNo:{txtCardNo.Text.Trim()}, 投入前10mm使用:{pre10mmUsed}, 不足枚数:{pre10mmShortage}")
             
         Else
             ' 第1段階NG
@@ -817,7 +808,17 @@ Public Class MainForm
     ''' キャンセルボタンクリック
     ''' </summary>
     Private Sub BtnCancel_Click(sender As Object, e As EventArgs)
-        ResetForm()
+        ' 確認ダイアログを表示
+        Dim result As DialogResult = MessageBox.Show(
+            "現在の操作をキャンセルしてもよろしいですか？",
+            "キャンセル確認",
+            MessageBoxButtons.YesNo,
+            MessageBoxIcon.Question)
+        
+        ' Yesが選択された場合のみリセット
+        If result = DialogResult.Yes Then
+            ResetForm()
+        End If
     End Sub
 
     ''' <summary>
@@ -844,6 +845,23 @@ Public Class MainForm
         _currentCondition = Nothing
         _currentMaterialCondition = Nothing
         txtEmployeeNo.Focus()  ' 従業員Noにフォーカス
+    End Sub
+
+    ''' <summary>
+    ''' フォームクローズ時の確認
+    ''' </summary>
+    Private Sub MainForm_FormClosing(sender As Object, e As FormClosingEventArgs)
+        ' 確認ダイアログを表示
+        Dim result As DialogResult = MessageBox.Show(
+            "アプリケーションを終了してもよろしいですか？",
+            "終了確認",
+            MessageBoxButtons.YesNo,
+            MessageBoxIcon.Question)
+        
+        ' Noが選択された場合は終了をキャンセル
+        If result = DialogResult.No Then
+            e.Cancel = True
+        End If
     End Sub
 
     ''' <summary>
@@ -1087,15 +1105,8 @@ Public Class MainForm
             ' 測定中メッセージを表示
             ShowMessage("秤の値測定中...", Color.Black)
             
-            ' 時間計測開始
-            Dim sw As New Stopwatch()
-            sw.Start()
-            
             ' 天秤1のみから投入前10mmを取得
             Dim pre10mmCount As Integer = _balanceManager.ReadBalance(0) ' 天秤1
-            
-            sw.Stop()
-            _logManager.WriteErrorLog($"[LAP厚選択] 天秤1取得時間: {sw.ElapsedMilliseconds}ms")
             
             ' 投入前10mmの照合前 数を表示（Remainingが照合前の列）
             lblPre10mmRemaining.Text = pre10mmCount.ToString() & "個"

@@ -17,7 +17,7 @@ Public Class LogManager
     End Sub
 
     ''' <summary>
-    ''' 検査ログを出力（成功時）
+    ''' 検査ログを出力（照合結果のみ）
     ''' </summary>
     Public Sub WriteInspectionLog(employeeNo As String, cardNo As String, condition As CardCondition, result As String)
         Try
@@ -29,12 +29,12 @@ Public Class LogManager
             Using writer As New StreamWriter(logPath, True, New UTF8Encoding(True))
                 ' ヘッダー行を書き込み（新規ファイルの場合）
                 If isNewFile Then
-                    writer.WriteLine("Timestamp,EmployeeNo,CardNo,EdgeGuard,BubbleInterference,Result")
+                    writer.WriteLine("Timestamp,EmployeeNo,CardNo,Result")
                 End If
                 
-                ' データ行を書き込み
+                ' データ行を書き込み（照合結果のみ）
                 Dim timestamp As String = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
-                Dim logLine As String = timestamp & "," & employeeNo & "," & cardNo & "," & condition.EdgeGuard.ToString() & "," & condition.BubbleInterference.ToString() & "," & result.ToString()
+                Dim logLine As String = String.Format("{0},{1},{2},{3}", timestamp, employeeNo, cardNo, result)
                 writer.WriteLine(logLine)
             End Using
             
