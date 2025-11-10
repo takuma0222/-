@@ -985,7 +985,7 @@ Public Class MainForm
             ' 投入後部材の情報を取得・表示（最新値）
             DisplayPostMaterialsForSecondStage()
             
-            ShowMessage("前回のセッションを復元しました。投入後部材を照合してください。", Color.Green)
+            ShowMessage("照合OK。投入前10mmをプロトスに入れて移載してください" & vbCrLf & "移載後、投入後1mm/5mm/10mmの必要枚数を用意して再照合してください", Color.Green)
             
         Catch ex As Exception
             MessageBox.Show("セッション復元エラー: " & ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error)
