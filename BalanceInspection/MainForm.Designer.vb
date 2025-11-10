@@ -94,91 +94,99 @@ Partial Class MainForm
         '
         'txtEmployeeNo
         '
-        Me.txtEmployeeNo.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
-        Me.txtEmployeeNo.Location = New System.Drawing.Point(242, 156)
+        Me.txtEmployeeNo.Font = New System.Drawing.Font("MS UI Gothic", 14.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.txtEmployeeNo.Location = New System.Drawing.Point(220, 170)
         Me.txtEmployeeNo.Margin = New System.Windows.Forms.Padding(5)
         Me.txtEmployeeNo.MaxLength = 6
         Me.txtEmployeeNo.Name = "txtEmployeeNo"
-        Me.txtEmployeeNo.Size = New System.Drawing.Size(276, 39)
+        Me.txtEmployeeNo.Size = New System.Drawing.Size(300, 42)
         Me.txtEmployeeNo.TabIndex = 1
         '
         'lblEmployeeNameValue
         '
         Me.lblEmployeeNameValue.AutoSize = True
-        Me.lblEmployeeNameValue.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
-        Me.lblEmployeeNameValue.Location = New System.Drawing.Point(546, 160)
+        Me.lblEmployeeNameValue.Font = New System.Drawing.Font("MS UI Gothic", 14.0!, System.Drawing.FontStyle.Bold)
+        Me.lblEmployeeNameValue.Location = New System.Drawing.Point(540, 175)
         Me.lblEmployeeNameValue.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.lblEmployeeNameValue.Name = "lblEmployeeNameValue"
-        Me.lblEmployeeNameValue.Size = New System.Drawing.Size(0, 33)
+        Me.lblEmployeeNameValue.Size = New System.Drawing.Size(0, 19)
         Me.lblEmployeeNameValue.TabIndex = 7
         '
         'txtCardNo
         '
         Me.txtCardNo.Enabled = False
-        Me.txtCardNo.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
-        Me.txtCardNo.Location = New System.Drawing.Point(242, 215)
+        Me.txtCardNo.Font = New System.Drawing.Font("MS UI Gothic", 14.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.txtCardNo.Location = New System.Drawing.Point(220, 232)
         Me.txtCardNo.Margin = New System.Windows.Forms.Padding(5)
         Me.txtCardNo.MaxLength = 6
         Me.txtCardNo.Name = "txtCardNo"
-        Me.txtCardNo.Size = New System.Drawing.Size(276, 39)
+        Me.txtCardNo.Size = New System.Drawing.Size(300, 42)
         Me.txtCardNo.TabIndex = 3
         '
         'cmbLapThickness
         '
         Me.cmbLapThickness.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbLapThickness.Enabled = False
-        Me.cmbLapThickness.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
+        Me.cmbLapThickness.Font = New System.Drawing.Font("MS UI Gothic", 14.0!)
         Me.cmbLapThickness.FormattingEnabled = True
-        Me.cmbLapThickness.Location = New System.Drawing.Point(242, 273)
+        Me.cmbLapThickness.Location = New System.Drawing.Point(220, 294)
         Me.cmbLapThickness.Margin = New System.Windows.Forms.Padding(5)
         Me.cmbLapThickness.Name = "cmbLapThickness"
-        Me.cmbLapThickness.Size = New System.Drawing.Size(276, 41)
+        Me.cmbLapThickness.Size = New System.Drawing.Size(300, 42)
         Me.cmbLapThickness.TabIndex = 4
         '
         'lblLapThickness
         '
         Me.lblLapThickness.AutoSize = True
-        Me.lblLapThickness.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
-        Me.lblLapThickness.Location = New System.Drawing.Point(39, 277)
+        Me.lblLapThickness.Font = New System.Drawing.Font("MS UI Gothic", 14.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblLapThickness.Location = New System.Drawing.Point(40, 299)
         Me.lblLapThickness.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.lblLapThickness.Name = "lblLapThickness"
-        Me.lblLapThickness.Size = New System.Drawing.Size(111, 33)
+        Me.lblLapThickness.Size = New System.Drawing.Size(78, 19)
         Me.lblLapThickness.TabIndex = 9
         Me.lblLapThickness.Text = "LAP厚:"
         '
         'btnVerify
         '
+        Me.btnVerify.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
         Me.btnVerify.Enabled = False
-        Me.btnVerify.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
-        Me.btnVerify.Location = New System.Drawing.Point(851, 452)
+        Me.btnVerify.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnVerify.Font = New System.Drawing.Font("MS UI Gothic", 16.0!, System.Drawing.FontStyle.Bold)
+        Me.btnVerify.ForeColor = System.Drawing.Color.White
+        Me.btnVerify.Location = New System.Drawing.Point(350, 1040)
         Me.btnVerify.Margin = New System.Windows.Forms.Padding(5)
         Me.btnVerify.Name = "btnVerify"
-        Me.btnVerify.Size = New System.Drawing.Size(292, 138)
+        Me.btnVerify.Size = New System.Drawing.Size(250, 70)
         Me.btnVerify.TabIndex = 5
         Me.btnVerify.Text = "照合"
-        Me.btnVerify.UseVisualStyleBackColor = True
+        Me.btnVerify.UseVisualStyleBackColor = False
         '
         'btnCancel
         '
-        Me.btnCancel.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
-        Me.btnCancel.Location = New System.Drawing.Point(851, 156)
+        Me.btnCancel.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer))
+        Me.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnCancel.Font = New System.Drawing.Font("MS UI Gothic", 14.0!)
+        Me.btnCancel.Location = New System.Drawing.Point(650, 1040)
         Me.btnCancel.Margin = New System.Windows.Forms.Padding(5)
         Me.btnCancel.Name = "btnCancel"
-        Me.btnCancel.Size = New System.Drawing.Size(292, 92)
+        Me.btnCancel.Size = New System.Drawing.Size(200, 70)
         Me.btnCancel.TabIndex = 6
         Me.btnCancel.Text = "キャンセル"
-        Me.btnCancel.UseVisualStyleBackColor = True
+        Me.btnCancel.UseVisualStyleBackColor = False
         '
         'lblMessage
         '
-        Me.lblMessage.Font = New System.Drawing.Font("MS UI Gothic", 18.0!)
+        Me.lblMessage.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(248, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.lblMessage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblMessage.Font = New System.Drawing.Font("MS UI Gothic", 20.0!, System.Drawing.FontStyle.Bold)
         Me.lblMessage.ForeColor = System.Drawing.Color.Black
-        Me.lblMessage.Location = New System.Drawing.Point(38, 77)
+        Me.lblMessage.Location = New System.Drawing.Point(20, 20)
         Me.lblMessage.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.lblMessage.Name = "lblMessage"
-        Me.lblMessage.Size = New System.Drawing.Size(1719, 64)
+        Me.lblMessage.Size = New System.Drawing.Size(1147, 80)
         Me.lblMessage.TabIndex = 6
         Me.lblMessage.Text = "従業員Noを入力してください"
+        Me.lblMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'pnlConditions
         '
@@ -223,22 +231,22 @@ Partial Class MainForm
         Me.pnlConditions.Controls.Add(Me.lblBubbleSecured)
         Me.pnlConditions.Controls.Add(Me.lblBubbleUsed)
         Me.pnlConditions.Controls.Add(Me.lblBubbleJudgment)
-        Me.pnlConditions.Location = New System.Drawing.Point(39, 692)
+        Me.pnlConditions.Location = New System.Drawing.Point(30, 700)
         Me.pnlConditions.Margin = New System.Windows.Forms.Padding(5)
         Me.pnlConditions.Name = "pnlConditions"
-        Me.pnlConditions.Size = New System.Drawing.Size(1104, 312)
+        Me.pnlConditions.Size = New System.Drawing.Size(1120, 320)
         Me.pnlConditions.TabIndex = 7
         '
         'lblConditionsTitle
         '
-        Me.lblConditionsTitle.BackColor = System.Drawing.Color.DarkGray
+        Me.lblConditionsTitle.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(130, Byte), Integer), CType(CType(180, Byte), Integer))
         Me.lblConditionsTitle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblConditionsTitle.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.lblConditionsTitle.Font = New System.Drawing.Font("MS UI Gothic", 14.0!, System.Drawing.FontStyle.Bold)
         Me.lblConditionsTitle.ForeColor = System.Drawing.Color.White
         Me.lblConditionsTitle.Location = New System.Drawing.Point(0, 0)
         Me.lblConditionsTitle.Margin = New System.Windows.Forms.Padding(0)
         Me.lblConditionsTitle.Name = "lblConditionsTitle"
-        Me.lblConditionsTitle.Size = New System.Drawing.Size(1103, 51)
+        Me.lblConditionsTitle.Size = New System.Drawing.Size(1119, 55)
         Me.lblConditionsTitle.TabIndex = 0
         Me.lblConditionsTitle.Text = "使用部材条件"
         Me.lblConditionsTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -780,10 +788,10 @@ Partial Class MainForm
         Me.pnlCardInfo.Controls.Add(Me.lblCardNoDisplayValue)
         Me.pnlCardInfo.Controls.Add(Me.lblCardNoDisplayLabel)
         Me.pnlCardInfo.Controls.Add(Me.lblCardInfoTitle)
-        Me.pnlCardInfo.Location = New System.Drawing.Point(39, 347)
+        Me.pnlCardInfo.Location = New System.Drawing.Point(30, 360)
         Me.pnlCardInfo.Margin = New System.Windows.Forms.Padding(5)
         Me.pnlCardInfo.Name = "pnlCardInfo"
-        Me.pnlCardInfo.Size = New System.Drawing.Size(649, 317)
+        Me.pnlCardInfo.Size = New System.Drawing.Size(660, 320)
         Me.pnlCardInfo.TabIndex = 8
         '
         'lblLocationValue
@@ -918,14 +926,14 @@ Partial Class MainForm
         '
         'lblCardInfoTitle
         '
-        Me.lblCardInfoTitle.BackColor = System.Drawing.Color.DarkGray
+        Me.lblCardInfoTitle.BackColor = System.Drawing.Color.FromArgb(CType(CType(70, Byte), Integer), CType(CType(130, Byte), Integer), CType(CType(180, Byte), Integer))
         Me.lblCardInfoTitle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblCardInfoTitle.Font = New System.Drawing.Font("MS UI Gothic", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.lblCardInfoTitle.Font = New System.Drawing.Font("MS UI Gothic", 14.0!, System.Drawing.FontStyle.Bold)
         Me.lblCardInfoTitle.ForeColor = System.Drawing.Color.White
         Me.lblCardInfoTitle.Location = New System.Drawing.Point(0, 0)
         Me.lblCardInfoTitle.Margin = New System.Windows.Forms.Padding(0)
         Me.lblCardInfoTitle.Name = "lblCardInfoTitle"
-        Me.lblCardInfoTitle.Size = New System.Drawing.Size(648, 51)
+        Me.lblCardInfoTitle.Size = New System.Drawing.Size(648, 55)
         Me.lblCardInfoTitle.TabIndex = 6
         Me.lblCardInfoTitle.Text = "カード情報"
         Me.lblCardInfoTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -933,22 +941,22 @@ Partial Class MainForm
         'lblEmployeeNo
         '
         Me.lblEmployeeNo.AutoSize = True
-        Me.lblEmployeeNo.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
-        Me.lblEmployeeNo.Location = New System.Drawing.Point(39, 160)
+        Me.lblEmployeeNo.Font = New System.Drawing.Font("MS UI Gothic", 14.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblEmployeeNo.Location = New System.Drawing.Point(40, 175)
         Me.lblEmployeeNo.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.lblEmployeeNo.Name = "lblEmployeeNo"
-        Me.lblEmployeeNo.Size = New System.Drawing.Size(155, 33)
+        Me.lblEmployeeNo.Size = New System.Drawing.Size(118, 19)
         Me.lblEmployeeNo.TabIndex = 0
         Me.lblEmployeeNo.Text = "従業員No:"
         '
         'lblCardNo
         '
         Me.lblCardNo.AutoSize = True
-        Me.lblCardNo.Font = New System.Drawing.Font("MS UI Gothic", 12.0!)
-        Me.lblCardNo.Location = New System.Drawing.Point(39, 215)
+        Me.lblCardNo.Font = New System.Drawing.Font("MS UI Gothic", 14.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.lblCardNo.Location = New System.Drawing.Point(40, 237)
         Me.lblCardNo.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.lblCardNo.Name = "lblCardNo"
-        Me.lblCardNo.Size = New System.Drawing.Size(131, 33)
+        Me.lblCardNo.Size = New System.Drawing.Size(98, 19)
         Me.lblCardNo.TabIndex = 2
         Me.lblCardNo.Text = "カードNo:"
         '
@@ -956,6 +964,7 @@ Partial Class MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(13.0!, 24.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.ClientSize = New System.Drawing.Size(1187, 1145)
         Me.Controls.Add(Me.pnlConditions)
         Me.Controls.Add(Me.pnlCardInfo)
