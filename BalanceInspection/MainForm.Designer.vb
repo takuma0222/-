@@ -148,11 +148,10 @@ Partial Class MainForm
         '
         'btnVerify
         '
-        Me.btnVerify.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
+        Me.btnVerify.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer))
         Me.btnVerify.Enabled = False
         Me.btnVerify.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnVerify.Font = New System.Drawing.Font("MS UI Gothic", 16.0!, System.Drawing.FontStyle.Bold)
-        Me.btnVerify.ForeColor = System.Drawing.Color.White
         Me.btnVerify.Location = New System.Drawing.Point(819, 338)
         Me.btnVerify.Margin = New System.Windows.Forms.Padding(5)
         Me.btnVerify.Name = "btnVerify"

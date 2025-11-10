@@ -72,11 +72,10 @@ Public Class ShelfRetrievalForm
         '
         'btnExecute
         '
-        Me.btnExecute.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(120, Byte), Integer), CType(CType(215, Byte), Integer))
+        Me.btnExecute.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer), CType(CType(240, Byte), Integer))
         Me.btnExecute.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btnExecute.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnExecute.Font = New System.Drawing.Font("MS UI Gothic", 13.0!, System.Drawing.FontStyle.Bold)
-        Me.btnExecute.ForeColor = System.Drawing.Color.White
         Me.btnExecute.Location = New System.Drawing.Point(100, 190)
         Me.btnExecute.Name = "btnExecute"
         Me.btnExecute.Size = New System.Drawing.Size(130, 50)
