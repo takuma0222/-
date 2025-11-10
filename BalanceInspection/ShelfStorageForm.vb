@@ -23,6 +23,13 @@ Public Class ShelfStorageForm
         _shelfManager = shelfManager
         
         InitializeComponent()
+        
+        ' イベントハンドラーを登録
+        AddHandler btnExecute.Click, AddressOf BtnExecute_Click
+        AddHandler btnCancel.Click, AddressOf BtnCancel_Click
+        
+        ' フォーカス設定
+        txtShelfNo.Focus()
     End Sub
     
     Private Sub InitializeComponent()

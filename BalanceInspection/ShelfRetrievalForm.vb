@@ -23,6 +23,10 @@ Public Class ShelfRetrievalForm
         
         InitializeComponent()
         
+        ' イベントハンドラーを登録
+        AddHandler btnExecute.Click, AddressOf BtnExecute_Click
+        AddHandler btnCancel.Click, AddressOf BtnCancel_Click
+        
         ' コンストラクタ後に動的な値を設定
         UpdateShelfInfo()
     End Sub
