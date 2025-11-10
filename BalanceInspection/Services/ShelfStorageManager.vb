@@ -90,6 +90,9 @@ Public Class ShelfStorageManager
     ''' カード番号から棚番号を検索
     ''' </summary>
     Public Function FindShelfByCardNo(cardNo As String) As ShelfStorage
+        ' 最新の状態を取得するため再読み込み
+        LoadStorages()
+        
         For Each storage As ShelfStorage In _storages.Values
             If storage.CardNo = cardNo Then
                 Return storage
@@ -102,6 +105,9 @@ Public Class ShelfStorageManager
     ''' 棚にカードを入庫
     ''' </summary>
     Public Sub StoreCard(shelfNo As String, cardNo As String)
+        ' 最新の状態を取得するため再読み込み
+        LoadStorages()
+        
         If Not _storages.ContainsKey(shelfNo) Then
             Throw New Exception($"棚番号{shelfNo}は存在しません")
         End If
@@ -119,6 +125,9 @@ Public Class ShelfStorageManager
     ''' 棚からカードを出庫
     ''' </summary>
     Public Sub RemoveCard(shelfNo As String)
+        ' 最新の状態を取得するため再読み込み
+        LoadStorages()
+        
         If Not _storages.ContainsKey(shelfNo) Then
             Throw New Exception($"棚番号{shelfNo}は存在しません")
         End If
