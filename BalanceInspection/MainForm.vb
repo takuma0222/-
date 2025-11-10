@@ -1100,7 +1100,7 @@ Public Class MainForm
             lblPre10mmRemaining.Text = pre10mmCount.ToString() & "個"
             
             ' 測定完了後のメッセージ
-            ShowMessage("投入前10mmを確認して照合ボタンを押してください", Color.Green)
+            ShowMessage("投入前10mmを用意して照合ボタンを押してください", Color.Green)
             btnVerify.Enabled = True
 
         Catch ex As Exception

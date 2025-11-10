@@ -178,12 +178,12 @@ Partial Class MainForm
         '
         Me.lblMessage.BackColor = System.Drawing.Color.FromArgb(CType(CType(240, Byte), Integer), CType(CType(248, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.lblMessage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lblMessage.Font = New System.Drawing.Font("MS UI Gothic", 16.0!, System.Drawing.FontStyle.Bold)
+        Me.lblMessage.Font = New System.Drawing.Font("MS UI Gothic", 14.0!, System.Drawing.FontStyle.Bold)
         Me.lblMessage.ForeColor = System.Drawing.Color.Black
         Me.lblMessage.Location = New System.Drawing.Point(20, 20)
         Me.lblMessage.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.lblMessage.Name = "lblMessage"
-        Me.lblMessage.Size = New System.Drawing.Size(1360, 100)
+        Me.lblMessage.Size = New System.Drawing.Size(1360, 120)
         Me.lblMessage.TabIndex = 6
         Me.lblMessage.Text = "従業員Noを入力してください"
         Me.lblMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
