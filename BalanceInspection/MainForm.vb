@@ -850,8 +850,9 @@ Public Class MainForm
     ''' メッセージを表示
     ''' </summary>
     Private Sub ShowMessage(message As String, color As Color)
-        If message.Length > 30 Then
-            message = message.Substring(0, 30)
+        ' メッセージの長さ制限を緩和（2行対応のため）
+        If message.Length > 100 Then
+            message = message.Substring(0, 100)
         End If
         lblMessage.Text = message
         lblMessage.ForeColor = color
