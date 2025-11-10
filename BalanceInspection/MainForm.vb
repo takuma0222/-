@@ -937,10 +937,16 @@ Public Class MainForm
     ''' </summary>
     Private Sub RestoreSession(savedState As SessionState)
         Try
+            ' イベントを一時的に無効化
+            RemoveHandler txtEmployeeNo.TextChanged, AddressOf TxtEmployeeNo_TextChanged
+            
             ' 従業員情報を復元
             txtEmployeeNo.Text = savedState.EmployeeNo
             lblEmployeeNameValue.Text = savedState.EmployeeName
             txtEmployeeNo.Enabled = False
+            
+            ' イベントを再有効化
+            AddHandler txtEmployeeNo.TextChanged, AddressOf TxtEmployeeNo_TextChanged
             
             ' カード情報を復元
             txtCardNo.Text = savedState.CardNo
