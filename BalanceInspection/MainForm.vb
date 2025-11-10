@@ -544,8 +544,8 @@ Public Class MainForm
             ShowMessage("照合OK。投入前10mmをプロトスに入れて移載してください" & vbCrLf & "移載後、投入後1mm/5mm/10mmの必要枚数を用意して再照合してください", Color.Green)
             _verificationStage = 1
             
-            ' セッション状態を保存
-            SaveSessionState(pre10mmBefore)
+            ' セッション状態を保存（照合結果も含める）
+            SaveSessionState(pre10mmBefore, pre10mmAfter, pre10mmShortage)
             
             ' 投入後部材の情報を取得・表示
             DisplayPostMaterialsForSecondStage()
@@ -868,7 +868,7 @@ Public Class MainForm
     ''' <summary>
     ''' セッション状態を保存
     ''' </summary>
-    Private Sub SaveSessionState(pre10mmBefore As Integer)
+    Private Sub SaveSessionState(pre10mmBefore As Integer, pre10mmAfter As Integer, pre10mmShortage As Integer)
         Try
             Dim state As New SessionState()
             state.Timestamp = DateTime.Now
@@ -878,6 +878,9 @@ Public Class MainForm
             state.CardNo = txtCardNo.Text.Trim()
             state.LapThickness = cmbLapThickness.SelectedItem.ToString()
             state.Pre10mmBefore = pre10mmBefore
+            state.Pre10mmAfter = pre10mmAfter
+            state.Pre10mmShortage = pre10mmShortage
+            state.Pre10mmJudgment = lblPre10mmJudgment.Text
             state.CardConditionJson = JsonConvert.SerializeObject(_currentCondition)
             state.MaterialConditionJson = JsonConvert.SerializeObject(_currentMaterialCondition)
             
@@ -978,6 +981,21 @@ Public Class MainForm
             
             ' 投入前10mmの照合前数を復元（保存された固定値）
             lblPre10mmRemaining.Text = savedState.Pre10mmBefore.ToString() & "個"
+            
+            ' 投入前10mmの照合結果を復元
+            lblPre10mmSecured.Text = savedState.Pre10mmAfter.ToString() & "個"
+            lblPre10mmUsed.Text = savedState.Pre10mmShortage.ToString() & "個"
+            lblPre10mmJudgment.Text = savedState.Pre10mmJudgment
+            
+            ' 判定結果の色設定
+            If savedState.Pre10mmJudgment = "OK" Then
+                lblPre10mmJudgment.ForeColor = Color.Green
+            Else
+                lblPre10mmJudgment.ForeColor = Color.Red
+            End If
+            
+            ' カードNo入力欄を非活性化
+            txtCardNo.Enabled = False
             
             ' 第1段階完了状態に設定
             _verificationStage = 1

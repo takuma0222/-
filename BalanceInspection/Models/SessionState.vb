@@ -38,6 +38,21 @@ Public Class SessionState
     Public Property Pre10mmBefore As Integer
     
     ''' <summary>
+    ''' 投入前10mm照合後の数
+    ''' </summary>
+    Public Property Pre10mmAfter As Integer
+    
+    ''' <summary>
+    ''' 投入前10mm過不足数
+    ''' </summary>
+    Public Property Pre10mmShortage As Integer
+    
+    ''' <summary>
+    ''' 投入前10mm判定結果（OK/不足/過剰）
+    ''' </summary>
+    Public Property Pre10mmJudgment As String
+    
+    ''' <summary>
     ''' カード条件（JSON文字列として保存）
     ''' </summary>
     Public Property CardConditionJson As String
