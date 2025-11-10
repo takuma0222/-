@@ -94,7 +94,7 @@ Public Class ShelfStorageManager
         LoadStorages()
         
         For Each storage As ShelfStorage In _storages.Values
-            If storage.CardNo = cardNo Then
+            If Not String.IsNullOrEmpty(storage.CardNo) AndAlso storage.CardNo.Equals(cardNo, StringComparison.OrdinalIgnoreCase) Then
                 Return storage
             End If
         Next
