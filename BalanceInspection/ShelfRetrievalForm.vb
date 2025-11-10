@@ -22,6 +22,9 @@ Public Class ShelfRetrievalForm
         _shelfManager = shelfManager
         
         InitializeComponent()
+        
+        ' コンストラクタ後に動的な値を設定
+        UpdateShelfInfo()
     End Sub
     
     Private Sub InitializeComponent()
@@ -35,7 +38,7 @@ Public Class ShelfRetrievalForm
         
         ' 棚情報ラベル
         lblShelfInfo = New Label()
-        lblShelfInfo.Text = $"棚番号: {_shelfStorage.ShelfNo}" & vbCrLf & $"カードNo: {_shelfStorage.CardNo}"
+        lblShelfInfo.Text = ""
         lblShelfInfo.Font = New Drawing.Font("MS UI Gothic", 14.0F, Drawing.FontStyle.Bold)
         lblShelfInfo.Location = New Drawing.Point(20, 30)
         lblShelfInfo.Size = New Drawing.Size(460, 70)
@@ -58,7 +61,7 @@ Public Class ShelfRetrievalForm
         txtCardNo.Font = New Drawing.Font("MS UI Gothic", 14.0F)
         txtCardNo.Location = New Drawing.Point(170, 130)
         txtCardNo.Size = New Drawing.Size(250, 35)
-        txtCardNo.Text = _shelfStorage.CardNo
+        txtCardNo.Text = ""
         txtCardNo.ReadOnly = True
         txtCardNo.BackColor = Drawing.Color.FromArgb(240, 240, 240)
         Me.Controls.Add(txtCardNo)
@@ -87,6 +90,14 @@ Public Class ShelfRetrievalForm
         btnCancel.Cursor = Cursors.Hand
         AddHandler btnCancel.Click, AddressOf BtnCancel_Click
         Me.Controls.Add(btnCancel)
+    End Sub
+    
+    ''' <summary>
+    ''' 棚情報を更新（動的な値を設定）
+    ''' </summary>
+    Private Sub UpdateShelfInfo()
+        lblShelfInfo.Text = $"棚番号: {_shelfStorage.ShelfNo}" & vbCrLf & $"カードNo: {_shelfStorage.CardNo}"
+        txtCardNo.Text = _shelfStorage.CardNo
     End Sub
     
     Private Sub BtnExecute_Click(sender As Object, e As EventArgs)
