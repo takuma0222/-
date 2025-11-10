@@ -538,7 +538,7 @@ Public Class MainForm
         
         If isOk Then
             ' 第1段階OK: 投入後部材の取得と表示
-            ShowMessage("照合OK。プロトスに入れた後に移載してください", Color.Green)
+            ShowMessage("照合OK。投入前10mmをプロトスに入れて移載してください" & vbCrLf & "移載後、投入後1mm/5mm/10mmの必要枚数を用意して再照合してください", Color.Green)
             _verificationStage = 1
             
             ' 投入後部材の情報を取得・表示
@@ -1099,8 +1099,8 @@ Public Class MainForm
             ' 投入前10mmの照合前 数を表示（Remainingが照合前の列）
             lblPre10mmRemaining.Text = pre10mmCount.ToString() & "個"
             
-            ' 測定完了後のメッセージ（2行）
-            ShowMessage("照合OK。投入前10mmをプロトスに入れて移載してください" & vbCrLf & "移載後、投入後1mm/5mm/10mmの必要枚数を用意してください", Color.Green)
+            ' 測定完了後のメッセージ
+            ShowMessage("投入前10mmを確認して照合ボタンを押してください", Color.Green)
             btnVerify.Enabled = True
 
         Catch ex As Exception

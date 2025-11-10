@@ -234,7 +234,7 @@ Partial Class MainForm
         Me.pnlConditions.Location = New System.Drawing.Point(30, 670)
         Me.pnlConditions.Margin = New System.Windows.Forms.Padding(5)
         Me.pnlConditions.Name = "pnlConditions"
-        Me.pnlConditions.Size = New System.Drawing.Size(1340, 314)
+        Me.pnlConditions.Size = New System.Drawing.Size(1104, 314)
         Me.pnlConditions.TabIndex = 7
         '
         'lblConditionsTitle
