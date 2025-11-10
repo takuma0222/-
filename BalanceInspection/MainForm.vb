@@ -1,6 +1,7 @@
 ﻿Imports System.Windows.Forms
 Imports System.IO
 Imports System.Diagnostics
+Imports Newtonsoft.Json
 
 ''' <summary>
 ''' メインフォーム
@@ -16,6 +17,7 @@ Public Class MainForm
     Private _logManager As LogManager
     Private _employeeLoader As EmployeeLoader
     Private _shelfManager As ShelfStorageManager
+    Private _sessionStateManager As SessionStateManager
     Private _currentCondition As CardCondition
     Private _currentMaterialCondition As MaterialCondition
     Private _isSearchingEmployee As Boolean = False
@@ -78,6 +80,10 @@ Public Class MainForm
             Dim shelfCsvPath As String = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "shelf_storage.csv")
             _shelfManager = New ShelfStorageManager(shelfCsvPath)
             
+            ' セッション状態管理初期化
+            Dim sessionStatePath As String = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "session_state.json")
+            _sessionStateManager = New SessionStateManager(sessionStatePath)
+            
             ' バランスマネージャー初期化
             _balanceManager = New BalanceManager(_appConfig)
             
@@ -88,6 +94,9 @@ Public Class MainForm
                 ' 開発/テスト時はポートが無くてもOK
                 _logManager.WriteErrorLog("ポートオープン時の警告: " & ex.Message)
             End Try
+            
+            ' セッション状態の復元確認
+            CheckAndRestoreSession()
             
         Catch ex As Exception
             MessageBox.Show("初期化エラー: " & ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -535,6 +544,9 @@ Public Class MainForm
             ShowMessage("照合OK。投入前10mmをプロトスに入れて移載してください" & vbCrLf & "移載後、投入後1mm/5mm/10mmの必要枚数を用意して再照合してください", Color.Green)
             _verificationStage = 1
             
+            ' セッション状態を保存
+            SaveSessionState(pre10mmBefore)
+            
             ' 投入後部材の情報を取得・表示
             DisplayPostMaterialsForSecondStage()
             
@@ -672,6 +684,9 @@ Public Class MainForm
             
             ' ログ出力（第2段階）
             _logManager.WriteInspectionLog(employeeNo, txtCardNo.Text.Trim(), _currentCondition, "OK")
+            
+            ' セッション状態を削除（照合完了）
+            _sessionStateManager.DeleteState()
             
             ' 入力欄をクリアしてリセット
             RemoveHandler txtEmployeeNo.TextChanged, AddressOf TxtEmployeeNo_TextChanged
@@ -845,6 +860,137 @@ Public Class MainForm
         _currentCondition = Nothing
         _currentMaterialCondition = Nothing
         txtEmployeeNo.Focus()  ' 従業員Noにフォーカス
+        
+        ' セッション状態を削除
+        _sessionStateManager.DeleteState()
+    End Sub
+    
+    ''' <summary>
+    ''' セッション状態を保存
+    ''' </summary>
+    Private Sub SaveSessionState(pre10mmBefore As Integer)
+        Try
+            Dim state As New SessionState()
+            state.Timestamp = DateTime.Now
+            state.Stage = 1  ' 第1段階完了
+            state.EmployeeNo = txtEmployeeNo.Text.Trim()
+            state.EmployeeName = lblEmployeeNameValue.Text
+            state.CardNo = txtCardNo.Text.Trim()
+            state.LapThickness = cmbLapThickness.SelectedItem.ToString()
+            state.Pre10mmBefore = pre10mmBefore
+            state.CardConditionJson = JsonConvert.SerializeObject(_currentCondition)
+            state.MaterialConditionJson = JsonConvert.SerializeObject(_currentMaterialCondition)
+            
+            _sessionStateManager.SaveState(state)
+        Catch ex As Exception
+            ' 保存エラーは無視（処理は継続）
+        End Try
+    End Sub
+
+    ''' <summary>
+    ''' セッション状態の復元確認
+    ''' </summary>
+    Private Sub CheckAndRestoreSession()
+        Try
+            Dim savedState As SessionState = _sessionStateManager.LoadState()
+            
+            If savedState Is Nothing Then
+                Return
+            End If
+            
+            ' 第1段階完了状態のみ復元対象
+            If savedState.Stage <> 1 Then
+                _sessionStateManager.DeleteState()
+                Return
+            End If
+            
+            ' 復元確認ダイアログ
+            Dim result As DialogResult = MessageBox.Show(
+                "前回の照合作業が途中で終了しています。" & vbCrLf &
+                "従業員No: " & savedState.EmployeeNo & vbCrLf &
+                "カードNo: " & savedState.CardNo & vbCrLf &
+                "LAP厚: " & savedState.LapThickness & vbCrLf & vbCrLf &
+                "前回の状態から再開しますか？",
+                "セッション復元確認",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question)
+            
+            If result = DialogResult.Yes Then
+                ' セッション状態を復元
+                RestoreSession(savedState)
+            Else
+                ' 復元しない場合は削除
+                _sessionStateManager.DeleteState()
+            End If
+            
+        Catch ex As Exception
+            ' エラーが発生した場合は状態ファイルを削除
+            _sessionStateManager.DeleteState()
+        End Try
+    End Sub
+    
+    ''' <summary>
+    ''' セッション状態を復元
+    ''' </summary>
+    Private Sub RestoreSession(savedState As SessionState)
+        Try
+            ' 従業員情報を復元
+            txtEmployeeNo.Text = savedState.EmployeeNo
+            lblEmployeeNameValue.Text = savedState.EmployeeName
+            txtEmployeeNo.Enabled = False
+            
+            ' カード情報を復元
+            txtCardNo.Text = savedState.CardNo
+            txtCardNo.Enabled = False
+            
+            ' LAP厚を復元
+            cmbLapThickness.SelectedItem = savedState.LapThickness
+            cmbLapThickness.Enabled = False
+            
+            ' カード条件を復元
+            _currentCondition = JsonConvert.DeserializeObject(Of CardCondition)(savedState.CardConditionJson)
+            _currentMaterialCondition = JsonConvert.DeserializeObject(Of MaterialCondition)(savedState.MaterialConditionJson)
+            
+            ' カード情報を表示
+            lblCardNoDisplayValue.Text = _currentCondition.CardNo
+            lblProductNameValue.Text = _currentCondition.ProductName
+            lblLotNoValue.Text = _currentCondition.LotNo
+            lblQuantityValue.Text = _currentCondition.Quantity.ToString()
+            lblLocationValue.Text = _currentCondition.Location
+            
+            ' 必要枚数を表示
+            lblPre10mmRequired.Text = _currentMaterialCondition.Pre10mm.ToString() & "個"
+            lblPost1mmRequired.Text = _currentMaterialCondition.Post1mm.ToString() & "個"
+            lblPost5mmRequired.Text = _currentMaterialCondition.Post5mm.ToString() & "個"
+            lblPost10mmRequired.Text = _currentMaterialCondition.Post10mm.ToString() & "個"
+            
+            If _currentCondition.EdgeGuard = 0 Then
+                lblEdgeRequired.Text = "不要"
+            Else
+                lblEdgeRequired.Text = _currentCondition.EdgeGuard.ToString() & "個"
+            End If
+            
+            If _currentCondition.BubbleInterference = 0 Then
+                lblBubbleRequired.Text = "不要"
+            Else
+                lblBubbleRequired.Text = _currentCondition.BubbleInterference.ToString() & "個"
+            End If
+            
+            ' 投入前10mmの照合前数を復元（保存された固定値）
+            lblPre10mmRemaining.Text = savedState.Pre10mmBefore.ToString() & "個"
+            
+            ' 第1段階完了状態に設定
+            _verificationStage = 1
+            
+            ' 投入後部材の情報を取得・表示（最新値）
+            DisplayPostMaterialsForSecondStage()
+            
+            ShowMessage("前回のセッションを復元しました。投入後部材を照合してください。", Color.Green)
+            
+        Catch ex As Exception
+            MessageBox.Show("セッション復元エラー: " & ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            ResetForm()
+        End Try
     End Sub
 
     ''' <summary>

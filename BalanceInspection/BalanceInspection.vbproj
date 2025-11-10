@@ -48,6 +48,9 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -58,6 +61,7 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
   </ItemGroup>
+
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="System" />
@@ -84,6 +88,7 @@
     <Compile Include="Models\MaterialCondition.vb" />
     <Compile Include="Models\BalanceConfig.vb" />
     <Compile Include="Models\ShelfStorage.vb" />
+    <Compile Include="Models\SessionState.vb" />
     <Compile Include="Services\ConfigLoader.vb" />
     <Compile Include="Services\ICardDataProvider.vb" />
     <Compile Include="Services\IEmployeeDataProvider.vb" />
@@ -98,6 +103,7 @@
     <Compile Include="Services\BalanceManager.vb" />
     <Compile Include="Services\LogManager.vb" />
     <Compile Include="Services\ShelfStorageManager.vb" />
+    <Compile Include="Services\SessionStateManager.vb" />
     <Compile Include="ShelfStorageForm.vb">
       <SubType>Form</SubType>
     </Compile>
