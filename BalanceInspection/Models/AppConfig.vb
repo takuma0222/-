@@ -41,5 +41,15 @@ Public Class AppConfig
     ''' リトライ回数
     ''' </summary>
     Public Property MaxRetries As Integer = 3
+
+    ''' <summary>
+    ''' 棚入庫対象の工程（所在）
+    ''' </summary>
+    Public Property ShelfStorageLocation As String = "XXX"
+
+    ''' <summary>
+    ''' 棚出庫チェックを有効にするかどうか
+    ''' </summary>
+    Public Property EnableShelfRetrieval As Boolean = True
 End Class
 

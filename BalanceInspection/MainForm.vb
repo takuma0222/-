@@ -995,11 +995,13 @@ Public Class MainForm
 
         ' 6桁入力完了時にLAP厚選択欄を活性化
         If cardNo.Length = 6 Then
-            ' 【優先1】棚ファイルを参照してカードNoが入庫されているかチェック
-            Dim shelfStorage As ShelfStorage = _shelfManager.FindShelfByCardNo(cardNo)
-            If shelfStorage IsNot Nothing Then
-                HandleShelfRetrieval(shelfStorage)
-                Return
+            ' 【優先1】棚ファイルを参照してカードNoが入庫されているかチェック（設定で有効化されている場合）
+            If _appConfig.EnableShelfRetrieval Then
+                Dim shelfStorage As ShelfStorage = _shelfManager.FindShelfByCardNo(cardNo)
+                If shelfStorage IsNot Nothing Then
+                    HandleShelfRetrieval(shelfStorage)
+                    Return
+                End If
             End If
             
             ' 【優先2】カード情報を取得（品名、枚数、所在などの表示用）
@@ -1023,8 +1025,8 @@ Public Class MainForm
                 Return
             End If
             
-            ' 【優先3】工程が"XXX"の場合、棚入庫処理
-            If _currentCondition.Location = "XXX" Then
+            ' 【優先3】設定された工程の場合、棚入庫処理
+            If Not String.IsNullOrEmpty(_appConfig.ShelfStorageLocation) AndAlso _currentCondition.Location = _appConfig.ShelfStorageLocation Then
                 HandleShelfStorage(cardNo)
                 Return
             End If
